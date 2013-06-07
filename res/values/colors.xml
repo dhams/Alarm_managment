@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+     <color name="main_bg_org">#f3ab2e</color>
+     <color name="main_bg_green">#A3C53A</color>
+      <color name="main_bg_blue">#a0fbff</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+      <color name="label_color">#FFFFFF</color>
+      <color name="dark_ass">#181818</color>
+</resources>
+

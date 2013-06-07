@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainMobileLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg_org"
+    android:orientation="vertical"
+    android:weightSum="10" >
+
+    <include
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title" />
+
+    <RelativeLayout
+        android:id="@+id/prevnext"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/btnPrevUserMob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_previous" />
+
+        <Button
+            android:id="@+id/btnNextUserMob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_next" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <RelativeLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" >
+
+                <ImageView
+                    android:id="@+id/imageMob"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/add_photo" >
+                </ImageView>
+
+                <LinearLayout
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10dip"
+                    android:layout_toRightOf="@+id/imageMob"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/textviewTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/first_name"
+                        android:textColor="@color/label_color"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etFName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_field_2"
+                        android:hint="@string/first_name"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true" >
+                    </EditText>
+
+                    <TextView
+                        android:id="@+id/textviewTitle"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/last_name"
+                        android:textColor="@color/label_color"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etLName"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/input_field_2"
+                        android:hint="@string/last_name"
+                        android:paddingLeft="5dp"
+                        android:singleLine="true" >
+                    </EditText>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/relation_prompt_mendatory"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spRelation"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:entries="@array/relation_arrays"
+                android:paddingLeft="10dp"
+                android:prompt="@string/relation_prompt" >
+            </Spinner>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/telephone"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etTel"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:hint="@string/telephone"
+                android:inputType="number"
+                android:maxLines="1"
+                  android:maxLength="20"
+                android:paddingLeft="10dp"
+                android:singleLine="true" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/mobile"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etMob"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:hint="@string/mobile"
+                android:inputType="number"
+                android:maxLines="1"
+                  android:maxLength="20"
+                android:paddingLeft="10dp"
+                android:singleLine="true" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/Icon_prompt"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spIcon"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:entries="@array/call_count_type"
+                android:paddingLeft="5dp"
+                android:prompt="@string/Icon_prompt" >
+            </Spinner>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <TextView
+                    android:id="@+id/textviewTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:text="@string/interval_time_prompt"
+                    android:textColor="@color/label_color"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textviewTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingLeft="5dp"
+                    android:text="@string/call_count_prompt"
+                    android:textColor="@color/label_color"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2" >
+
+                <Spinner
+                    android:id="@+id/spInterval"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_bg"
+                    android:entries="@array/time_interval_type"
+                    android:paddingLeft="10dp"
+                    android:prompt="@string/interval_time_prompt" >
+                </Spinner>
+
+                <Spinner
+                    android:id="@+id/spCall"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/spinner_bg"
+                    android:entries="@array/call_count_type"
+                    android:paddingLeft="10dp"
+                    android:prompt="@string/call_count_prompt" >
+                </Spinner>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/mail"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:hint="@string/mail"
+                android:paddingLeft="10dp"
+                android:inputType="textEmailAddress"
+                android:singleLine="true" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/warning"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etText"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:hint="@string/warning"
+                android:maxLines="2"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/mail_counter"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etMailCounter"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:hint="@string/mail_counter"
+                android:inputType="number"
+                android:maxLines="2"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/mail_interval"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etMailInterval"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:hint="@string/mail_interval"
+                android:inputType="number"
+                android:maxLines="2"
+                android:paddingLeft="10dp" >
+            </EditText>
+
+            <LinearLayout
+                android:id="@+id/btnForAdd"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center_horizontal"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/btnMobCan"
+                    style="@style/font_size_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_big_bg"
+                    android:text="@string/cancel" >
+                </Button>
+
+                <Button
+                    android:id="@+id/btnMobAdd"
+                    style="@style/font_size_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_big_bg"
+                    android:text="@string/add_contact" >
+                </Button>
+                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/btnForShow"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:visibility="gone"
+                    android:gravity="center_horizontal"
+                    android:weightSum="3" >
+
+                    <Button
+                        android:id="@+id/btnMobDel"
+                        style="@style/font_size_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/red_button_bg1"
+                        android:text="@string/delete"
+                        android:textColor="@color/black" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btnMobBk"
+                        style="@style/font_size_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_big_bg"
+                        android:text="@string/back" >
+                    </Button>
+
+                    <Button
+                        android:id="@+id/btnMobUp"
+                        style="@style/font_size_small"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/button_big_bg"
+                        android:text="@string/update" >
+                    </Button>
+                </LinearLayout>
+           
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

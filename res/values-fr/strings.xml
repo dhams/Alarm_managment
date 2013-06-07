@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tapToast">Appuyez sur le bouton pour arrêter l\'alarme</string> 
+    <string name="tapCellToast">Tapez cellule pour arrêter l\'alarme</string> 
+    <string name="start_date">Date de début</string>
+    <string name="hello">Bonjour tout le monde, splashScreen!</string>
+    <string name="app_name">Medplann</string>
+    <string name="logo">"Pour vous aider à planifier et\nde garder trace de \nprise quotidienne de médicaments"</string>
+    <string name="add_new">Ajouter un nouveau</string>
+    <string name="cell_edit">Cliquez sur la cellule, que vous souhaitez modifier.</string>
+    <string name="home">maison</string>
+    <string name="start_med">Début medplann</string>
+    <string name="config_med">Personalizza Medplann</string>
+    <string name="name">* nom</string>
+    <string name="first_name">* Prénom</string>
+    <string name="last_name">* Nom de famille</string>
+    <string name="user_name">* Nom d\'utilisateur</string>
+    <string name="medicine_for_each_time_prompt">Combien de fois dans une journée?</string>
+    <string name="password">* Mot de passe</string>
+    <string name="sign_up">SignUp</string>
+    <string name="login">login</string>
+    <string name="logout">Déconnexion</string>
+    <string name="type">* Type d\'</string>
+    <string name="address">adresse</string>
+    <string name="zip">code postal</string>
+    <string name="state">état</string>
+    <string name="city">ville</string>
+    <string name="telephone">* Téléphone</string>
+    <string name="telephone_not_medatory">téléphone</string>
+    <string name="mobile">* Mobile</string>
+    <string name="mobile_not_medatory">mobile</string>
+    <string name="mail">E-Mail</string>
+    <string name="intolerance">l\'intolérance,</string>
+    <string name="doctor">médecin</string>
+    <string name="note">noter</string>
+    <string name="buzz_sound_title">son Buzz *</string>
+    <string name="buzz_sound">Cliquez sur l\'icône pour jouer les sons, puis cliquez sur la ligne pour le sélectionner.</string>
+    <string name="buzz_repetition">répétition Buzz</string>
+    <string name="mini_image">image Mini</string>
+    <string name="blink_cell">Blink cellule</string>
+    <string name="alert">Sonnerie d\'alerte</string>
+    <string name="text_to_speech">Text To Speech</string>
+    <string name="vibration">vibration</string>
+    <string name="text_red">Texte en rouge pendant buzz</string>
+    <string name="activate">activer</string>
+    <string name="edit_cell">Modifier cellules</string>
+    <string name="photo">photo Catégorie</string>
+    <string name="desc">* Description</string>
+    <string name="desc_not_mentatory">Description</string>
+    <string name="short_desc">brève description</string>
+    <string name="long_desc">Description longue</string>
+    <string name="warning">message d\'avertissement</string>
+    <string name="mail_counter">compteur électronique</string>
+    <string name="mail_interval">intervalle de messagerie</string>
+    <string name="active_ingrediant">ingrédient actif</string>
+    <string name="therapeutic">indications thérapeutiques</string>
+    <string name="caution">prudence</string>
+    <string name="add">ajouter</string>
+    <string name="show">Mostra</string>
+    <string name="print">imprimer</string>
+    <string name="list">liste</string>
+    <string name="search">Rechercher</string>
+    <string name="select">sélectionner</string>
+    <string name="filter">filtrer</string>
+    <string name="search_record">Rechercher record de tous les champs.</string>
+    <string name="user_mgt">"gestion des utilisateurs"</string>
+    <string name="pic_mgt">"photos gestion"</string>
+    <string name="med_mgt">"médicaments &amp; traitements\n gestion"</string>
+    <string name="phy_mgt">médecins  gestion</string>
+    <string name="mob_mgt">"Les appels d'urgence \n gestion"</string>
+    <string name="date_mgt">"Date et heure"</string>
+    <string name="cell_mgt">"Des boîtes, des cellules &amp; alarmes \n gestion"</string>
+    <string name="alarm_mgt">gestion des alarmes</string>
+    <string name="reprot_mgt">"rapports de gestion"</string>
+    <string name="select_med">Sélectionnez la médecine</string>
+    <string name="select_bgColor">couleur de fond *</string>
+    <string name="sound_type">types de sons</string>
+    <string name="stop_alarm">arrêter l\'alarme</string>
+    <string name="wayto_stopalarm">"Des moyens pour arrêter l\'alarme"</string>
+    <string name="confirm_medicine">reconnaissance médecine</string>
+    <string name="inteval_time">intervalle de temps</string>
+    <string name="inteval_days">jours d\'intervalle</string>
+    <string name="male">masculin</string>
+    <string name="female">féminin</string>
+    <string name="add_user">Ajouter un utilisateur</string>
+    <string name="add_phy">Ajouter médecin</string>
+    <string name="add_contact">Ajouter un contact</string>
+    <string name="add_medicine">Ajouter la médecine</string>
+    <string name="add_image">Ajouter une image</string>
+    <string name="add_cell">Ajouter cellulaire</string>
+    <string name="cancel">annuler</string>
+    <string name="delete">effacer</string>
+    <string name="back">arrière</string>
+    <string name="update">mettre à jour</string>
+    <string name="visiting_time">temps de visite</string>
+    <string name="days">journées</string>
+    <string name="from">à partir de</string>
+    <string name="to">à</string>
+    <string name="mon">lundi</string>
+    <string name="tues">mardi</string>
+    <string name="wed">mercredi</string>
+    <string name="thurs">jeudi</string>
+    <string name="fri">vendredi</string>
+    <string name="sat">samedi</string>
+    <string name="sun">dimanche</string>
+    <string name="used_as_of">Utilisé en tant que / pour</string>
+    <string name="keyword">mot-clé</string>
+    <string name="find">trouver</string>
+    <string name="tel_no">Tél. Non.</string>
+    <string name="mob_no">Mob. Non.</string>
+    <string name="texocity_prompt">Médecine toxicité</string>
+    <string name="country_prompt">pays</string>
+    <string name="state_prompt">état</string>
+    <string name="type_prompt">Type d\'utilisateur</string>
+    <string name="blood_prompt">groupe sanguin</string>
+    <string name="photo_category_prompt">photo Catégorie</string>
+    <string name="visiting_prompt">visite d\'une journée</string>
+    <string name="relation_prompt">relations</string>
+    <string name="relation_prompt_mendatory">* Lien de parenté</string>
+    <string name="category_prompt">catégorie</string>
+    <string name="dosage_prompt">dosage</string>
+    <string name="dosage_time_prompt">temps de dosage</string>
+    <string name="dosage_type_prompt">Type de dosage / forme</string>
+    <string name="stop_alarm_prompt">arrêter l\'alarme</string>
+    <string name="interval_time_prompt">intervalle de temps</string>
+    <string name="interval_days_prompt">jours d\'intervalle</string>
+    <string name="dosage_mesurement_prompt">dosage de mesure</string>
+    <string name="How_many_prompt">Combien de fois par jour?</string>
+    <string name="schedule_prompt">Programmer dans l\'intervalle choisi</string>
+    <string name="week_prompt">Semaine du mois</string>
+    <string name="month_prompt">"Mois de l\'année"</string>
+    <string name="additional_time_prompt">un délai supplémentaire</string>
+    <string name="day_of_interval_prompt">Journée de l\'intervalle</string>
+    <string name="Icon_prompt">icône de téléphone</string>
+    <string name="call_count_prompt">Appelez compter</string>
+    <string name="time_from_prompt">temps de</string>
+    <string name="time_to_prompt">le temps de</string>
+    <string name="route_admin_prompt">Voie d\'administration</string>
+    <string name="auto_login">Connexion automatique</string>
+    <string name="incorrect_login">Nom d\'utilisateur ou mot de passe incorrect.</string>
+    <string name="store_user_login">Voulez-vous enregistrer votre nom d\'utilisateur et mot de passe?</string>
+    <string name="feild_require_register">S\'il vous plaît entrez par exemple des champs requis. Nom, Prénom, Nom d\'utilisateur, Mot de passe, type d\'utilisateur.</string>
+    <string name="alreday_exist_register">Nom d\'utilisateur existe déjà.</string>
+    <string name="enter_keyword">S\'il vous plaît entrez mot clé.</string>
+    <string name="enter_name">S\'il vous plaît entrer un nom.</string>
+    <string name="enter_city">"S\'il vous plaît entrer la ville."</string>
+    <string name="enter_gender">"S\'il vous plaît Inscrivez le Sexe"</string>
+    <string name="enter_category">S\'il vous plaît entrer catégorie.</string>
+    <string name="enter_desc">S\'il vous plaît entrez mot clé description.</string>
+    <string name="enter_short">S\'il vous plaît entrez mot clé courte description.</string>
+    <string name="enter_active">S\'il vous plaît entrer ingrédient actif.</string>
+    <string name="enter_weekday">S\'il vous plaît entrer un jour de semaine.</string>
+    <string name="enter_relation">S\'il vous plaît entrez relation.</string>
+    <string name="enter_mobile_no">"S\'il vous plaît entrez le numéro Mobile"</string>
+    <string name="no_record_found">Aucun enregistrement trouvé.</string>
+    <string name="first_record">Premier enregistrement.</string>
+    <string name="last_record">Dernier enregistrement.</string>
+    
+    
+    
+    <string name="people">personnes</string>
+    <string name="medicine">médecine</string>
+    <string name="ok">oui</string>
+    <string name="no_thanks">aucun</string>
+    <string name="ok_thanks">Merci Ok!</string>
+    <string name="confirm">Stop</string>
+    <string name="yeah_sure">Ouais, bien sûr</string>
+    
+    <string name="fail">échouer</string>
+    <string name="success">succès</string>
+    <string name="set_starting_date">Définir la date de début</string>
+    <string name="star_date">Date de début</string>
+    <string name="feild_require_user_mgt">S\'il vous plaît entrer champs obligatoires i.e. Nom, Prénom.</string>
+    <string name="pateint_added_user_mgt">Malade ajouté.</string>
+    <string name="pateint_delete_user_mgt">L\'entrée du patient supprimé.</string>
+    <string name="pateint_update_user_mgt">Malade à jour.</string>
+    <string name="exists_list_user_mgt">Choisissez dans la liste existante.</string>
+    <string name="add_new_user_mgt">Ajouter un nouveau médecin.</string>
+    <string name="no_user_user_mgt">Aucun utilisateur n\'a encore été enregistré, vous pouvez ajouter maintenant.</string>
+    
+    
+    <string name="no_patient_user_mgt">Aucun patient n\'a ajouté.</string>
+    <string name="filter_search_user_mgt">Filtre va rechercher les utilisateurs en fonction de la sélection du champ.</string>
+    <string name="by_name_user_mgt">nommément</string>
+    <string name="by_city_user_mgt">par ville</string>
+    <string name="filter_search_pic_mgt">Filtre va rechercher les images en fonction de la sélection du champ.</string>
+    <string name="by_desc_pic_mgt">par description</string>
+    <string name="by_cat_pic_mgt">par catégorie</string>
+    <string name="no_picture_pic_mgt">Aucune image dans la base de données, vous pouvez ajouter un</string>
+    <string name="picture_save_pic_mgt">Image enregistrée.</string>
+    <string name="picture_update_pic_mgt">Photo mise à jour.</string>
+    <string name="picture_delete_pic_mgt">Image supprimer.</string>
+    <string name="take_new_pic_mgt">Prendre une nouvelle photo.</string>
+    <string name="pic_gallery_pic_mgt">Choisissez parmi galerie.</string>
+    <string name="feild_require_pic_mgt">S\'il vous plaît entrer les champs requis soit photo, catégorie, description.</string>
+    <string name="feild_1_require_pic_mgt">S\'il vous plaît entrer les champs requis photo c.-à-Description.</string>
+    <string name="add_picture_pic_mgt">Pas d\'image ajoutée, S\'il vous plaît ajouter dans la gestion d\'image.</string>
+    
+    
+    
+    <string name="no_picture_stored_pic_mgt">Pas d\'image encore stockées.</string>
+    <string name="filter_search_med_mgt">Filtre va chercher les médicaments à base de la sélection du champ.</string>
+    <string name="by_short_med_mgt">Par brève description</string>
+    <string name="by_active_med_mgt">En principe actif</string>
+    
+    <string name="no_physician_med_mgt">Aucun médecin ajoutée, s\'il vous plaît ajouter dans la gestion médecin.</string>
+    <string name="no_medicine_stored_med_mgt">Aucun médicament encore stockées.</string>
+    <string name="no_medicine_save_yet_med_mgt">Aucun médicament n\'a encore été enregistré, s\'il vous plaît ajouter dans la gestion de la médecine.</string>
+    
+    
+    <string name="medcine_save_med_mgt">Médecine sauvé.</string>
+    <string name="feild_require_med_mgt">S\'il vous plaît entrer champs obligatoires iename, une courte description.</string>
+    <string name="medicine_update_med_mgt">Médecine mis à jour.</string>
+    <string name="medicine_delete_med_mgt">Médecine supprimé.</string>
+    <string name="filter_search_phy_mgt">Filtre va chercher les médecins sur la base de la sélection du champ.</string>
+    <string name="by_visiting_phy_mgt">en visitant</string>
+    <string name="no_phy_added_phy_mgt">Aucun médecin ajoutée, s\'il vous plaît ajouter dans la gestion médecin.</string>
+    <string name="no_phy_stored_phy_mgt">Aucun médecin encore stockées.</string>
+    <string name="feild_require_phy_mgt">Per favore inserire tutti i campi obbligatori come ad es, Nome e Cognome</string>
+    <string name="physician_delete_phy_mgt">Entrée médecin supprimé</string>
+    <string name="physician_update_phy_mgt">Médecin de mise à jour.</string>
+    <string name="physician_saved_phy_mgt">Médecin sauvé.</string>
+    
+    
+    
+    <string name="warning_msg_phy_mgt">Attention! Vos heures saisies semble incorrecte. Etes-vous sûr que vous voulez entrer dans ce moment?</string>
+    <string name="no_user_phy_mgt">Aucun utilisateur n\'a encore été enregistré, vous pouvez ajouter maintenant.</string>
+    <string name="filter_search_mob_mgt">Filtre va rechercher les contacts sur la base de la sélection de champ.</string>
+    <string name="by_relation_mob_mgt">en relation</string>
+    <string name="by_mobile_mob_mgt">Par No mobiles</string>
+    <string name="no_contact_mob_mgt">Aucun contact ajouté, S\'il vous plaît ajouter dans la gestion médecin.</string>
+    <string name="no_contact_stored_mob_mgt">Pas de contact encore stockées.</string>
+    <string name="no_contact_saved_mob_mgt">Aucun contact n\'a encore été enregistré, vous pouvez ajouter maintenant.</string>
+    
+    
+    <string name="feild_require_mob_mgt">S\'il vous plaît entrer champs obligatoires savoir nom, prénom, relation, tél Non, mobile n °</string>
+    <string name="contact_update_mob_mgt">Contactez sauvé.</string>
+    <string name="contact_delete_mob_mgt">Contactez mis à jour.</string>
+    <string name="contact_saved_mob_mgt">Contactez sauvé.</string>
+    
+    
+    <string name="box_selection_cell_mgt_line1">Sélectionnez Utilisateur / Patient mettre un lien vers la boîte.</string>
+    <string name="box_selection_cell_mgt_line2">Sélectionnez le type de boîte que vous souhaitez utiliser.</string>
+    <string name="box_selection_cell_mgt_line3">Lien vers la case de droite en utilisant le bouton d\'activation.</string>
+    <string name="box_selection_cell_mgt_line4">Attribuer médicaments / friandises et des alarmes vers les cellules de boîte.</string>
+    
+    
+    <string name="first_box_cell_mgt">Première case.</string>
+    <string name="last_box_cell_mgt">Dernière case.</string>
+    
+    <string name="select_user_cell_mgt">Sélectionnez l\'utilisateur de se connecter à n\'importe quel type de boîte.</string>
+    <string name="similar_choosen_cell_mgt">Auparavant choisi Box similaire = + + box_id, il va écraser l\'ancien. Etes-vous sûr?</string>
+    
+    <string name="connect_box_cell_mgt">Ne vous voulez vous connecter case:</string>
+    
+    <string name="to_you_cell_mgt">à l\'utilisateur:</string>
+    
+    <string name="user_cell_mgt">utilisateur</string>
+    <string name="already_exist_cell_mgt">a déjà activée boîte</string>
+    <string name="the_box_cell_mgt">la</string>
+    <string name="same_choosed_cell_mgt">est déjà sélectionné pour l\'utilisateur:</string>
+    <string name="pname">Nom du patient</string>
+    <string name="mname">Nom de la médecine</string>
+    <string name="date">date</string>
+    <string name="time">temps</string>
+    <string name="taken">pris</string>
+    <string name="noreportfound">Aucun rapport trouvé</string>
+    <string name="getreport">Obtenir le rapport en PDF</string>
+    <string name="differ_choosen_cell_mgt">Auparavant vous choisi Box = + + getCell_id, Il remplacera votre précédent Etes-vous sûr?</string>
+
+</resources>

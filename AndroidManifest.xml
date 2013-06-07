@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.medplan.app"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.CALL_PHONE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name" android:name="ApplicationClass" >
+        <activity
+            android:label="@string/app_name"
+            android:name=".SplashScreen"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name="com.medplannapp.android.widgettbn.ConfigureWidget" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter> 
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.Default" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="LoginScreen"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation" />
+        <activity
+            android:name="RegisterScreen"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="keyboardHidden|orientation" >
+        </activity>
+        <activity
+            android:name=".MediManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="PhysicianManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="MobileManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="PictureManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="ConfigureScreen"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="UserManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="UserManage_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="UserManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="PicManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="MediManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="PhysicianManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="MobileManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="CellManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="AlarmManage_AddShowActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="stateHidden" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="MobileManage_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="CellManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="PhysicianManage_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="PicManage_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="MediManage_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="AlarmManageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name=".BoxThreeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name=".BoxFourActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name=".BoxSixActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name=".BoxEightActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name=".BoxTenActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="AssignUser_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="CellUser_ListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+        <activity
+            android:name="UserReportActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" android:configChanges="keyboardHidden|orientation">
+        </activity>
+
+        <receiver
+            android:label="@string/app_name"
+            android:name="com.medplannapp.android.widgettbn.ToggleWidget" >
+            <intent-filter >
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <!-- Custom define intent-filters -->
+            <intent-filter >
+                <action android:name="com.medplannapp.android.widgettbn.ButtonFirst" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="com.medplannapp.android.widgettbn.ButtonSecond" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="com.medplannapp.android.widgettbn.ButtonThird" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="com.medplannapp.android.widgettbn.ButtonFourth" />
+            </intent-filter>
+            <intent-filter >
+                <action android:name="com.medplannapp.android.widgettbn.ButtonFifth" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget" />
+        </receiver>
+    </application>
+
+</manifest>

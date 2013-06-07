@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:background="@color/main_bg_org"
+    >
+
+    <TextView
+        android:id="@+id/userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+         android:padding="3dp"
+        android:textColor="@color/black"
+        style="@style/font_size_small" />
+
+    <TextView
+        android:id="@+id/userRel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@id/userName"
+        android:gravity="right"
+        android:text="@string/relation_prompt"
+        android:textColor="@color/black"
+       style="@style/font_size_small" />
+
+    <TextView
+        android:id="@+id/userTel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/userName"
+        android:text="@string/tel_no"
+         android:padding="3dp"
+        android:textColor="@color/black"
+        style="@style/font_size_small"/>
+
+    <TextView
+        android:id="@+id/userMob"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/userTel"
+        android:gravity="right"
+        android:text="@string/mob_no"
+        android:padding="3dp"
+        android:textColor="@color/black"
+        style="@style/font_size_small" />
+
+</RelativeLayout>

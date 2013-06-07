@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/MainAlarmLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg_org"
+    android:orientation="vertical"
+    android:weightSum="3.9" >
+
+    <include
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title"  />
+
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+       	android:gravity="center"
+       	android:weightSum="3"
+       	android:background="@color/black">
+
+    <TextView
+        android:id="@+id/tv_userbox_name"
+        android:layout_width="0dp"
+        android:layout_weight="2.3"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:text=""
+        android:ellipsize="end"
+         style="@style/font_size"
+        android:singleLine="true"
+        android:textColor="@color/white"
+      	 />
+    <TextView
+        android:id="@+id/tv_userbox_boxname"
+        android:layout_width="0dp"
+        android:layout_weight="0.7"
+        android:layout_height="wrap_content"
+        android:text="Box 3"
+         style="@style/font_size"
+         android:layout_marginLeft="10dip"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        />
+    </LinearLayout>
+    
+     <Button
+        android:id="@+id/btn_boxten_confirm"
+        android:onClick="doShowToast"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/confirm"
+        android:visibility="gone"
+        android:background="@drawable/red_button_bg"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:layout_weight="3.6"
+        android:background="@drawable/square_border"
+        android:gravity="center"
+        android:weightSum="2" >
+
+        <LinearLayout
+            android:id="@+id/linearlayout_first"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="5" >
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxA"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1" 
+                android:onClick="doShowToast">
+                
+                <TextView
+                    android:id="@+id/tv_ten_timeA"
+                    android:onClick="doShowToast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                  	android:layout_above="@+id/img_ten_boxA"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxA"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+ 
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxA"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_ten_boxA"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="A/1"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxC"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1" >
+                
+
+                <TextView
+                    android:id="@+id/tv_ten_timeC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxC"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxC"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxC"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxC"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="C/3"
+                    android:textColor="@color/black"
+                     style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxE"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxE"
+                   android:layout_centerHorizontal="true"
+                   
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxE"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxE"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxE"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="E/5"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxG"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxG"
+                   android:layout_centerHorizontal="true"
+
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxG"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxG"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxG"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="G/7"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxI"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxI"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxI"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+                <TextView
+                    android:id="@+id/tv_ten_boxI"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxI"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="I/9"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="8dp"
+            android:layout_height="fill_parent"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:id="@+id/linearlayout_first"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:weightSum="5" >
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxB"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxB"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxB"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxB"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxB"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="B/2"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxD"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxD"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxD"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxD"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxD"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="D/4"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxF"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxF"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxF"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxF"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxF"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="F/6"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxH"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxH"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxH"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+
+                <TextView
+                    android:id="@+id/tv_ten_boxH"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxH"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="H/8"
+                    android:textColor="@color/black"
+                     style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="8dp"
+                android:background="@color/black" />
+
+            <RelativeLayout
+                android:id="@+id/rl_ten_boxJ"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_ten_timeJ"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_ten_boxJ"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                     
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_ten_boxJ"
+                    android:layout_width="30dip"
+                    android:layout_height="30dip"
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                     
+                   />
+                <TextView
+                    android:id="@+id/tv_ten_boxJ"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_ten_boxJ"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="J/10"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

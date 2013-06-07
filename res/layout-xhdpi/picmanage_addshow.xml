@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainPicLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/main_bg_org"
+    android:orientation="vertical"
+    android:weightSum="10" >
+
+    <include
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        layout="@layout/header_title" />
+
+    <RelativeLayout
+        android:id="@+id/prevnext"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/btnPrevPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_previous" />
+
+        <Button
+            android:id="@+id/btnNextPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/button_next" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp" >
+
+            <ImageView
+                android:id="@+id/imageUser"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:background="@drawable/add_photo"
+                android:scaleType="fitXY" >
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/photo"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <Spinner
+                android:id="@+id/spPicCat"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:entries="@array/photo_category"
+                android:paddingLeft="5dp"
+                android:prompt="@string/photo_category_prompt" >
+            </Spinner>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/desc"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etDesc"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_big_1"
+                android:gravity="top|left"
+                android:hint="@string/desc"
+                android:maxLines="5"
+                android:paddingLeft="5dp"
+                android:scrollbars="vertical"
+                android:singleLine="false" />
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/note"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etNote1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:gravity="top|left"
+                android:hint="@string/note"
+                android:minLines="2"
+                android:paddingLeft="5dp"
+                android:singleLine="false" >
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:id="@+id/textviewTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/note"
+                android:textColor="@color/label_color"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etNote2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/input_field_1"
+                android:gravity="top|left"
+                android:hint="@string/note"
+                android:minLines="2"
+                android:paddingLeft="5dp"
+                android:singleLine="false" />
+
+            <LinearLayout
+                android:id="@+id/btnForAdd"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:visibility="gone" >
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="@style/font_size_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_big_bg"
+                    android:text="@string/cancel" >
+                </Button>
+
+                <Button
+                    android:id="@+id/btnAdd"
+                    style="@style/font_size_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_big_bg"
+                    android:text="@string/add_image" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnForShow"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:visibility="gone"
+                android:weightSum="3" >
+
+                <Button
+                    android:id="@+id/btnDelete"
+                    style="@style/font_size_small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                  android:background="@drawable/red_button_bg1"
+                    android:text="@string/delete"
+                    android:textColor="@color/black" >
+                </Button>
+
+                <Button
+                    android:id="@+id/btnBack"
+                    style="@style/font_size_small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_big_bg"
+                    android:text="@string/back" >
+                </Button>
+
+                <Button
+                    android:id="@+id/btnUpdate"
+                    style="@style/font_size_small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/button_big_bg"
+                    android:text="@string/update" >
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:padding="3dip"
+    android:weightSum="1" >
+
+    
+
+    <TextView
+        android:id="@+id/text_values"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+       	android:layout_weight="0.9"
+       	android:layout_gravity="center_vertical"
+        android:text="Coderz"
+        android:textColor="@color/black"
+         android:textSize="16sp"
+       />
+
+    <ImageView
+        android:id="@+id/image_sound"
+        android:layout_width="42dip"
+        android:layout_height="42dip"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:background="@drawable/icon" />
+
+</LinearLayout>

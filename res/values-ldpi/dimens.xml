@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+					<!-- LDP -->
+<resources>
+		<style name="font_size">
+		    <item name="android:textSize">14dp</item>
+			</style>
+			
+			<style name="font_size_small">
+		    <item name="android:textSize">12dp</item>
+			</style>
+		
+			    <style name="font_size_medium">
+		    <item name="android:textSize">16dp</item>
+		</style>
+		
+		<style name="font_size_large">
+		    <item name="android:textSize">18dp</item>
+		</style>
+</resources>
+
+
+	

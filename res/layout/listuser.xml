@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/MainCommonLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+     android:background="@color/main_bg_org" >
+    
+     <include 
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title" />
+
+    <RelativeLayout
+        android:id="@+id/rlSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:padding="10dp"
+         android:visibility="gone"
+         
+       
+       >
+
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_record" 
+            android:background="@drawable/input_field_2"
+           android:paddingLeft="5dp" >
+        </EditText>
+       
+            <Spinner
+            android:id="@+id/spSearch"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner_bg"
+            android:prompt="@string/category_prompt"
+            android:entries="@array/photo_category"
+            android:visibility="gone"
+           android:paddingLeft="5dp" >
+        </Spinner>
+
+        <Button
+            android:id="@+id/btnFind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/editText1"
+            android:background="@drawable/button_big_bg"
+            android:layout_marginLeft="5dp"
+            android:visibility="gone"
+            android:text="@string/find" >
+        </Button>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+     	android:cacheColorHint="#00000000"/>
+    
+
+</LinearLayout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainll"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    
+    <include
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="10" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            
+            android:weightSum="4" 
+            android:gravity="center">
+            
+             <TextView
+                android:id="@+id/tv_assignUsers"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+               android:layout_marginLeft="5dip"
+                android:text="User name"
+                 style="@style/font_size_small"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_assignBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Box"
+                 style="@style/font_size_small"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_assignCell"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Assigned"
+                 style="@style/font_size_small"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:id="@+id/tv_unassignCell"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Remaining"
+                 style="@style/font_size_small"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_assign_users"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8" >
+        </ListView>
+
+        <Button
+            android:id="@+id/btn_addNew"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:text="@string/add_new"
+             style="@style/font_size_small" />
+    </LinearLayout>
+
+</LinearLayout>

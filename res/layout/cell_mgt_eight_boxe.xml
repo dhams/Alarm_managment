@@ -1,0 +1,504 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/MainAlarmLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+      android:background="@color/main_bg_org"
+      android:orientation="vertical"
+    android:weightSum="3.9">
+    
+     <include
+        android:id="@+id/headerlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header_title" 
+        />
+       
+        <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+       	android:gravity="center"
+       	android:weightSum="3"
+       	android:background="@color/black">
+
+    <TextView
+        android:id="@+id/tv_userbox_name"
+        android:layout_width="0dp"
+        android:layout_weight="2.3"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dip"
+        android:text="User: John Smith"
+        android:ellipsize="end"
+        style="@style/font_size"
+        android:singleLine="true"
+        android:textColor="@color/white"
+      	 />
+    <TextView
+        android:id="@+id/tv_userbox_boxname"
+        android:layout_width="0dp"
+        android:layout_weight="0.7"
+        android:layout_height="wrap_content"
+        android:text="Box 3"
+         style="@style/font_size"
+         android:layout_marginLeft="10dip"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        />
+    </LinearLayout>
+       
+       <Button
+        android:id="@+id/btn_boxeight_confirm"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/confirm"
+        android:onClick="doShowToast"
+        android:visibility="gone"
+        android:background="@drawable/red_button_bg"
+        android:textSize="16sp"    
+        android:textStyle="bold" />
+    
+       <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3.6"
+        android:background="@drawable/square_border"
+        android:gravity="center"
+        android:weightSum="2" 
+         android:layout_margin="5dp" >
+        
+         <LinearLayout 
+        android:id="@+id/linearlayout_first"
+        android:layout_width="0dp"
+         android:layout_height="fill_parent"
+         android:orientation="vertical"
+         android:layout_weight="1"
+         android:weightSum="4"
+         android:gravity="center">
+        
+        <RelativeLayout
+                android:id="@+id/rl_eight_boxA"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" 
+                android:onClick="doShowToast"
+                android:layout_marginLeft="3dp"
+                android:layout_marginTop="3dp">
+                
+            <TextView
+                    android:id="@+id/tv_eight_timeA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	 android:layout_above="@+id/img_eight_boxA"
+                     android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxA"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                   android:visibility="gone"
+                    android:background="@drawable/add_photo_small"
+                    
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxA"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxA"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="A/1"
+                    android:textColor="@color/black"
+                     style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+    <View 
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+       android:background="@color/black"/>
+
+    <RelativeLayout
+                android:id="@+id/rl_eight_boxC"
+                android:layout_width="wrap_content"
+                android:onClick="doShowToast"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_eight_timeC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                      android:layout_above="@+id/img_eight_boxC"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxC"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                   
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxC"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxC"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="C/3"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+    
+     <View 
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+        android:background="@color/black"/>
+     
+      <RelativeLayout
+                android:id="@+id/rl_eight_boxE"
+                android:layout_width="wrap_content"
+                android:onClick="doShowToast"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1" >
+
+               <TextView
+                    android:id="@+id/tv_eight_timeE"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:layout_above="@+id/img_eight_boxE"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxE"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+     
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxE"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxE"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="E/5"
+                    android:textColor="@color/black"
+                     style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+      
+       <View 
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+        android:background="@color/black"/>
+       
+        <RelativeLayout
+                android:id="@+id/rl_eight_boxG"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1" >
+
+               <TextView
+                    android:id="@+id/tv_eight_timeG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                  	 android:layout_above="@+id/img_eight_boxG"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxG"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxG"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxG"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="G/7"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        
+        
+    </LinearLayout>
+    
+      <View 
+        android:layout_width="8dp"
+        android:layout_height="fill_parent"
+        android:background="@color/black"/>
+      
+      
+        <LinearLayout 
+        android:id="@+id/linearlayout_first"
+        android:layout_width="0dp"
+         android:layout_height="fill_parent"
+         android:orientation="vertical"
+         android:layout_weight="1"
+         android:weightSum="4"
+         android:gravity="center">
+        
+        <RelativeLayout
+                android:id="@+id/rl_eight_boxB"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1" 
+                android:layout_marginTop="3dp"
+                android:layout_marginRight="3dp">
+
+                <TextView
+                    android:id="@+id/tv_eight_timeB"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                  	  android:layout_above="@+id/img_eight_boxB"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxB"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+               
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxB"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxB"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="B/2"
+                    android:textColor="@color/black"
+                     style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+    <View 
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+        android:background="@color/black"/>
+
+    <RelativeLayout
+                android:id="@+id/rl_eight_boxD"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_eight_timeD"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                  	 android:layout_above="@+id/img_eight_boxD"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxD"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxD"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxD"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="D/4"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+    
+     <View 
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+        android:background="@color/black"/>
+     
+      <RelativeLayout
+                android:id="@+id/rl_eight_boxF"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_eight_timeF"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                  	 android:layout_above="@+id/img_eight_boxF"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxF"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxF"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxF"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="F/6"
+                    android:textColor="@color/black"
+                    style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+      
+      <View 
+        android:layout_width="wrap_content"
+        android:layout_height="8dp"
+        android:background="@color/black"/>
+      
+      <RelativeLayout
+                android:id="@+id/rl_eight_boxH"
+                android:onClick="doShowToast"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="1" >
+
+                <TextView
+                    android:id="@+id/tv_eight_timeH"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                  	 android:layout_marginTop="5dp"
+                   android:layout_centerHorizontal="true"
+                  	android:text="time"
+                  	 android:layout_above="@+id/img_eight_boxH"
+                    android:textColor="@color/black"
+                     android:visibility="gone"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/img_eight_boxH"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+
+                    android:scaleType="fitXY"
+                  android:layout_centerHorizontal="true"
+                  android:layout_centerVertical="true"
+                    android:background="@drawable/add_photo_small"
+                    android:visibility="gone"
+                   
+                     />
+
+                <TextView
+                    android:id="@+id/tv_eight_boxH"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@+id/img_eight_boxH"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:text="H/8"
+                    android:textColor="@color/black"
+                     style="@style/font_size_medium"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        
+        
+    </LinearLayout>
+        
+    </LinearLayout>
+
+</LinearLayout>

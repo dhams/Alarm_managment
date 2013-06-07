@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="user_type">
+        <item>用戶/病人</item>
+        <item>醫生/醫師</item>
+        <item>醫藥</item>
+    </string-array>
+    <string-array name="Route_admin_arrays">
+        <item></item>
+        <item>肌肉注射</item>
+        <item>静脉</item>
+        <item>口的</item>
+        <item>直肠的</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="Time_arrays">
+        <item></item>
+        <item>08 AM</item>
+        <item>09 AM</item>
+        <item>10 AM</item>
+        <item>11 AM</item>
+        <item>12 PM</item>
+        <item>01 PM</item>
+        <item>02 PM</item>
+        <item>03 PM</item>
+        <item>04 PM</item>
+        <item>05 PM</item>
+        <item>06 PM</item>
+        <item>07 PM</item>
+        <item>08 PM</item>
+        <item>09 PM</item>
+        <item>10 PM</item>
+        <item>11 PM</item>
+        <item>00 AM</item>
+        <item>01 AM</item>
+        <item>02 AM</item>
+        <item>03 AM</item>
+        <item>04 AM</item>
+        <item>05 AM</item>
+        <item>06 AM</item>
+        <item>07 AM</item>
+    </string-array>
+    <string-array name="relation_arrays">
+        <item></item>
+        <item>母亲</item>
+        <item>父亲</item>
+        <item>弟弟</item>
+        <item>妹妹</item>
+        <item>儿子</item>
+        <item>女儿</item>
+        <item>医生</item>
+        <item>朋友</item>
+        <item>护理</item>
+        <item>员工</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="blood_group">
+        <item></item>
+        <item>A RH+</item>
+        <item>A RH-</item>
+        <item>B RH+</item>
+        <item>B RH-</item>
+        <item>AB RH+</item>
+        <item>AB RH-</item>
+        <item>O RH+</item>
+        <item>O RH-</item>
+    </string-array>
+    <string-array name="medicine_texocity">
+        <item></item>
+        <item>低</item>
+        <item>平均</item>
+        <item>高</item>
+    </string-array>
+    <string-array name="stop_alarm">
+        <item></item>
+        <item>2 重复</item>
+        <item>3 重复</item>
+        <item>4 重复</item>
+        <item>5 重复</item>
+        <item>X 重复</item>
+    </string-array>
+    <string-array name="way_stop_alarm">
+        <item></item>
+        <item>停止按钮</item>
+        <item>闪光的单元格</item>
+    </string-array>
+    <string-array name="interval_time">
+        <item></item>
+        <item>每日</item>
+        <item>每周</item>
+        <item>每月c</item>
+        <item>週天</item>
+    </string-array>
+    <string-array name="interval_day">
+        <item></item>
+        <item>天</item>
+        <item>周</item>
+        <item>月</item>
+    </string-array>
+    <string-array name="medicine_no">
+        <item></item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+    </string-array>
+    <string-array name="photo_category">
+        <item></item>
+        <item>人</item>
+        <item>醫藥</item>
+    </string-array>
+    <string-array name="Dosage_Mesurement">
+        <item></item>
+        <item>0.5</item>
+        <item>1</item>
+        <item>1.5</item>
+        <item>2</item>
+        <item>2.5</item>
+        <item>3</item>
+    </string-array>
+    <string-array name="How_many_day">
+        <item></item>
+        <item>每日</item>
+        <item>一天两次</item>
+        <item>一天三次</item>
+        <item>每两天一次</item>
+    </string-array>
+    <string-array name="additional_time">
+        <item></item>
+        <item>在早餐前</item>
+        <item>吃早饭时</item>
+        <item>在午餐前</item>
+        <item>吃午饭时</item>
+        <item>晚饭前r</item>
+        <item>吃晚饭时</item>
+        <item>睡前</item>
+        <item>睡觉时</item>
+        <item>在夜间</item>
+    </string-array>
+    <string-array name="Dosage_time">
+        <item></item>
+        <item>每日饭前</item>
+        <item>每日三餐后</item>
+        <item>每天就唤醒</item>
+        <item>每日睡觉前</item>
+        <item>每日每X小时</item>
+        <item>每日在一定的时间</item>
+        <item>每周</item>
+        <item>每月</item>
+        <item>医生配方</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="Dosage_type">
+        <item></item>
+        <item>小瓶</item>
+        <item>片剂</item>
+        <item>药丸</item>
+        <item>滴</item>
+        <item>口服 滴</item>
+        <item>鼻服 滴</item>
+        <item>眼药水</item>
+        <item>耳服滴</item>
+        <item>糖浆</item>
+        <item>口服液颗粒</item>
+        <item>栓剂</item>
+        <item>软膏</item>
+        <item>凝胶</item>
+        <item>舌下含服</item>
+    </string-array>
+    <string-array name="time_interval_type">
+        <item></item>
+        <item>1 分鐘</item>
+        <item>2 分鐘</item>
+        <item>3 分鐘</item>
+        <item>4 分鐘</item>
+        <item>5 分鐘</item>
+    </string-array>
+    <string-array name="confirm_medicine_type">
+        <item></item>
+        <item>C确认的按钮</item>
+        <item>单元格单击</item>
+        <item>单元格双击</item>
+    </string-array>
+    <string-array name="call_count_type">
+        <item></item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+    <string-array name="month_type">
+        <item></item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="color_type">
+        <item></item>
+        <item>红色</item>
+        <item>橙色</item>
+        <item>绿色</item>
+        <item>黄色</item>
+       <item>蓝 色</item>
+        <item>白色</item>
+    </string-array>
+    <string-array name="widget_icon">
+        <item></item>
+        <item>圖標</item>
+        <item>圖標</item>
+        <item>圖標</item>
+        <item>圖標</item>
+        <item>圖標</item>
+        <item>圖標</item>
+    </string-array>
+    <string-array name="sound_type">
+        <item></item>
+        <item>声音 1</item>
+        <item>声音 2</item>
+        <item>声音 3</item>
+        <item>声音 4</item>
+        <item>声音 5</item>
+        <item>声音 6</item>
+        <item>声音 7</item>
+        <item>声音 8</item>
+        <item>声音 9</item>
+        <item>声音 10</item>
+        <item>声音 11</item>
+        <item>声音 12</item>
+    </string-array>
+    <string-array name="country_arrays">
+        <item></item>
+        <item>Afghanistan</item>
+        <item>Albania</item>
+        <item>Algeria</item>
+        <item>American Samoa</item>
+        <item>Andorra</item>
+        <item>Angola</item>
+        <item>Anguilla</item>
+        <item>Antarctica</item>
+        <item>Antigua and Barbuda</item>
+        <item>Argentina</item>
+        <item>Armenia</item>
+        <item>Aruba</item>
+        <item>Australia</item>
+        <item>Austria</item>
+        <item>Azerbaijan</item>
+        <item>Bahrain</item>
+        <item>Bangladesh</item>
+        <item>Barbados</item>
+        <item>Belarus</item>
+        <item>Belgium</item>
+        <item>Belize</item>
+        <item>Benin</item>
+        <item>Bermuda</item>
+        <item>Bhutan</item>
+        <item>Bolivia</item>
+        <item>Bosnia and Herzegovina</item>
+        <item>Botswana</item>
+        <item>Bouvet Island</item>
+        <item>Brazil</item>
+        <item>British Indian Ocean Territory</item>
+        <item>British Virgin Islands</item>
+        <item>Brunei</item>
+        <item>Bulgaria</item>
+        <item>Burkina Faso</item>
+        <item>Burundi</item>
+        <item>"Cote d'Ivoire"</item>
+        <item>Cambodia</item>
+        <item>Cameroon</item>
+        <item>Canada</item>
+        <item>Cape Verde</item>
+        <item>Cayman Islands</item>
+        <item>Central African Republic</item>
+        <item>Chad</item>
+        <item>Chile</item>
+        <item>China</item>
+        <item>Christmas Island</item>
+        <item>Cocos (Keeling) Islands</item>
+        <item>Colombia</item>
+        <item>Comoros</item>
+        <item>Congo</item>
+        <item>Cook Islands</item>
+        <item>Costa Rica</item>
+        <item>Croatia</item>
+        <item>Cuba</item>
+        <item>Cyprus</item>
+        <item>Czech Republic</item>
+        <item>Democratic Republic of the Congo</item>
+        <item>Denmark</item>
+        <item>Djibouti</item>
+        <item>Dominica</item>
+        <item>Dominican Republic</item>
+        <item>East Timor</item>
+        <item>Ecuador</item>
+        <item>Egypt</item>
+        <item>El Salvador</item>
+        <item>Equatorial Guinea</item>
+        <item>Eritrea</item>
+        <item>Estonia</item>
+        <item>Ethiopia</item>
+        <item>Faeroe Islands</item>
+        <item>Falkland Islands</item>
+        <item>Fiji</item>
+        <item>Finland</item>
+        <item>Former Yugoslav Republic of Macedonia</item>
+        <item>France</item>
+        <item>French Guiana</item>
+        <item>French Polynesia</item>
+        <item>French Southern Territories</item>
+        <item>Gabon</item>
+        <item>Georgia</item>
+        <item>Germany</item>
+        <item>Ghana</item>
+        <item>Gibraltar</item>
+        <item>Greece</item>
+        <item>Greenland</item>
+        <item>Grenada</item>
+        <item>Guadeloupe</item>
+        <item>Guam</item>
+        <item>Guatemala</item>
+        <item>Guinea</item>
+        <item>Guinea-Bissau</item>
+        <item>Guyana</item>
+        <item>Haiti</item>
+        <item>Heard Island and McDonald Islands</item>
+        <item>Honduras</item>
+        <item>Hong Kong</item>
+        <item>Hungary</item>
+        <item>Iceland</item>
+        <item>India</item>
+        <item>Indonesia</item>
+        <item>Iran</item>
+        <item>Iraq</item>
+        <item>Ireland</item>
+        <item>Israel</item>
+        <item>Italy</item>
+        <item>Jamaica</item>
+        <item>Japan</item>
+        <item>Jordan</item>
+        <item>Kazakhstan</item>
+        <item>Kenya</item>
+        <item>Kiribati</item>
+        <item>Kuwait</item>
+        <item>Kyrgyzstan</item>
+        <item>Laos</item>
+        <item>Latvia</item>
+        <item>Lebanon</item>
+        <item>Lesotho</item>
+        <item>Liberia</item>
+        <item>Libya</item>
+        <item>Liechtenstein</item>
+        <item>Lithuania</item>
+        <item>Luxembourg</item>
+        <item>Macau</item>
+        <item>Madagascar</item>
+        <item>Malawi</item>
+        <item>Malaysia</item>
+        <item>Maldives</item>
+        <item>Mali</item>
+        <item>Malta</item>
+        <item>Marshall Islands</item>
+        <item>Martinique</item>
+        <item>Mauritania</item>
+        <item>Mauritius</item>
+        <item>Mayotte</item>
+        <item>Mexico</item>
+        <item>Micronesia</item>
+        <item>Moldova</item>
+        <item>Monaco</item>
+        <item>Mongolia</item>
+        <item>Montserrat</item>
+        <item>Morocco</item>
+        <item>Mozambique</item>
+        <item>Myanmar</item>
+        <item>Namibia</item>
+        <item>Nauru</item>
+        <item>Nepal</item>
+        <item>Netherlands</item>
+        <item>Netherlands Antilles</item>
+        <item>New Caledonia</item>
+        <item>New Zealand</item>
+        <item>Nicaragua</item>
+        <item>Niger</item>
+        <item>Nigeria</item>
+        <item>Niue</item>
+        <item>Norfolk Island</item>
+        <item>North Korea</item>
+        <item>Northern Marianas</item>
+        <item>Norway</item>
+        <item>Oman</item>
+        <item>Pakistan</item>
+        <item>Palau</item>
+        <item>Panama</item>
+        <item>Papua New Guinea</item>
+        <item>Paraguay</item>
+        <item>Peru</item>
+        <item>Philippines</item>
+        <item>Pitcairn Islands</item>
+        <item>Poland</item>
+        <item>Portugal</item>
+        <item>Puerto Rico</item>
+        <item>Qatar</item>
+        <item>Reunion</item>
+        <item>Romania</item>
+        <item>Russia</item>
+        <item>Rwanda</item>
+        <item>Sqo Tome and Principe</item>
+        <item>Saint Helena</item>
+        <item>Saint Kitts and Nevis</item>
+        <item>Saint Lucia</item>
+        <item>Saint Pierre and Miquelon</item>
+        <item>Saint Vincent and the Grenadines</item>
+        <item>Samoa</item>
+        <item>San Marino</item>
+        <item>Saudi Arabia</item>
+        <item>Senegal</item>
+        <item>Seychelles</item>
+        <item>Sierra Leone</item>
+        <item>Singapore</item>
+        <item>Slovakia</item>
+        <item>Slovenia</item>
+        <item>Solomon Islands</item>
+        <item>Somalia</item>
+        <item>South Africa</item>
+        <item>South Georgia and the South Sandwich Islands</item>
+        <item>South Korea</item>
+        <item>Spain</item>
+        <item>Sri Lanka</item>
+        <item>Sudan</item>
+        <item>Suriname</item>
+        <item>Svalbard and Jan Mayen</item>
+        <item>Swaziland</item>
+        <item>Sweden</item>
+        <item>Switzerland</item>
+        <item>Syria</item>
+        <item>Taiwan</item>
+        <item>Tajikistan</item>
+        <item>Tanzania</item>
+        <item>Thailand</item>
+        <item>The Bahamas</item>
+        <item>The Gambia</item>
+        <item>Togo</item>
+        <item>Tokelau</item>
+        <item>Tonga</item>
+        <item>Trinidad and Tobago</item>
+        <item>Tunisia</item>
+        <item>Turkey</item>
+        <item>Turkmenistan</item>
+        <item>Turks and Caicos Islands</item>
+        <item>Tuvalu</item>
+        <item>Virgin Islands</item>
+        <item>Uganda</item>
+        <item>Ukraine</item>
+        <item>United Arab Emirates</item>
+        <item>United Kingdom</item>
+        <item>United States</item>
+        <item>United States Minor Outlying Islands</item>
+        <item>Uruguay</item>
+        <item>Uzbekistan</item>
+        <item>Vanuatu</item>
+        <item>Vatican City</item>
+        <item>Venezuela</item>
+        <item>Vietnam</item>
+        <item>Wallis and Futuna</item>
+        <item>Western Sahara</item>
+        <item>Yemen</item>
+        <item>Yugoslavia</item>
+        <item>Zambia</item>
+        <item>Zimbabwe</item>
+    </string-array>
+    <string-array name="state_arrays">
+        <item>Alabama</item>
+        <item>Alaska</item>
+        <item>Arizona</item>
+        <item>Arkansas</item>
+        <item>California</item>
+        <item>Colorado</item>
+        <item>Conneticut</item>
+        <item>District of Columbia</item>
+        <item>Delaware</item>
+        <item>Florida</item>
+        <item>Georgia</item>
+        <item>Hawaii</item>
+        <item>Idaho</item>
+        <item>Illinois</item>
+        <item>Indiana</item>
+        <item>Iowa</item>
+        <item>Kansas</item>
+        <item>Kentucky</item>
+        <item>Louisiana</item>
+        <item>Maine</item>
+        <item>Maryland</item>
+        <item>Massachusetts</item>
+        <item>Michigan</item>
+        <item>Minnesota</item>
+        <item>Mississippi</item>
+        <item>Missouri</item>
+        <item>Montana</item>
+        <item>Nebraska</item>
+        <item>Nevada</item>
+        <item>New Hampshire</item>
+        <item>New Jersey</item>
+        <item>New Mexico</item>
+        <item>New York</item>
+        <item>North Carolina</item>
+        <item>North Dakota</item>
+        <item>Ohio</item>
+        <item>Oklahoma</item>
+        <item>Oregon</item>
+        <item>Pennsylvania</item>
+        <item>Puerto Rico</item>
+        <item>Rhode Island</item>
+        <item>South Carolina</item>
+        <item>South Dakota</item>
+        <item>Tennessee</item>
+        <item>Texas</item>
+        <item>Utah</item>
+        <item>Virginia</item>
+        <item>Virgin Islands</item>
+        <item>Vermont</item>
+        <item>Washington</item>
+        <item>West Virginia</item>
+        <item>Wisconsin</item>
+        <item>Wyoming</item>
+    </string-array>
+</resources>

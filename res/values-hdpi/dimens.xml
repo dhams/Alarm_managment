@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+					<!-- HDP -->
+<resources>
+	<style name="font_size">
+		    <item name="android:textSize">16dp</item>
+			</style>
+			
+			<style name="font_size_small">
+		    <item name="android:textSize">14dp</item>
+		    
+			</style>
+		
+			    <style name="font_size_medium">
+		    <item name="android:textSize">20dp</item>
+		</style>
+		
+		<style name="font_size_large">
+		    <item name="android:textSize">18dp</item>
+		</style>
+		<style name="image_width">
+		    <item name="android:layout_width">80dp</item>
+		</style>
+		<style name="image_height">
+		    <item name="android:layout_height">80dp</item>
+		</style>
+</resources>

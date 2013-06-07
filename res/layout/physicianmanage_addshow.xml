@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/mainPhyLayout" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:background="@color/main_bg_org"
+	android:orientation="vertical" android:weightSum="10">
+
+	<include android:id="@+id/headerlayout" android:layout_width="fill_parent"
+		android:layout_height="wrap_content" layout="@layout/header_title" />
+
+	<RelativeLayout android:id="@+id/prevnext"
+		android:layout_width="fill_parent" android:layout_height="wrap_content"
+		android:gravity="center">
+
+		<Button android:id="@+id/btnPrevPhy" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentLeft="true"
+			android:layout_margin="5dp" android:background="@drawable/button_previous" />
+
+		<Button android:id="@+id/btnNextPhy" android:layout_width="wrap_content"
+			android:layout_height="wrap_content" android:layout_alignParentRight="true"
+			android:layout_margin="5dp" android:background="@drawable/button_next" />
+	</RelativeLayout>
+
+	<ScrollView android:id="@+id/scrollView1"
+		android:layout_width="fill_parent" android:layout_height="0dp"
+		android:layout_weight="10">
+
+		<LinearLayout android:id="@+id/linearLayout4"
+			android:layout_width="fill_parent" android:layout_height="wrap_content"
+			android:orientation="vertical" android:padding="10dp">
+
+			<RelativeLayout android:id="@+id/linearLayout1"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_gravity="center" android:weightSum="3">
+
+				<ImageView android:id="@+id/imagePhy"
+					android:layout_width="80dp" android:layout_height="80dp"
+					android:layout_centerVertical="true" android:scaleType="fitXY"
+					android:layout_marginLeft="5dp" android:src="@drawable/add_photo">
+				</ImageView>
+
+				<LinearLayout android:id="@+id/linearLayout2"
+					android:layout_width="wrap_content" android:layout_height="fill_parent"
+					android:layout_toRightOf="@+id/imagePhy" android:layout_marginLeft="10dip"
+					android:orientation="vertical">
+
+					<TextView android:id="@+id/textviewTitle"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:text="@string/first_name" android:layout_marginLeft="5dp"
+						android:paddingLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold" />
+
+					<EditText android:id="@+id/etFName" android:singleLine="true"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:background="@drawable/input_field_2" android:hint="@string/first_name"
+						android:paddingLeft="5dp">
+					</EditText>
+
+					<TextView android:id="@+id/textviewTitle"
+						android:layout_width="fill_parent" android:layout_height="wrap_content"
+						android:text="@string/last_name" android:paddingLeft="5dp"
+						android:layout_marginLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold" />
+
+					<EditText android:id="@+id/etLName" android:layout_width="fill_parent"
+						android:layout_height="wrap_content" android:background="@drawable/input_field_2"
+						android:singleLine="true" android:hint="@string/last_name"
+						android:paddingLeft="5dp">
+					</EditText>
+				</LinearLayout>
+			</RelativeLayout>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="@string/address" android:paddingLeft="5dp"
+				android:textColor="@color/label_color"
+				android:textStyle="bold" />
+
+			<EditText android:id="@+id/etAddress" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_big_1"
+				android:gravity="top|left" android:hint="@string/address"
+				android:maxLines="5" android:paddingLeft="5dp" android:scrollbars="vertical"
+				android:singleLine="false">
+			</EditText>
+			
+			
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:text="@string/zip" android:textColor="@color/label_color"
+				android:paddingLeft="5dp" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etZip" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/zip" android:singleLine="true"
+				android:inputType="number" android:paddingLeft="5dp">
+			</EditText>
+
+			<EditText android:id="@+id/etCountry" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/country_prompt" android:paddingLeft="5dp"
+				android:singleLine="true" android:visibility="gone">
+			</EditText>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/country_prompt"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<AutoCompleteTextView android:id="@+id/autocomplete_country"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@drawable/input_field_1"
+				android:completionThreshold="1" android:hint="@string/country_prompt"
+				android:singleLine="true" android:paddingLeft="5dp" />
+
+			<!-- <Spinner -->
+			<!-- android:id="@+id/spCountryPhy" -->
+			<!-- android:layout_width="fill_parent" -->
+			<!-- android:layout_height="wrap_content" -->
+			<!-- android:background="@drawable/spinner_bg_1" -->
+			<!-- android:entries="@array/country_arrays" -->
+			<!-- android:paddingLeft="10dp" -->
+			<!-- android:prompt="@string/country_prompt" > -->
+			<!-- </Spinner> -->
+
+
+			<!-- <Spinner -->
+			<!-- android:id="@+id/spStateUSPhy" -->
+			<!-- android:layout_width="fill_parent" -->
+			<!-- android:layout_height="wrap_content" -->
+			<!-- android:background="@drawable/spinner_bg_1" -->
+			<!-- android:entries="@array/state_arrays" -->
+			<!-- android:paddingLeft="10dp" -->
+			<!-- android:prompt="@string/state_prompt" -->
+			<!-- android:visibility="gone" > -->
+			<!-- </Spinner> -->
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/state"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<AutoCompleteTextView android:id="@+id/autocomplete_state"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:background="@drawable/input_field_1"
+				android:completionThreshold="1" android:hint="@string/state"
+				android:paddingLeft="5dp" android:visibility="gone" />
+
+			<EditText android:id="@+id/etState" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/state" android:singleLine="true"
+				android:paddingLeft="5dp">
+			</EditText>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/city"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etCity" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/city" android:singleLine="true"
+				android:paddingLeft="5dp">
+			</EditText>
+
+			<RadioGroup android:id="@+id/radioGroup1"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:orientation="horizontal" android:weightSum="2">
+
+				<RadioButton android:id="@+id/rdMale"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_weight="1" android:checked="true" android:text="@string/male"
+					android:textColor="@color/black">
+				</RadioButton>
+
+				<RadioButton android:id="@+id/rdFemale"
+					android:layout_width="wrap_content" android:layout_height="wrap_content"
+					android:layout_weight="1" android:text="@string/female"
+					android:textColor="@color/black">
+				</RadioButton>
+			</RadioGroup>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/telephone"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etTel" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/telephone" android:inputType="number"
+				android:maxLines="1" android:maxLength="20" android:singleLine="true"
+				android:paddingLeft="5dp">
+			</EditText>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/mobile"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etMobile" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/mobile" android:inputType="number"
+				android:maxLines="1" android:maxLength="20" android:singleLine="true"
+				android:paddingLeft="5dp">
+			</EditText>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/mail"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etEmail" android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/mail" android:singleLine="true"
+				android:inputType="textEmailAddress" android:paddingLeft="5dp">
+			</EditText>
+
+			<TextView android:id="@+id/textView1" android:layout_width="wrap_content"
+				android:layout_height="wrap_content" android:text="@string/visiting_time"
+				android:paddingLeft="5dp" android:textColor="@color/label_color"
+				android:textStyle="bold" />
+
+			<LinearLayout android:id="@+id/llMonday"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_gravity="center"
+					android:text="@string/days" android:textColor="@color/label_color"
+					android:paddingLeft="5dp" android:layout_weight="0.3"
+					android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvMonday" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1.7"
+					android:gravity="center_vertical" android:hint="@string/days"
+					android:textSize="18sp" android:paddingLeft="10dp"
+					android:background="@drawable/spinner_bg" android:focusable="true"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llMondayTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:text="@string/from" android:textColor="@color/label_color"
+						android:paddingLeft="5dp" android:textStyle="bold"
+						android:layout_weight="0.7">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromMonday"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:paddingLeft="10dp" android:layout_weight="1.3"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:textStyle="bold" android:paddingLeft="10dp"
+						android:layout_weight="0.7">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToMonday"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:paddingLeft="10dp" android:layout_weight="1.3"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llTuesday"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingTop="5dp" android:visibility="gone"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvTuesday" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1.7"
+					android:background="@drawable/spinner_bg" android:focusable="true"
+					android:textSize="18sp" android:gravity="center_vertical"
+					android:paddingLeft="10dp" android:text="@string/tues"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llTuesdayTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:text="@string/from" android:textColor="@color/label_color"
+						android:textStyle="bold" android:paddingLeft="5dp"
+						android:layout_weight="0.7">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromTuesday"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:paddingLeft="10dp" android:layout_weight="1.3"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:layout_weight="0.7" android:paddingLeft="10dp"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToTuesday"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:paddingLeft="10dp" android:layout_weight="1.3"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llWed"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:paddingTop="5dp"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvWednesday"
+					android:layout_width="0dp" android:layout_height="wrap_content"
+					android:layout_weight="1.7" android:background="@drawable/spinner_bg"
+					android:focusable="true" android:textSize="18sp" android:gravity="center_vertical"
+					android:paddingLeft="10dp" android:text="@string/wed"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llWedTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:text="@string/from" android:paddingLeft="5dp"
+						android:textColor="@color/label_color" android:layout_weight="0.7"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromWed"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:paddingLeft="10dp" android:layout_weight="1.3"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:text="@string/to"
+						android:textColor="@color/label_color" android:paddingLeft="10dp"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToWed"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llThur"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:paddingTop="5dp"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvThursday"
+					android:layout_width="0dp" android:layout_height="wrap_content"
+					android:layout_weight="1.7" android:background="@drawable/spinner_bg"
+					android:focusable="true" android:textSize="18sp" android:gravity="center_vertical"
+					android:paddingLeft="10dp" android:text="@string/thurs"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llThursTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:text="@string/from"
+						android:paddingLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromThurs"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:paddingLeft="10dp"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToThurs"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llFri"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:paddingTop="5dp"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvFriday" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1.7"
+					android:background="@drawable/spinner_bg" android:focusable="true"
+					android:textSize="18sp" android:gravity="center_vertical"
+					android:paddingLeft="10dp" android:text="@string/fri"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llFriTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:text="@string/from"
+						android:paddingLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromFri"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:paddingLeft="10dp"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToFri"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llSat"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:paddingTop="5dp"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvSaturday"
+					android:layout_width="0dp" android:layout_height="wrap_content"
+					android:layout_weight="1.7" android:background="@drawable/spinner_bg"
+					android:focusable="true" android:textSize="18sp" android:gravity="center_vertical"
+					android:paddingLeft="10dp" android:text="@string/sat"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llSatTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:text="@string/from"
+						android:paddingLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromSat"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:paddingLeft="10dp"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToSat"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llSun"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:paddingTop="5dp"
+				android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<TextView android:id="@+id/tvSunday" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1.7"
+					android:background="@drawable/spinner_bg" android:focusable="true"
+					android:textSize="18sp" android:gravity="center_vertical"
+					android:paddingLeft="10dp" android:text="@string/sun"
+					android:textColor="#000000">
+				</TextView>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/llSunTime"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:text="@string/from"
+						android:paddingLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFromSun"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:paddingLeft="10dp"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeToSun"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="1.3" android:background="@drawable/spinner_bg"
+						android:entries="@array/Time_arrays" android:paddingLeft="10dp"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<LinearLayout android:layout_width="fill_parent"
+				android:layout_height="wrap_content" android:visibility="gone"
+				android:paddingTop="5dp" android:weightSum="2">
+
+				<TextView android:id="@+id/textView2" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="0.3"
+					android:text="@string/days" android:paddingLeft="5dp"
+					android:textColor="@color/label_color" android:textStyle="bold">
+				</TextView>
+
+				<Spinner android:id="@+id/spDay" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1.7"
+					android:layout_marginLeft="10dp" android:background="@drawable/spinner_bg"
+					android:focusable="true" android:entries="@array/visiting_arrays"
+					android:paddingLeft="10dp" android:prompt="@string/visiting_prompt">
+				</Spinner>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/linearLayout2"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:visibility="gone" android:weightSum="2">
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.7" android:text="@string/from"
+						android:paddingLeft="5dp" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeFrom" android:layout_width="0dp"
+						android:layout_height="wrap_content" android:layout_weight="1.3"
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:prompt="@string/time_from_prompt">
+					</Spinner>
+				</LinearLayout>
+
+				<LinearLayout android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:weightSum="2">
+
+					<TextView android:id="@+id/textView2"
+						android:layout_width="0dp" android:layout_height="wrap_content"
+						android:layout_weight="0.3" android:paddingLeft="10dp"
+						android:text="@string/to" android:textColor="@color/label_color"
+						android:textStyle="bold">
+					</TextView>
+
+					<Spinner android:id="@+id/spTimeTo" android:layout_width="0dp"
+						android:layout_height="wrap_content" android:layout_weight="1."
+						android:background="@drawable/spinner_bg" android:entries="@array/Time_arrays"
+						android:prompt="@string/time_to_prompt">
+					</Spinner>
+				</LinearLayout>
+			</LinearLayout>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/note"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etNote1" android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/note" android:maxLines="3"
+				android:paddingLeft="5dp">
+			</EditText>
+
+			<TextView android:id="@+id/textviewTitle"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:paddingLeft="5dp" android:text="@string/note"
+				android:textColor="@color/label_color" android:textStyle="bold" />
+
+			<EditText android:id="@+id/etNote2" android:layout_width="match_parent"
+				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
+				android:hint="@string/note" android:maxLines="3"
+				android:paddingLeft="5dp">
+			</EditText>
+
+			<LinearLayout android:id="@+id/btnForAdd"
+				android:layout_width="fill_parent" android:layout_height="0dp"
+				android:layout_marginBottom="10dp" android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp" android:layout_weight="1"
+				android:gravity="center_horizontal" android:visibility="gone">
+
+				<Button android:id="@+id/btnCanPhy" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:background="@drawable/button_big_bg"
+					android:text="@string/cancel" style="@style/font_size_small">
+				</Button>
+
+				<Button android:id="@+id/btnAddPhy" android:layout_width="wrap_content"
+					android:layout_height="wrap_content" android:background="@drawable/button_big_bg"
+					android:text="@string/add_phy" style="@style/font_size_small">
+				</Button>
+			</LinearLayout>
+
+			<LinearLayout android:id="@+id/btnForShow"
+				android:layout_width="fill_parent" android:layout_height="0dp"
+				android:layout_marginBottom="10dp" android:layout_marginLeft="10dp"
+				android:layout_marginRight="10dp" android:layout_weight="9"
+				android:gravity="center_horizontal" android:visibility="gone"
+				android:weightSum="3">
+
+				<Button android:id="@+id/btnDelPhy" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:background="@drawable/red_button_bg1" android:text="@string/delete"
+					android:textColor="@color/black" style="@style/font_size_small">
+				</Button>
+
+				<Button android:id="@+id/btnBkPhy" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:background="@drawable/button_big_bg" android:text="@string/back"
+					style="@style/font_size_small">
+				</Button>
+
+				<Button android:id="@+id/btnUpPhy" android:layout_width="0dp"
+					android:layout_height="wrap_content" android:layout_weight="1"
+					android:background="@drawable/button_big_bg" android:text="@string/update"
+					style="@style/font_size_small">
+				</Button>
+			</LinearLayout>
+		</LinearLayout>
+	</ScrollView>
+
+
+
+</LinearLayout>
