@@ -12,7 +12,7 @@
         android:id="@+id/text_values"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-       	android:layout_weight="0.9"
+       	android:layout_weight="0.8"
        	android:layout_gravity="center_vertical"
         android:text="Coderz"
         android:textColor="@color/black"
@@ -20,8 +20,9 @@
        />
 
     <ImageView
+        android:layout_weight="0.2"
         android:id="@+id/image_sound"
-        android:layout_width="42dip"
+        android:layout_width="0dip"
         android:layout_height="42dip"
         android:layout_gravity="center"
         android:scaleType="centerCrop"

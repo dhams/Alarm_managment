@@ -130,7 +130,7 @@
     <string name="stop_alarm_prompt">Stop alarm</string>
     <string name="interval_time_prompt">Interval time</string>
     <string name="interval_days_prompt">Days interval</string>
-    <string name="medicine_for_each_time_prompt">How many time in a day?</string>
+    <string name="medicine_for_each_time_prompt">How many time in a day?*</string>
     <string name="dosage_mesurement_prompt">Dosage measurement</string>
     <string name="How_many_prompt">How many times in day?</string>
     <string name="schedule_prompt">Schedule within interval chosen</string>

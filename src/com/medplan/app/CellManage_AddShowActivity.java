@@ -69,7 +69,7 @@ public class CellManage_AddShowActivity extends Activity implements
 	ImageView imgUser;
 	EditText etDesc;
 	
-	Button btnAdd, btnCancel, btnDelete, btnBack, btnUpdate;
+	Button btnAdd, btnCancel, btnDelete, btnBack, btnUpdate; 
 	CheckBox cbMini, cbBlink, cbAlert, cbVibrant;
 	Spinner spMed, spBG, spSound, spBuzzRepeat, spAlarm, spWayToStop,
 			spConfirmMed, spScheduleInterval, spIntervalDay,
@@ -767,18 +767,16 @@ public class CellManage_AddShowActivity extends Activity implements
 				} else {
 					ImageView image = (ImageView) findViewById(R.id.image_sound);
 					image.setVisibility(View.GONE);
-
 				}
-
 				mSoundManager.stopSound();
 
 			}
 
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
-				// TODO Auto-generated method stub
 				mSoundManager.stopSound();
 			}
+			
 		});
 
 		spIntervalDay.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -879,6 +877,92 @@ public class CellManage_AddShowActivity extends Activity implements
 			addButton.setVisibility(View.GONE);
 			fillIsTheForm();
 		}
+	}
+	
+	private boolean validateDate(){
+		
+		Calendar calendar = Calendar.getInstance();
+		String time = "";
+		mLength = spHow_many.getSelectedItemPosition();
+		
+		if (mLength==0){
+			Toast.makeText(CellManage_AddShowActivity.this,
+					getResources().getString(R.string.set_alarm_time),
+					Toast.LENGTH_SHORT).show();
+			return false ;
+		}
+		
+		for (int i = 1; i < mLength; i++) {
+			switch (i) {
+			case 1:
+				time = tvtime1.getText().toString();
+
+				break;
+			case 2:
+				time = tvtime2.getText().toString();
+				break;
+			case 3:
+				time = tvtime3.getText().toString();
+				break;
+			case 4:
+				time = tvtime4.getText().toString();
+				break;
+			case 5:
+				time = tvtime5.getText().toString();
+				break;
+			case 6:
+				time = tvtime6.getText().toString();
+				break;
+			case 7:
+				time = tvtime7.getText().toString();
+				break;
+			case 8:
+				time = tvtime8.getText().toString();
+				break;
+			case 9:
+				time = tvtime9.getText().toString();
+				break;
+			}
+
+			if (time.equalsIgnoreCase("")) {
+				Toast.makeText(CellManage_AddShowActivity.this,
+						getResources().getString(R.string.set_alarm_time),
+						Toast.LENGTH_SHORT).show();
+				return false ;
+			}
+
+				
+			
+        	String timeArry[] = time.split(":") ;
+        	String dateArry [] =  tvIdate.getText().toString().split("/") ;
+        	
+        	int year  = Integer.parseInt(dateArry[2]) ;
+        	int month  = Integer.parseInt(dateArry[1])-1 ;
+            int date  = Integer.parseInt(dateArry[0]) ; 
+            
+            int hour   = Integer.parseInt(timeArry[0]) ;
+            int minute  =Integer.parseInt(timeArry[1]) ;
+	 
+            	calendar.set(Calendar.YEAR, year) ;
+            	calendar.set(Calendar.MONTH, month) ;
+            	calendar.set(Calendar.DATE, date) ;
+            	
+            	calendar.set(Calendar.HOUR_OF_DAY, hour) ;
+            	calendar.set(Calendar.MINUTE,minute) ;
+            	calendar.set(Calendar.SECOND,0) ;
+            	
+            	  Calendar calendar2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+		            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
+		            	
+		            {
+		            	Toast.makeText(CellManage_AddShowActivity.this,
+								"Select  upcoming time ", Toast.LENGTH_LONG).show();
+		            	
+		            	return  false;
+		            }
+
+		}
+		return true;
 	}
 
 	public void fillIsTheForm() {
@@ -1366,6 +1450,15 @@ public class CellManage_AddShowActivity extends Activity implements
             	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
             	calendar.set(Calendar.SECOND,0) ;
 				
+	            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
+	            	
+	            {
+	            	Toast.makeText(CellManage_AddShowActivity.this,
+							"Select  upcoming time ", Toast.LENGTH_LONG).show();
+	            	
+	            	return  ;
+	            }
+	            
 				PendingIntent pendingIntent ;
 				if (spIntervalDay.getSelectedItemPosition() != 4) {
 					
@@ -1522,7 +1615,11 @@ public class CellManage_AddShowActivity extends Activity implements
 				return ; 
 			}
 			
-			counter = db.getLastNotificationId() ;
+			
+			if (validateDate()==false){
+				return ; 
+			}
+ 			counter = db.getLastNotificationId() ;
 			// db.deleteNotification(userid, boxid, cellid, loginid);
 			AlarmManager alarmanager = (AlarmManager) getSystemService(ALARM_SERVICE);
 			Intent myntent = null; 

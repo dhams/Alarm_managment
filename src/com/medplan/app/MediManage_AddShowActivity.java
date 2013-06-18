@@ -6,12 +6,14 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix.ScaleToFit;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,11 +21,12 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,7 +37,6 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.medpan.util.Constant;
 import com.medpan.util.GlobalMethods;
@@ -75,7 +77,9 @@ public class MediManage_AddShowActivity extends Activity implements
 	AlertDialog.Builder alertDialog,ad1,ad2;
 	boolean flagCamera;
 	int userid;
-
+	private static final int CAMERA_IMAGE_CAPTURE = 0;
+	private  Uri imageCaptureUri  ,unknowndeviceUri; 
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -479,20 +483,19 @@ public class MediManage_AddShowActivity extends Activity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-			if (requestCode == 1212) {
-			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-			Bitmap bitmap;
-			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(_path, 80, 80);
-			bitmap=GlobalMethods.decodeFile(_path);
-			if (bitmap == null) {
-				imgMed.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
-			} 
-			else {
-				imgMed.setImageBitmap(bitmap);
-				imgMed.setScaleType(ScaleType.FIT_XY);
-				flagCamera=true;
-			}
-		}
+//			if (requestCode == 1212) {
+//			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+//			Bitmap bitmap;
+//			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(_path, 80, 80);
+//			bitmap=GlobalMethods.decodeFile(_path);
+//			if (bitmap == null) {
+//				imgMed.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
+//			} 
+//			else {
+//				imgMed.setImageBitmap(bitmap);
+//				flagCamera=true;
+//			}
+//		}
 		if (requestCode == 111) { 
 			picid = data.getIntExtra("pid", 0);
 			Picture_Model picmodel = db.getPicture(picid);
@@ -506,37 +509,118 @@ public class MediManage_AddShowActivity extends Activity implements
 			}
 			 _path=picmodel.path;
 		}
-	}
-	public void Shot_Camera(){
-		try {
-//			Calendar cal = Calendar.getInstance();
-//			_path = Environment.getExternalStorageDirectory() + File.separator
-//					+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
+		
+		if(requestCode==CAMERA_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK){
+			_path	= getThubnailFilePath() ;
+			Bitmap bitmap = GlobalMethods.decodeFile(_path);
 			
-			String parentdir;
-			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
-			File parentDirFile = new File(parentdir);
-			parentDirFile.mkdirs();
-
-			// If we can't write to that special path, try just writing
-			// directly to the sdcard
-			if (!parentDirFile.isDirectory()) {
-			parentdir = Environment.getExternalStorageDirectory()+"";
+			if (bitmap == null) {
+				imgMed.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
+			} else {
+				imgMed.setImageBitmap(bitmap);
 			}
-	                Calendar cal = Calendar.getInstance();
-	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
-	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
-	                _path=filepath;
-			File file = new File(_path);
-			Uri outputFileUri = Uri.fromFile(file);
-			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-			startActivityForResult(intent, 1212);	
-			flagCamera=true;
+		}
+	
+		
+	}
+	
+	/**
+	 * Get the path of captured  image by camera 
+	 * @return
+	 */
+	private String getThubnailFilePath() {
+
+		String thumbnailPath = "";
+
+		try {
+			String[] projection = {
+					MediaStore.Images.Thumbnails._ID, // The columns we want
+					MediaStore.Images.Thumbnails.IMAGE_ID,
+					MediaStore.Images.Thumbnails.KIND,
+					MediaStore.Images.Thumbnails.DATA };
+			String selection = MediaStore.Images.Thumbnails.KIND + "=" + // Select
+																			// only
+																			// mini's
+					MediaStore.Images.Thumbnails.MINI_KIND;
+
+			String sort = MediaStore.Images.Thumbnails._ID + " DESC";
+
+			Cursor myCursor = this.managedQuery(
+					MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+					projection, selection, null, sort);
+
+			myCursor.moveToFirst();
+			thumbnailPath = myCursor.getString(myCursor
+					.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
+
+			unknowndeviceUri = Uri.fromFile(new File(thumbnailPath));
+			imageCaptureUri = null;
 		} catch (Exception e) {
+			unknowndeviceUri = null;
 			e.printStackTrace();
 		}
 		
+		if (unknowndeviceUri != null)
+			return unknowndeviceUri.getPath();
+		else
+			return imageCaptureUri.getPath();
+	}
+	
+	
+	public void Shot_Camera(){
+//		try {
+////			Calendar cal = Calendar.getInstance();
+////			_path = Environment.getExternalStorageDirectory() + File.separator
+////					+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
+//			
+//			String parentdir;
+//			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
+//			File parentDirFile = new File(parentdir);
+//			parentDirFile.mkdirs();
+//
+//			// If we can't write to that special path, try just writing
+//			// directly to the sdcard
+//			if (!parentDirFile.isDirectory()) {
+//			parentdir = Environment.getExternalStorageDirectory()+"";
+//			}
+//	                Calendar cal = Calendar.getInstance();
+//	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
+//	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
+//	                _path=filepath;
+//			File file = new File(_path);
+//			Uri outputFileUri = Uri.fromFile(file);
+//			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//			startActivityForResult(intent, 1212);	
+//			flagCamera=true;
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
+		String storageState = Environment.getExternalStorageState();
+		if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+			String filename = System.currentTimeMillis() + ".jpg";
+			ContentValues values = new ContentValues();
+			values.put(MediaStore.Images.Media.TITLE, filename);
+			imageCaptureUri = getContentResolver().insert(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+			intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					imageCaptureUri);
+			try {
+				startActivityForResult(intent, CAMERA_IMAGE_CAPTURE);
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
+			}
+		} else {
+			new AlertDialog.Builder(MediManage_AddShowActivity.this)
+					.setMessage(
+							"External Storeage (SD Card) is required.\n\nCurrent state: "
+									+ storageState).setCancelable(true)
+					.create().show();
+		}
 	}
 	
 	@Override

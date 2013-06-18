@@ -77,8 +77,8 @@ public class AlarmManage_AddShowActivity extends Activity implements
 		spBG.setAdapter(bb);
 		ArrayAdapter cc = new ArrayAdapter(this,
 				android.R.layout.simple_spinner_item, items3);
-		cc
-				.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		
+		cc.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spSound.setAdapter(cc);
 
 		if (doWhat.equalsIgnoreCase("show")) {

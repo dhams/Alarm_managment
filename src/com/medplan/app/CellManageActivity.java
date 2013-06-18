@@ -105,7 +105,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 		tvUName = (TextView) findViewById(R.id.tvUName);
 		// tvAlarm = (TextView) findViewById(R.id.tvAlarm);
 		ivBox = (ImageView) findViewById(R.id.ivCell);
-		
+		 
 //		rlCell = (RelativeLayout) findViewById(R.id.rlCell);
 		// rlAlarm = (RelativeLayout) findViewById(R.id.rlAlarm);
 		//
@@ -200,6 +200,8 @@ public class CellManageActivity extends Activity implements OnClickListener {
 				activate.setBackgroundResource(R.drawable.button_activate);
 			}
 			
+			
+			//
 			if(box_pos==3){
 				count=0;
 			}
@@ -765,8 +767,6 @@ public class CellManageActivity extends Activity implements OnClickListener {
     		super.onPreExecute();
     	}
     	
-    	
-    	
 		@Override
 		protected Void doInBackground(Integer... params) {
 			
@@ -884,7 +884,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 				
 				long repeat = 0 ;
 				String interval  ;
-				
+				 
 				Calendar calendar = null ;
 				calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
 				Calendar calendar2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
@@ -949,13 +949,13 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			            	
 				            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis())){
 				            	
-//					            calendar.clear() ;
-//				                calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)) ;
-//				                calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)) ;
-//				                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
-//				             	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
-//				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-//				            	calendar.set(Calendar.SECOND,0) ;
+					            calendar.clear() ;
+				                calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+1) ;
+				                calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)) ;
+				                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
+				             	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
+				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
+				            	calendar.set(Calendar.SECOND,0) ;
 			            }
 			         }
 			            else if (interval.equalsIgnoreCase("weekly")){

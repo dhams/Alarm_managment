@@ -62,8 +62,6 @@ public class SoundAdapter extends ArrayAdapter<String>{
 			holder.textValue=(TextView)vi.findViewById(R.id.text_values);
 			holder.imageSearch=(ImageView)vi.findViewById(R.id.image_sound);
 			vi.setTag(holder);
-			
-			
 		}
 		else{
 			holder = (ViewHolder) vi.getTag();
@@ -80,6 +78,8 @@ public class SoundAdapter extends ArrayAdapter<String>{
 					System.out.println("sound clicked");
 					
 					pos=(Integer) v.getTag();
+					
+					mSoundManager.stopSound();
 					mSoundManager.playSound(pos);
 				}
 			});

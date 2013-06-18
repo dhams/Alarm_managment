@@ -6,8 +6,6 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
-
-
 public class SoundManager {
 	
 	private  SoundPool mSoundPool; 
@@ -38,7 +36,7 @@ public class SoundManager {
 	public void playSound(int index) { 
 		try{
 	     int streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); 
-	      mSoundPool.play(mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f); 
+	     mSoundPool.play(mSoundPoolMap.get(index), 1, 1, 1, 0, 1f); 
 	      lastIndex = index;
 		}catch (Exception e) {
 			
