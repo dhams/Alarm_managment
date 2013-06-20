@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -331,6 +332,12 @@ public class CellManage_AddShowActivity extends Activity implements
 
 	}
 
+	@Override
+	public void onBackPressed() {
+		
+		mSoundManager.stopSound();
+		super.onBackPressed();
+	}
 	@Override
 	protected Dialog onCreateDialog(int id) {
 		switch (id) {
@@ -756,6 +763,7 @@ public class CellManage_AddShowActivity extends Activity implements
 				.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		spSound.setAdapter(soundAdapter);
 
+		
 		spSound.setOnItemSelectedListener(new OnItemSelectedListener() {
 
 			@Override
@@ -879,7 +887,19 @@ public class CellManage_AddShowActivity extends Activity implements
 		}
 	}
 	
+//	
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent event) {
+//		
+//		switch (keyCode) {
+//		case KeyEvent.KEYCODE_BACK:
+//			
+//			return true ; 
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
 	private boolean validateDate(){
+		boolean flage  =true ;
 		
 		Calendar calendar = Calendar.getInstance();
 		String time = "";
@@ -889,10 +909,11 @@ public class CellManage_AddShowActivity extends Activity implements
 			Toast.makeText(CellManage_AddShowActivity.this,
 					getResources().getString(R.string.set_alarm_time),
 					Toast.LENGTH_SHORT).show();
-			return false ;
+			flage=false ;
+			return flage;
 		}
 		
-		for (int i = 1; i < mLength; i++) {
+		for (int i = 1; i <= mLength; i++) {
 			switch (i) {
 			case 1:
 				time = tvtime1.getText().toString();
@@ -928,7 +949,8 @@ public class CellManage_AddShowActivity extends Activity implements
 				Toast.makeText(CellManage_AddShowActivity.this,
 						getResources().getString(R.string.set_alarm_time),
 						Toast.LENGTH_SHORT).show();
-				return false ;
+				flage= false ;
+				break  ;
 			}
 
 				
@@ -957,12 +979,13 @@ public class CellManage_AddShowActivity extends Activity implements
 		            {
 		            	Toast.makeText(CellManage_AddShowActivity.this,
 								"Select  upcoming time ", Toast.LENGTH_LONG).show();
-		            	
-		            	return  false;
+		            	flage=false ;
+		            	break  ;
 		            }
-
+		            if (flage==false)
+		            	break  ;
 		}
-		return true;
+		return flage;
 	}
 
 	public void fillIsTheForm() {
@@ -1260,7 +1283,7 @@ public class CellManage_AddShowActivity extends Activity implements
 
 			break;
 		case R.id.btnAddForm:
-			if (tvMed.getText().toString().equalsIgnoreCase("")) {         
+			if (tvMed.getText().toString().equalsIgnoreCase("")|| tvIdate.getText().toString().equalsIgnoreCase("")) {         
 				Toast.makeText(CellManage_AddShowActivity.this,
 						getResources().getString(R.string.enter_med_mgt),
 						Toast.LENGTH_SHORT).show();
@@ -1273,7 +1296,7 @@ public class CellManage_AddShowActivity extends Activity implements
 			
 			//TODO Need to uncomment it 
 			
-			if (spBG.getSelectedItemPosition()==0 || spSound.getSelectedItemPosition()==0||spSound.getSelectedItemPosition()==0){
+			if (spBG.getSelectedItemPosition()==0 || spSound.getSelectedItemPosition()==0||spDosageMgt.getSelectedItemPosition()==0){
 				Toast.makeText(CellManage_AddShowActivity.this,
 						"Please enter required fields ",
 						Toast.LENGTH_SHORT).show(); 
@@ -1357,7 +1380,7 @@ public class CellManage_AddShowActivity extends Activity implements
 			myIntent.putExtra("WayToStop", intWay);
 			myIntent.putExtra("Med", MedName);
 			myIntent.putExtra("Description", strDesc);
-			myIntent.putExtra("Sound", intSound);
+			myIntent.putExtra("Sound", intSound-1);
 			myIntent.putExtra("FromWhereActivity","Heaven" ); 
 
    
@@ -1608,35 +1631,108 @@ public class CellManage_AddShowActivity extends Activity implements
 				return;	
 			}
 			
-			if (spBG.getSelectedItemPosition()==0 || spSound.getSelectedItemPosition()==0||spSound.getSelectedItemPosition()==0){
+			if (spBG.getSelectedItemPosition()==0 || spSound.getSelectedItemPosition()==0||spDosageMgt.getSelectedItemPosition()==0){
 				Toast.makeText(CellManage_AddShowActivity.this,
 						"Please enter required fields ",
 						Toast.LENGTH_SHORT).show(); 
 				return ; 
 			}
 			
-			
-			if (validateDate()==false){
-				return ; 
+			boolean isDateValid  = validateDate() ;
+			Log.e("Date Valid ?", ""+isDateValid) ;
+			if (isDateValid==false){
+				break ;
 			}
- 			counter = db.getLastNotificationId() ;
-			// db.deleteNotification(userid, boxid, cellid, loginid);
-			AlarmManager alarmanager = (AlarmManager) getSystemService(ALARM_SERVICE);
-			Intent myntent = null; 
-//			db.updateNotifcationDead(userid, boxid, cellid, loginid);
-			ArrayList<Integer> arrIds = db.getDeadIds(userid, boxid, cellid,loginid);
+			else{
 			
-//			myntent = new Intent(CellManage_AddShowActivity.this,
-//					BoxThreeActivity.class);
-  
-			
-			Log.i("User Id : Cell Add ", "" + loginid);
+	 			counter = db.getLastNotificationId() ;
+				// db.deleteNotification(userid, boxid, cellid, loginid);
+				AlarmManager alarmanager = (AlarmManager) getSystemService(ALARM_SERVICE);
+				Intent myntent = null; 
+//				db.updateNotifcationDead(userid, boxid, cellid, loginid);
+				ArrayList<Integer> arrIds = db.getDeadIds(userid, boxid, cellid,loginid);
+				
+//				myntent = new Intent(CellManage_AddShowActivity.this,
+//						BoxThreeActivity.class);
+	  
+				
+				Log.i("User Id : Cell Add ", "" + loginid);
 
-			
-           //Deactivate all previous alarm
-			
-			PendingIntent pendingIntent ;
-			for (int i = 0; i < arrIds.size(); i++) {
+				
+	           //Deactivate all previous alarm
+				
+				PendingIntent pendingIntent ;
+				for (int i = 0; i < arrIds.size(); i++) {
+
+					switch (boxid) {
+					case 3:
+						myntent = new Intent(CellManage_AddShowActivity.this,
+								BoxThreeActivity.class);
+						break;
+					case 4:
+						myntent = new Intent(CellManage_AddShowActivity.this,
+								BoxFourActivity.class);
+						break;
+
+					case 6:	
+						myntent = new Intent(CellManage_AddShowActivity.this	,
+								BoxSixActivity.class);
+						break;
+
+					case 8:	
+						myntent = new Intent(CellManage_AddShowActivity.this,
+								BoxEightActivity.class);
+						break;
+
+					case 10:
+						myntent = new Intent(CellManage_AddShowActivity.this,
+								BoxTenActivity.class);
+						break;
+
+					}
+					
+					Log.i("Alarm Removed", ".......Alarm Removed............ " + arrIds.get(i));
+//					myntent.setData(Uri.parse("custom://" + arrIds.get(i)));
+//					myntent.setAction(String.valueOf(arrIds.get(i)));
+					
+		            pendingIntent = PendingIntent.getActivity(
+							CellManage_AddShowActivity.this, arrIds.get(i),
+							myntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+					alarmanager.cancel(pendingIntent);
+					pendingIntent.cancel();
+
+				}
+				
+			    System.out.println("while selection~~~~~~~~~~~" + strDesc);
+
+				Log.i("",
+						"userid, boxid, cellid, medid, picid,loginid,WayToStop,Med,Description,Sound == "
+								+ userid
+								+ " "
+								+ boxid
+								+ " "
+								+ cellid
+								+ " "
+								+ medid
+								+ " "
+								+ picid
+								+ " "
+								+ loginid
+								+ " "
+								+ intWay
+								+ " "
+								+ MedName + " " + strDesc + " " + intSound);
+
+//				ArrayList<Notification_Model> arr2 = db.getCellNotification();
+//				totalCounter = arr2.size();
+//				totalCounter = SP.getInt("totalCounter", 0) ;
+				
+//			    myntent.setData(Uri.parse("custom://" + totalCounter));
+//			    myntent.setAction(String.valueOf(totalCounter))
+//			    ;
+//				Log.d("Total couter", "----- " + totalCounter);
+				// totalCounter =10;
 
 				switch (boxid) {
 				case 3:
@@ -1649,11 +1745,11 @@ public class CellManage_AddShowActivity extends Activity implements
 					break;
 
 				case 6:	
-					myntent = new Intent(CellManage_AddShowActivity.this	,
+					myntent = new Intent(CellManage_AddShowActivity.this,
 							BoxSixActivity.class);
 					break;
 
-				case 8:	
+				case 8:
 					myntent = new Intent(CellManage_AddShowActivity.this,
 							BoxEightActivity.class);
 					break;
@@ -1665,294 +1761,226 @@ public class CellManage_AddShowActivity extends Activity implements
 
 				}
 				
-				Log.i("Alarm Removed", ".......Alarm Removed............ " + arrIds.get(i));
-//				myntent.setData(Uri.parse("custom://" + arrIds.get(i)));
-//				myntent.setAction(String.valueOf(arrIds.get(i)));
 				
-	            pendingIntent = PendingIntent.getActivity(
-						CellManage_AddShowActivity.this, arrIds.get(i),
-						myntent, PendingIntent.FLAG_UPDATE_CURRENT);
+				Calendar calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
 
-				alarmanager.cancel(pendingIntent);
-				pendingIntent.cancel();
+				for (int i = 1; i <= mLength; i++) {
+					
+					counter++  ;
+					
+					myntent.putExtra("BoxID", boxid);
+					myntent.putExtra("UserID", userid);
+					myntent.putExtra("LoginID", loginid);
+					myntent.putExtra("CellID", cellid);
+					myntent.putExtra("WayToStop", intWay);
+					myntent.putExtra("Med", MedName);
 
-			}
-			
-		    System.out.println("while selection~~~~~~~~~~~" + strDesc);
+					myntent.putExtra("Description", strDesc);
+					myntent.putExtra("Sound", intSound-1);
+				    myntent.putExtra("FromWhereActivity","Heaven" ); 
+					
+				    
+					String time = "";
+					switch (i) {
+					case 1:
+						time = tvtime1.getText().toString();
 
-			Log.i("",
-					"userid, boxid, cellid, medid, picid,loginid,WayToStop,Med,Description,Sound == "
-							+ userid
-							+ " "
-							+ boxid
-							+ " "
-							+ cellid
-							+ " "
-							+ medid
-							+ " "
-							+ picid
-							+ " "
-							+ loginid
-							+ " "
-							+ intWay
-							+ " "
-							+ MedName + " " + strDesc + " " + intSound);
+						break;
+					case 2:
+						time = tvtime2.getText().toString();
+						break;
+					case 3:
+						time = tvtime3.getText().toString();
+						break;
+					case 4:
+						time = tvtime4.getText().toString();
+						break;
+					case 5:
+						time = tvtime5.getText().toString();
+						break;
+					case 6:
+						time = tvtime6.getText().toString();
+						break;
+					case 7:
+						time = tvtime7.getText().toString();
+						break;
+					case 8:
+						time = tvtime8.getText().toString();
+						break;
+					case 9:
+						time = tvtime9.getText().toString();
+						break;
+					}
 
-//			ArrayList<Notification_Model> arr2 = db.getCellNotification();
-//			totalCounter = arr2.size();
-//			totalCounter = SP.getInt("totalCounter", 0) ;
-			
-//		    myntent.setData(Uri.parse("custom://" + totalCounter));
-//		    myntent.setAction(String.valueOf(totalCounter))
-//		    ;
-//			Log.d("Total couter", "----- " + totalCounter);
-			// totalCounter =10;
+					if (time.equalsIgnoreCase("")) {
+						Toast.makeText(CellManage_AddShowActivity.this,
+								getResources().getString(R.string.set_alarm_time),
+								Toast.LENGTH_SHORT).show();
+						return;
+					}
 
-			switch (boxid) {
-			case 3:
-				myntent = new Intent(CellManage_AddShowActivity.this,
-						BoxThreeActivity.class);
-				break;
-			case 4:
-				myntent = new Intent(CellManage_AddShowActivity.this,
-						BoxFourActivity.class);
-				break;
+					Log.i("i time", i + " " + time); 
 
-			case 6:	
-				myntent = new Intent(CellManage_AddShowActivity.this,
-						BoxSixActivity.class);
-				break;
+					long tostarttimer = diff(time);
 
-			case 8:
-				myntent = new Intent(CellManage_AddShowActivity.this,
-						BoxEightActivity.class);
-				break;
-
-			case 10:
-				myntent = new Intent(CellManage_AddShowActivity.this,
-						BoxTenActivity.class);
-				break;
-
-			}
-			
-			
-			Calendar calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-
-			for (int i = 1; i <= mLength; i++) {
-				
-				counter++  ;
-				
-				myntent.putExtra("BoxID", boxid);
-				myntent.putExtra("UserID", userid);
-				myntent.putExtra("LoginID", loginid);
-				myntent.putExtra("CellID", cellid);
-				myntent.putExtra("WayToStop", intWay);
-				myntent.putExtra("Med", MedName);
-
-				myntent.putExtra("Description", strDesc);
-				myntent.putExtra("Sound", intSound);
-			    myntent.putExtra("FromWhereActivity","Heaven" ); 
-				
-			    
-				String time = "";
-				switch (i) {
-				case 1:
-					time = tvtime1.getText().toString();
-
-					break;
-				case 2:
-					time = tvtime2.getText().toString();
-					break;
-				case 3:
-					time = tvtime3.getText().toString();
-					break;
-				case 4:
-					time = tvtime4.getText().toString();
-					break;
-				case 5:
-					time = tvtime5.getText().toString();
-					break;
-				case 6:
-					time = tvtime6.getText().toString();
-					break;
-				case 7:
-					time = tvtime7.getText().toString();
-					break;
-				case 8:
-					time = tvtime8.getText().toString();
-					break;
-				case 9:
-					time = tvtime9.getText().toString();
-					break;
-				}
-
-				if (time.equalsIgnoreCase("")) {
-					Toast.makeText(CellManage_AddShowActivity.this,
-							getResources().getString(R.string.set_alarm_time),
-							Toast.LENGTH_SHORT).show();
-					return;
-				}
-
-				Log.i("i time", i + " " + time); 
-
-				long tostarttimer = diff(time);
-
-//				calendar.setTimeInMillis(System.currentTimeMillis());
-//				long curTime = calendar.getTimeInMillis();
-//				calendar.set(tmy, tmm, tmd);
-//				long nextTime = calendar.getTimeInMillis();
-				
-				
-				
-            	String timeArry[] = time.split(":") ;
-            	String dateArry [] =  tvIdate.getText().toString().split("/") ;
-            	
-            	int year  = Integer.parseInt(dateArry[2]) ;
-            	int month  = Integer.parseInt(dateArry[1])-1 ;
-	            int date  = Integer.parseInt(dateArry[0]) ; 
-	            
-	            int hour   = Integer.parseInt(timeArry[0]) ;
-	            int minute  =Integer.parseInt(timeArry[1]) ;
-		 
-	            	calendar.set(Calendar.YEAR, year) ;
-	            	calendar.set(Calendar.MONTH, month) ;
-	            	calendar.set(Calendar.DATE, date) ;
+//					calendar.setTimeInMillis(System.currentTimeMillis());
+//					long curTime = calendar.getTimeInMillis();
+//					calendar.set(tmy, tmm, tmd);
+//					long nextTime = calendar.getTimeInMillis();
+					
+					
+					
+	            	String timeArry[] = time.split(":") ;
+	            	String dateArry [] =  tvIdate.getText().toString().split("/") ;
 	            	
-	            	calendar.set(Calendar.HOUR_OF_DAY, hour) ;
-	            	calendar.set(Calendar.MINUTE,minute) ;
-	            	calendar.set(Calendar.SECOND,0) ;
-	            	
-	            	  Calendar calendar2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-			            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
-			            	
-			            {
-			            	Toast.makeText(CellManage_AddShowActivity.this,
-									"Select  upcoming time ", Toast.LENGTH_LONG).show();
-			            	
-			            	return  ;
-			            }
-			            
-				if (spIntervalDay.getSelectedItemPosition() != 4) {
-					
-					myntent.putExtra("unique", counter+"") ;
-					
-					Log.d("Pending intent counter in IF", "----- " + counter);
-					
-			    	PendingIntent	pd = PendingIntent.getActivity(
-							CellManage_AddShowActivity.this, counter,
-							myntent, PendingIntent.FLAG_UPDATE_CURRENT);					
+	            	int year  = Integer.parseInt(dateArry[2]) ;
+	            	int month  = Integer.parseInt(dateArry[1])-1 ;
+		            int date  = Integer.parseInt(dateArry[0]) ; 
 		            
-		         	alarmanager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), repeat, pd);
-		         	
-		            Log.d("time","Date ="+ date+" Month ="+month+" Year = "+year+ " Hour ="+hour+" Minute= "+minute+" Milisecond ="+calendar.getTimeInMillis()  ) ;
-		            
-					db.insertNotification(userid, boxid, cellid, loginid, time,
-							counter, repeatString , null , startdate ,intWay ,intSound, strDesc,MedName);
-//					applicationClass.totalCounter++;
-				} else {
-					for (int k = 0; k < flags.length; k++) {
-
-//		            	calendar.clear() ; 
+		            int hour   = Integer.parseInt(timeArry[0]) ;
+		            int minute  =Integer.parseInt(timeArry[1]) ;
+			 
 		            	calendar.set(Calendar.YEAR, year) ;
 		            	calendar.set(Calendar.MONTH, month) ;
 		            	calendar.set(Calendar.DATE, date) ;
 		            	
 		            	calendar.set(Calendar.HOUR_OF_DAY, hour) ;
 		            	calendar.set(Calendar.MINUTE,minute) ;
-		            	calendar.set(Calendar.SECOND,0) ;	
+		            	calendar.set(Calendar.SECOND,0) ;
 		            	
-						if (flags[k] == true)  {
-							 
-							counter++ ;
-					 
-							myntent.putExtra("unique", counter+"") ;
+		            	  Calendar calendar2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+				            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
+				            	
+				            {
+				            	Toast.makeText(CellManage_AddShowActivity.this,
+										"Select  upcoming time ", Toast.LENGTH_LONG).show();
+				            	
+				            	return  ;
+				            }
+				            
+					if (spIntervalDay.getSelectedItemPosition() != 4) {
+						
+						myntent.putExtra("unique", counter+"") ;
+						
+						Log.d("Pending intent counter in IF", "----- " + counter);
+						
+				    	PendingIntent	pd = PendingIntent.getActivity(
+								CellManage_AddShowActivity.this, counter,
+								myntent, PendingIntent.FLAG_UPDATE_CURRENT);					
+			            
+			         	alarmanager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), repeat, pd);
+			         	
+			            Log.d("time","Date ="+ date+" Month ="+month+" Year = "+year+ " Hour ="+hour+" Minute= "+minute+" Milisecond ="+calendar.getTimeInMillis()  ) ;
+			            
+						db.insertNotification(userid, boxid, cellid, loginid, time,
+								counter, repeatString , null , startdate ,intWay ,intSound, strDesc,MedName);
+//						applicationClass.totalCounter++;
+					} else {
+						for (int k = 0; k < flags.length; k++) {
 
-//							Log.d("time before set ", "Milisecond ="+calendar.getTimeInMillis()) ;
+//			            	calendar.clear() ; 
+			            	calendar.set(Calendar.YEAR, year) ;
+			            	calendar.set(Calendar.MONTH, month) ;
+			            	calendar.set(Calendar.DATE, date) ;
+			            	
+			            	calendar.set(Calendar.HOUR_OF_DAY, hour) ;
+			            	calendar.set(Calendar.MINUTE,minute) ;
+			            	calendar.set(Calendar.SECOND,0) ;	
+			            	
+							if (flags[k] == true)  {
+								 
+								counter++ ;
+						 
+								myntent.putExtra("unique", counter+"") ;
 
-							calendar.set(Calendar.DAY_OF_WEEK , k+1);
-							
-							if (!(calendar2.get(Calendar.DATE) == calendar                   //To manage old dates 
-									.get(Calendar.DATE)                                      //increment day of week until it comes to current or greater then current  .   
-									&& (calendar2.get(Calendar.MONTH) == calendar
-											.get(Calendar.MONTH)) && (calendar2
-										.get(Calendar.YEAR) == calendar
-									.get(Calendar.YEAR)))){
+//								Log.d("time before set ", "Milisecond ="+calendar.getTimeInMillis()) ;
+
+								calendar.set(Calendar.DAY_OF_WEEK , k+1);
 								
-								while (calendar.getTimeInMillis()<calendar2.getTimeInMillis()){
+								if (!(calendar2.get(Calendar.DATE) == calendar                   //To manage old dates 
+										.get(Calendar.DATE)                                      //increment day of week until it comes to current or greater then current  .   
+										&& (calendar2.get(Calendar.MONTH) == calendar
+												.get(Calendar.MONTH)) && (calendar2
+											.get(Calendar.YEAR) == calendar
+										.get(Calendar.YEAR)))){
 									
-				        	    	calendar.set(Calendar.DATE,  calendar.get(Calendar.DATE)+7) ;
-				        		    Log.d("Next event ","Date = "+ calendar.get(Calendar.DATE)  +"Month= "+calendar.get(Calendar.MONTH)) ;
-				        	    }
+									while (calendar.getTimeInMillis()<calendar2.getTimeInMillis()){
+										
+					        	    	calendar.set(Calendar.DATE,  calendar.get(Calendar.DATE)+7) ;
+					        		    Log.d("Next event ","Date = "+ calendar.get(Calendar.DATE)  +"Month= "+calendar.get(Calendar.MONTH)) ;
+					        	    }
+								}
+
+//								calendar = Calendar.getInstance();
+////								curTime = calendar.getTimeInMillis();
+//								calendar.set(mYear, mMonth - 1, mDate);
+	//
+////								nextTime = calendar.getTimeInMillis();
+	//
+//								int dow = calendar.get(Calendar.DAY_OF_WEEK);
+	//
+//								if (k < dow) {
+//									addDays = (7 - dow) + k;
+//								} else if (k > dow) {	
+//									addDays = k - dow;
+//								} else {
+//									addDays = 0;
+//								}
+//								//
+//								calendar.add(Calendar.DAY_OF_YEAR, addDays);
+////								nextTime = calendar.getTimeInMillis();	
+	// 
+//								tostarttimer = diff(time);
+	//
+////								tostarttimer = tostarttimer + (nextTime - curTime);
+	//
+						    	PendingIntent	pdI = PendingIntent.getActivity(
+										CellManage_AddShowActivity.this,
+										counter, myntent,PendingIntent.FLAG_UPDATE_CURRENT);
+						    	
+//								Log.i("Total couter", "----- " + totalCounter);
+//								// alarmManager.cancel(pendingIntent);
+	//
+//								calendar.setTimeInMillis(System.currentTimeMillis());
+//								calendar.add(Calendar.MILLISECOND,
+//										(int) tostarttimer);
+	//
+//								Toast.makeText(
+//										getApplicationContext(),
+//										"" + addDays + " date"
+//												+ calendar.get(Calendar.DATE),
+//										Toast.LENGTH_LONG).show();
+
+								alarmanager.setRepeating(AlarmManager.RTC_WAKEUP,
+										calendar.getTimeInMillis(), repeat,
+										pdI);
+								db.insertNotification(userid, boxid, cellid,
+										loginid, time.trim(), counter,repeatString, items[k].toString() , startdate ,intWay ,intSound, strDesc,MedName);
+								
+						        Log.d("time", "Milisecond ="+calendar.getTimeInMillis()) ;
 							}
-
-//							calendar = Calendar.getInstance();
-////							curTime = calendar.getTimeInMillis();
-//							calendar.set(mYear, mMonth - 1, mDate);
-//
-////							nextTime = calendar.getTimeInMillis();
-//
-//							int dow = calendar.get(Calendar.DAY_OF_WEEK);
-//
-//							if (k < dow) {
-//								addDays = (7 - dow) + k;
-//							} else if (k > dow) {	
-//								addDays = k - dow;
-//							} else {
-//								addDays = 0;
-//							}
-//							//
-//							calendar.add(Calendar.DAY_OF_YEAR, addDays);
-////							nextTime = calendar.getTimeInMillis();	
-// 
-//							tostarttimer = diff(time);
-//
-////							tostarttimer = tostarttimer + (nextTime - curTime);
-//
-					    	PendingIntent	pdI = PendingIntent.getActivity(
-									CellManage_AddShowActivity.this,
-									counter, myntent,PendingIntent.FLAG_UPDATE_CURRENT);
-					    	
-//							Log.i("Total couter", "----- " + totalCounter);
-//							// alarmManager.cancel(pendingIntent);
-//
-//							calendar.setTimeInMillis(System.currentTimeMillis());
-//							calendar.add(Calendar.MILLISECOND,
-//									(int) tostarttimer);
-//
-//							Toast.makeText(
-//									getApplicationContext(),
-//									"" + addDays + " date"
-//											+ calendar.get(Calendar.DATE),
-//									Toast.LENGTH_LONG).show();
-
-							alarmanager.setRepeating(AlarmManager.RTC_WAKEUP,
-									calendar.getTimeInMillis(), repeat,
-									pdI);
-							db.insertNotification(userid, boxid, cellid,
-									loginid, time.trim(), counter,repeatString, items[k].toString() , startdate ,intWay ,intSound, strDesc,MedName);
-							
-					        Log.d("time", "Milisecond ="+calendar.getTimeInMillis()) ;
 						}
+						
 					}
-					
+//					applicationClass.totalCounter++;
 				}
-//				applicationClass.totalCounter++;
-			}
 
-//			SP.edit().putInt("totalCounter", totalCounter).commit() ;
-			
-			Log.i("", "userid, boxid, cellid, medid, picid,loginid == "
-					+ userid + " " + boxid + " " + cellid + " " + medid + " "
-					+ picid + " " + loginid);
-			db.updateForm(userid, boxid, cellid, medid, picid, strDesc, intBg,
-					intblAlert, intblBlink, intSound, intBuzz, intblMini,
-					intblVibrant, intAlarm, intWay, intConfirm, intDayOf_Int,
-					intDos_Mgt, intMany_Time, intSch_Int, intInt_Day, intWeek,
-					intMonth, loginid, weekdaystring, startdate);
-			Toast.makeText(getApplicationContext(),
-					R.string.cell_update_cell_mgt, Toast.LENGTH_SHORT).show();
-			// startActivity(myntent);	
-			this.finish();
+//				SP.edit().putInt("totalCounter", totalCounter).commit() ;
+				
+				Log.i("", "userid, boxid, cellid, medid, picid,loginid == "
+						+ userid + " " + boxid + " " + cellid + " " + medid + " "
+						+ picid + " " + loginid);
+				db.updateForm(userid, boxid, cellid, medid, picid, strDesc, intBg,
+						intblAlert, intblBlink, intSound, intBuzz, intblMini,
+						intblVibrant, intAlarm, intWay, intConfirm, intDayOf_Int,
+						intDos_Mgt, intMany_Time, intSch_Int, intInt_Day, intWeek,
+						intMonth, loginid, weekdaystring, startdate);
+				Toast.makeText(getApplicationContext(),
+						R.string.cell_update_cell_mgt, Toast.LENGTH_SHORT).show();
+				// startActivity(myntent);	
+				this.finish();
+
+			}
 			break;
 
 		case R.id.btnDelForm:

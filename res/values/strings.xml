@@ -27,7 +27,8 @@
     <string name="telephone_not_medatory">Telephone</string>
     <string name="mobile">Mobile*</string>
     <string name="mobile_not_medatory">Mobile</string>
-    <string name="mail">E-Mail</string>
+    <string name="mail">E-Mail*</string>
+    <string name="email">E-Mail</string>
     <string name="intolerance">Intolerance with</string>
     <string name="doctor">Physician</string>
     <string name="note">Note</string>
@@ -42,10 +43,10 @@
     <string name="text_red">Text red during buzz</string>
     <string name="activate">Activate</string>
     <string name="edit_cell">Edit cells</string>
-    <string name="photo">Photo category</string>
+    <string name="photo">Photo category *</string>
     <string name="desc">Description*</string>
     <string name="desc_not_mentatory">Description</string>
-    <string name="short_desc">Short description</string>
+    <string name="short_desc">Short description*</string>
     <string name="long_desc">Long description</string>
     <string name="warning">Warning message</string>
     <string name="mail_counter">Mail counter</string>
@@ -84,7 +85,7 @@
     <string name="stop_alarm">Stop alarm</string>
     <string name="wayto_stopalarm">Ways to stop Alarm</string>
     <string name="confirm_medicine">Medicine acknowledgment</string>
-    <string name="inteval_time">Interval time</string>
+    <string name="inteval_time">Interval time*</string>
     <string name="inteval_days">Interval days</string>
     <string name="male">Male</string>
     <string name="female">Female</string>
@@ -131,7 +132,7 @@
     <string name="interval_time_prompt">Interval time</string>
     <string name="interval_days_prompt">Days interval</string>
     <string name="medicine_for_each_time_prompt">How many time in a day?*</string>
-    <string name="dosage_mesurement_prompt">Dosage measurement</string>
+    <string name="dosage_mesurement_prompt">Dosage measurement*</string>
     <string name="How_many_prompt">How many times in day?</string>
     <string name="schedule_prompt">Schedule within interval chosen</string>
     <string name="week_prompt">Week of month</string>
@@ -189,7 +190,7 @@
     <string name="stop_alarm_msg">Please stop the alarm first.</string>
     <string name="set_alarm_time">Please set alarm time.</string>
     <string name="set_starting_date">Set starting date</string>
-    <string name="star_date">Start date</string>
+    <string name="star_date">Start date*</string>
     <string name="feild_require_user_mgt">Please enter required fields i.e. Name, Surname.</string>
     <string name="pateint_added_user_mgt">Patient added.</string>
     <string name="pateint_delete_user_mgt">"Patient's entry deleted."</string>

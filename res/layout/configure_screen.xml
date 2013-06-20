@@ -267,7 +267,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:text="@string/mail"
+                    android:text="@string/email"
                     style="@style/font_size_small"
                     android:gravity="center"
                     android:textColor="@color/white" >

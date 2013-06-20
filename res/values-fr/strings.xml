@@ -29,7 +29,8 @@
     <string name="telephone_not_medatory">téléphone</string>
     <string name="mobile">* Mobile</string>
     <string name="mobile_not_medatory">mobile</string>
-    <string name="mail">E-Mail</string>
+    <string name="mail">E-Mail*</string>
+    <string name="email">E-Mail</string>
     <string name="intolerance">l\'intolérance,</string>
     <string name="doctor">médecin</string>
     <string name="note">noter</string>
@@ -44,10 +45,10 @@
     <string name="text_red">Texte en rouge pendant buzz</string>
     <string name="activate">activer</string>
     <string name="edit_cell">Modifier cellules</string>
-    <string name="photo">photo Catégorie</string>
+    <string name="photo">photo Catégorie*</string>
     <string name="desc">* Description</string>
     <string name="desc_not_mentatory">Description</string>
-    <string name="short_desc">brève description</string>
+    <string name="short_desc">brève description*</string>
     <string name="long_desc">Description longue</string>
     <string name="warning">message d\'avertissement</string>
     <string name="mail_counter">compteur électronique</string>
@@ -78,7 +79,7 @@
     <string name="stop_alarm">arrêter l\'alarme</string>
     <string name="wayto_stopalarm">"Des moyens pour arrêter l\'alarme"</string>
     <string name="confirm_medicine">reconnaissance médecine</string>
-    <string name="inteval_time">intervalle de temps</string>
+    <string name="inteval_time">intervalle de temps*</string>
     <string name="inteval_days">jours d\'intervalle</string>
     <string name="male">masculin</string>
     <string name="female">féminin</string>
@@ -124,7 +125,7 @@
     <string name="stop_alarm_prompt">arrêter l\'alarme</string>
     <string name="interval_time_prompt">intervalle de temps</string>
     <string name="interval_days_prompt">jours d\'intervalle</string>
-    <string name="dosage_mesurement_prompt">dosage de mesure</string>
+    <string name="dosage_mesurement_prompt">dosage de mesure*</string>
     <string name="How_many_prompt">Combien de fois par jour?</string>
     <string name="schedule_prompt">Programmer dans l\'intervalle choisi</string>
     <string name="week_prompt">Semaine du mois</string>
@@ -169,7 +170,7 @@
     <string name="fail">échouer</string>
     <string name="success">succès</string>
     <string name="set_starting_date">Définir la date de début</string>
-    <string name="star_date">Date de début</string>
+    <string name="star_date">Date de début*</string>
     <string name="feild_require_user_mgt">S\'il vous plaît entrer champs obligatoires i.e. Nom, Prénom.</string>
     <string name="pateint_added_user_mgt">Malade ajouté.</string>
     <string name="pateint_delete_user_mgt">L\'entrée du patient supprimé.</string>

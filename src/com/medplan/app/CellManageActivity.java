@@ -912,7 +912,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 					newIntent.putExtra("WayToStop", alarmUtilsList.get(i).waytostop);
 					newIntent.putExtra("Med", alarmUtilsList.get(i).medicine);
 					newIntent.putExtra("Description", alarmUtilsList.get(i).description);
-					newIntent.putExtra("Sound", alarmUtilsList.get(i).sound);
+					newIntent.putExtra("Sound", alarmUtilsList.get(i).sound-1);
 					newIntent.putExtra("FromWhereActivity","Heaven" ); 
 					
 		            newPendingIntent = PendingIntent.getActivity(

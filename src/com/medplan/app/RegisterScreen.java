@@ -5,6 +5,8 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,7 +45,7 @@ import com.medplan.db.databasehelper;
 public class RegisterScreen extends Activity implements OnClickListener {
 	Button cancelButton, registerButton;
 	EditText etFnm, etLnm, etUnm, etPwd, etZip, etAdd, etState, etCity;
-	String fnm, lnm, unm, pwd, zip, address, city, uType, country, state;
+	String fnm="", lnm="", unm="", pwd="", zip, address, city, uType, country, state;
 	int type = 1;
 	databasehelper db;
 	Spinner spType;
@@ -58,6 +60,10 @@ public class RegisterScreen extends Activity implements OnClickListener {
 	static AlertDialog.Builder loginDialog;
 	public static SharedPreferences SP;
 	private Bitmap bitmap=null;
+	
+	private  Uri imageCaptureUri  ,unknowndeviceUri; 
+	private static final int CAMERA_IMAGE_CAPTURE = 0;
+
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -247,7 +253,7 @@ public class RegisterScreen extends Activity implements OnClickListener {
 //	}
 	
 	public void Shot_Camera() {
-		try { 
+//		try { 
 //			   Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
 //               startActivityForResult(cameraIntent, 1212); 
 			
@@ -261,31 +267,60 @@ public class RegisterScreen extends Activity implements OnClickListener {
 //	                	_path = "/sdcard";
 //	        			}
 	                
-			String parentdir;
-			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
-			File parentDirFile = new File(parentdir);
-			parentDirFile.mkdirs();
-
-			// If we can't write to that special path, try just writing
-			// directly to the sdcard
-			if (!parentDirFile.isDirectory()) {
-			parentdir = Environment.getExternalStorageDirectory()+"";
-			} 
-	                Calendar cal = Calendar.getInstance();
-	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
-	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
-	                _path=filepath;
+//			String parentdir;
+//			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
+//			File parentDirFile = new File(parentdir);
+//			parentDirFile.mkdirs();
+//
+//			// If we can't write to that special path, try just writing
+//			// directly to the sdcard
+//			if (!parentDirFile.isDirectory()) {
+//			parentdir = Environment.getExternalStorageDirectory()+"";
+//			} 
+//	                Calendar cal = Calendar.getInstance();
+//	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
+//	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
+//	                _path=filepath;
+//		
+//			
+//			//_path = Environment.getExternalStorageDirectory() + File.separator+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
+//			System.out.println("thumbnail path~~~~~~"+_path);
+//			File file = new File(_path);
+//			Uri outputFileUri = Uri.fromFile(file);
+//			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//			startActivityForResult(intent, 1212);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
-			
-			//_path = Environment.getExternalStorageDirectory() + File.separator+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
-			System.out.println("thumbnail path~~~~~~"+_path);
-			File file = new File(_path);
-			Uri outputFileUri = Uri.fromFile(file);
-			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-			startActivityForResult(intent, 1212);
-		} catch (Exception e) {
-			e.printStackTrace();
+		
+		
+		String storageState = Environment.getExternalStorageState();
+		if (storageState.equals(Environment.MEDIA_MOUNTED)) 
+		{
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+			String filename = System.currentTimeMillis() + ".jpg";
+			ContentValues values = new ContentValues();
+			values.put(MediaStore.Images.Media.TITLE, filename);
+			imageCaptureUri = getContentResolver().insert(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+			intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					imageCaptureUri);
+			try {
+				startActivityForResult(intent, CAMERA_IMAGE_CAPTURE);
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			new AlertDialog.Builder(RegisterScreen.this)
+					.setMessage(
+							"External Storeage (SD Card) is required.\n\nCurrent state: "
+									+ storageState).setCancelable(true)
+					.create().show();
 		}
 
 	}
@@ -437,8 +472,98 @@ public class RegisterScreen extends Activity implements OnClickListener {
 
 		
 		}
+		
+		if(requestCode==CAMERA_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK){
+			_path	= getThubnailFilePath() ;
+			Bitmap bitmap = GlobalMethods.decodeFile(_path);
+			
+			if (bitmap == null) {
+				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
+			} else {
+				ivPhy.setImageBitmap(bitmap);
+			}
+		}
 	}
+	
+	/**
+	 * Get the path of captured  image by camera 
+	 * @return
+	 */
+	private String getThubnailFilePath() {
+		try {
+			String[] largeFileProjection = {
+					MediaStore.Images.ImageColumns._ID,
+					MediaStore.Images.ImageColumns.DATA };
 
+			String largeFileSort = MediaStore.Images.ImageColumns._ID
+					+ " DESC";
+		Cursor	myCursor = this.managedQuery(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+					largeFileProjection, null, null, largeFileSort);
+			
+			
+			String largeImagePath = "";
+
+			try {
+				myCursor.moveToFirst();
+
+				// This will actually give yo uthe file path location of
+				// the
+				// image.
+				largeImagePath = myCursor
+						.getString(myCursor
+								.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
+				unknowndeviceUri = Uri.fromFile(new File(
+						largeImagePath));
+				imageCaptureUri = null;
+			} finally {
+			}
+			
+			
+		} catch (Exception e) {
+			unknowndeviceUri = null;
+			e.printStackTrace();
+		}
+		
+		if (unknowndeviceUri != null)
+			return unknowndeviceUri.getPath();
+		else
+			return getPath(imageCaptureUri);
+	}
+	
+	/**
+	 * Get String path from {@link Uri}
+	 * @param uri
+	 * @return
+	 */
+	public String getPath(Uri uri) {
+
+		String StringPath = null;
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			// HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+			// THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+
+			StringPath = cursor.getString(column_index);
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			StringPath = null;
+		}
+
+		if (StringPath == null) {
+			StringPath = uri.getPath();
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			return null;
+		}
+		return StringPath;
+	}
 	public void onClick(View v) {
 		fnm = etFnm.getText().toString();
 		lnm = etLnm.getText().toString();

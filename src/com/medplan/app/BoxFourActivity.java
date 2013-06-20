@@ -158,28 +158,51 @@ public class BoxFourActivity extends Activity implements OnClickListener,
 		if (pendingInterntID!=null)
 			Log.d("*********** Pending intent Id =", "Pending intent Id ="+pendingInterntID) ;
 		
-		if(((SP.getInt("lock", -1) == 0))||(SP.getString("isLogin", "")=="no")||(db.isUserExsist(userid)==false)) {
-			Log.e("", "*************  finish  ****	**************");
-			stop = true ;
-			finish();
-		}
-	else{
-		
-		
-		ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
-				userid, boxid, cell_pos);
-		if (arrCell.size()==0 && fromWhere!=null){
-			Log.e("", "*************  finish  ****	**************");
-			stop = true ;
-			finish();
-		}
-		else
-			if (activity!=null)
-		Toast.makeText(BoxFourActivity.this,
-				getResources().getString(R.string.cell_edit),
-				Toast.LENGTH_LONG).show();
-	}
+//		if(((SP.getInt("lock", -1) == 0))||(SP.getString("isLogin", "")=="no")||(db.isUserExsist(userid)==false)) {
+//			Log.e("", "*************  finish  ****	**************");
+//			stop = true ;
+//			finish();
+//		}
+//	else{
+//		
+//		
+//		ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
+//				userid, boxid, cell_pos);
+//		if (arrCell.size()==0 && fromWhere!=null){
+//			Log.e("", "*************  finish  ****	**************");
+//			stop = true ;
+//			finish();
+//		}
+//		else
+//			if (activity!=null)
+//		Toast.makeText(BoxFourActivity.this,
+//				getResources().getString(R.string.cell_edit),
+//				Toast.LENGTH_LONG).show();
+//	}
        
+		
+		if (((SP.getInt("lock", -1) == 0) && cell_pos != -1)
+				|| (SP.getString("isLogin", "") == "no")
+				|| (db.isUserExsist(userid) == false)) {
+			Log.e("", "*************  finish  ****	**************");
+			stop = true;
+			finish();
+		} else {
+			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
+					userid, boxid, cell_pos);
+			if (arrCell.size() == 0 & fromWhere != null) {
+				Log.e("", "*************  finish  ****	**************");
+				stop = true;
+				finish();
+			} else{
+				if (activity!=null)
+				Toast.makeText(BoxFourActivity.this,
+						getResources().getString(R.string.cell_edit),
+						Toast.LENGTH_LONG).show();
+			}
+				
+		}
+		
 		setContentView(R.layout.cell_mgt_four_boxe);
 		Constant.flag = false;
 

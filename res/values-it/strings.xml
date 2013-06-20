@@ -30,7 +30,8 @@
     <string name="telephone_not_medatory">Telefono</string>
     <string name="mobile">Cellulare*</string>
     <string name="mobile_not_medatory">Cellulare</string>
-    <string name="mail">E-Mail</string>
+    <string name="mail">E-Mail*</string>
+    <string name="email">E-Mail</string>
     <string name="intolerance">Intolleranza a</string>
     <string name="doctor">Medico</string>
     <string name="note">Nota</string>
@@ -45,7 +46,7 @@
     <string name="text_red">Testo letto durante allarme</string>
     <string name="activate">Attivare</string>
     <string name="edit_cell">Modif. cell</string>
-    <string name="photo">Categoria delle foto</string>
+    <string name="photo">Categoria delle foto*</string>
     <string name="desc">Descrizione*</string>
     <string name="desc_not_mentatory">Descrizione</string>
     <string name="short_desc">Descrizione breve*</string>
@@ -79,7 +80,7 @@
     <string name="stop_alarm">Ferma allarme</string>
     <string name="wayto_stopalarm">"Modo di fermare l'allarme"</string>
     <string name="confirm_medicine">Conferma medicinale</string>
-    <string name="inteval_time">Intervalli di tempo</string>
+    <string name="inteval_time">Intervalli di tempo*</string>
     <string name="inteval_days">Intervallo di giorni</string>
     <string name="male">Maschio</string>
     <string name="female">Femmina</string>
@@ -125,7 +126,7 @@
     <string name="stop_alarm_prompt">Ferma allarme</string>
     <string name="interval_time_prompt">Intervallo di tempo</string>
     <string name="interval_days_prompt">Intervallo di giorni</string>
-    <string name="dosage_mesurement_prompt">Misura dei dosaggi</string>
+    <string name="dosage_mesurement_prompt">Misura dei dosaggi*</string>
     <string name="How_many_prompt">Quante volte al giorno?</string>
     <string name="schedule_prompt">"Programma all'interno dell'intervallo scelto"</string>
     <string name="week_prompt">Settimana del mese</string>
@@ -166,7 +167,7 @@
     <string name="fail">Errore, insuccesso</string>
     <string name="success">Successo</string>
     <string name="set_starting_date">imposta data inizio</string>
-    <string name="star_date">data di inizio</string>
+    <string name="star_date">data di inizio*</string>
     <string name="medicine_for_each_time_prompt">Quante volte in un giorno?</string>
     <string name="feild_require_user_mgt">Per favore inserire tutti i campi obbligatori come ad es, Nome, Cognome</string>
     <string name="pateint_added_user_mgt">Nuovo paziente aggiunto</string>

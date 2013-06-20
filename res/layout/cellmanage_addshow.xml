@@ -188,7 +188,6 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/spinner_bg"
                 android:entries="@array/call_count_type"
-               android:paddingLeft="5dp"
                 android:prompt="@string/buzz_repetition" >
             </Spinner>
 

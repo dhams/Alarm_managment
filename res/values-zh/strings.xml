@@ -27,7 +27,8 @@
     <string name="telephone_not_medatory">電話</string>
     <string name="mobile">手机号码</string>
     <string name="mobile_not_medatory">移動</string>
-    <string name="mail">电邮地址</string>
+    <string name="mail">电邮地址*</string>
+    <string name="email">电邮地址</string>
     <string name="intolerance">无法忍受</string>
     <string name="doctor">大夫</string>
     <string name="note">注意</string>
@@ -42,10 +43,10 @@
     <string name="text_red">在嗡鸣时文字变红</string>
     <string name="activate">激活</string>
     <string name="edit_cell">编辑</string>
-    <string name="photo">图片类别</string>
+    <string name="photo">图片类别*</string>
     <string name="desc">描述*</string>
     <string name="desc_not_mentatory">描述</string>
-    <string name="short_desc">简明的描述</string>
+    <string name="short_desc">简明的描述*</string>
     <string name="long_desc">详细的描述</string>
     <string name="warning">警告消息</string>
     <string name="mail_counter">发送的电邮数</string>
@@ -84,7 +85,7 @@
     <string name="stop_alarm">停止警 报</string>
     <string name="wayto_stopalarm">停止警报的方法</string>
     <string name="confirm_medicine">醫學確認</string>
-    <string name="inteval_time">时间 的 间隔</string>
+    <string name="inteval_time">时间 的 间隔*</string>
     <string name="inteval_days">天的 间隔</string>
     <string name="male">男</string>
     <string name="female">女</string>
@@ -131,7 +132,7 @@
     <string name="interval_time_prompt">时间 的 间隔</string>
     <string name="interval_days_prompt">天的 间隔</string>
     <string name="medicine_for_each_time_prompt">一天中的多少倍？</string>
-    <string name="dosage_mesurement_prompt">剂量的量</string>
+    <string name="dosage_mesurement_prompt">剂量的量*</string>
     <string name="How_many_prompt">一天 多少次?</string>
     <string name="schedule_prompt">在被选中的间隔里定时</string>
     <string name="week_prompt">月份的一周</string>
@@ -189,7 +190,7 @@
     <string name="stop_alarm_msg">请先停止报警。</string>
     <string name="set_alarm_time">请设定的闹铃时间。</string>
     <string name="set_starting_date">設置起始日期</string>
-    <string name="star_date">開始日期</string>
+    <string name="star_date">開始日期*</string>
     <string name="feild_require_user_mgt">請輸入所需的領域，即名稱，姓氏。</string>
     <string name="pateint_added_user_mgt">新病人添加了</string>
     <string name="pateint_delete_user_mgt">病人的记录删除</string>

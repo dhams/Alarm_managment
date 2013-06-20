@@ -57,7 +57,7 @@ public class MediManage_AddShowActivity extends Activity implements
 	Button add, cancel, back, update, delete,next,prev;
 	ImageView imgMed;
 
-	String name, sdesc, ldesc, usedAs, aing, therapeutic, intolerancem,
+	String name="", sdesc="", ldesc, usedAs, aing, therapeutic, intolerancem,
 			caution, note1, note2, mtherap;
 	// float dosage;
 	int id, picid, medi_user_id, cat, dosage, dosageType, dosagetime, dunit,route_admin,
@@ -71,11 +71,11 @@ public class MediManage_AddShowActivity extends Activity implements
 	public static ArrayAdapter DosageTypeAdapter;
 	String[] MilliLiter = { "Spoon", "Tea spoon ", "Small measure" };
 	String[] medType = {"NR"};
-	static String _path;
+	String _path="";
 	ArrayList<Picture_Model> picList;
 	AlertDialog alertMsg;
 	AlertDialog.Builder alertDialog,ad1,ad2;
-	boolean flagCamera;
+//	boolean flagCamera;
 	int userid;
 	private static final int CAMERA_IMAGE_CAPTURE = 0;
 	private  Uri imageCaptureUri  ,unknowndeviceUri; 
@@ -368,14 +368,14 @@ public class MediManage_AddShowActivity extends Activity implements
 			if (!(name.equals("")  || sdesc.equals(""))) {
 				
 				
-				if(flagCamera==true){
+//				if(flagCamera==true){
 					//insertation in picture management
 				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
-				     flagCamera=false;
+//				     flagCamera=false;
 //				     ArrayList<Picture_Model> picsTemp = db.getPicture(id)
 					//	picid = picsTemp.get(picsTemp.size() - 1).id;
 				     picid = db.getPictureID(_path);
-				}
+//				}
 				
 				db.insertMedical(medi_user_id, picid, name, sdesc, ldesc,
 						usedAs, aing, dosage,dosageType,dosagetime,  therapeutic,
@@ -393,14 +393,14 @@ public class MediManage_AddShowActivity extends Activity implements
 			if (!(name.equals("") || sdesc.equals("")))
 			{
 				
-				if(flagCamera==true){
+//				if(flagCamera==true){
 					//insertation in picture management
 				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
-				     flagCamera=false;
+//				     flagCamera=false;
 //				     ArrayList<Picture_Model> picsTemp = db.getPictures(medi_user_id);
 //						picid = picsTemp.get(picsTemp.size() - 1).id;
 				     picid = db.getPictureID(_path);
-				}
+//				}
 				
 				db.updateMedical(medi_user_id, id, picid, name, sdesc, ldesc,
 						usedAs, aing,  dosage, dosageType, dosagetime,   therapeutic,
@@ -529,32 +529,60 @@ public class MediManage_AddShowActivity extends Activity implements
 	 * @return
 	 */
 	private String getThubnailFilePath() {
-
-		String thumbnailPath = "";
-
 		try {
-			String[] projection = {
-					MediaStore.Images.Thumbnails._ID, // The columns we want
-					MediaStore.Images.Thumbnails.IMAGE_ID,
-					MediaStore.Images.Thumbnails.KIND,
-					MediaStore.Images.Thumbnails.DATA };
-			String selection = MediaStore.Images.Thumbnails.KIND + "=" + // Select
-																			// only
-																			// mini's
-					MediaStore.Images.Thumbnails.MINI_KIND;
+//			String[] projection = {
+//					MediaStore.Images.Thumbnails._ID, // The columns we want
+//					MediaStore.Images.Thumbnails.IMAGE_ID,
+//					MediaStore.Images.Thumbnails.KIND,
+//					MediaStore.Images.Thumbnails.DATA };
+//			String selection = MediaStore.Images.Thumbnails.KIND + "=" + // Select
+//																			// only
+//																			// mini's
+//					MediaStore.Images.Thumbnails.MINI_KIND;
+//
+//			String sort = MediaStore.Images.Thumbnails._ID + " DESC";
+//
+//			Cursor myCursor = this.managedQuery(
+//					MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
+//					projection, selection, null, sort);
+//
+//			myCursor.moveToFirst();
+//			thumbnailPath = myCursor.getString(myCursor
+//					.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
+//
+//			unknowndeviceUri = Uri.fromFile(new File(thumbnailPath));
+//			imageCaptureUri = null;
+			
 
-			String sort = MediaStore.Images.Thumbnails._ID + " DESC";
+			String[] largeFileProjection = {
+					MediaStore.Images.ImageColumns._ID,
+					MediaStore.Images.ImageColumns.DATA };
 
-			Cursor myCursor = this.managedQuery(
-					MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,
-					projection, selection, null, sort);
+			String largeFileSort = MediaStore.Images.ImageColumns._ID
+					+ " DESC";
+		Cursor	myCursor = this.managedQuery(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+					largeFileProjection, null, null, largeFileSort);
+			
+			
+			String largeImagePath = "";
 
-			myCursor.moveToFirst();
-			thumbnailPath = myCursor.getString(myCursor
-					.getColumnIndexOrThrow(MediaStore.Images.Thumbnails.DATA));
+			try {
+				myCursor.moveToFirst();
 
-			unknowndeviceUri = Uri.fromFile(new File(thumbnailPath));
-			imageCaptureUri = null;
+				// This will actually give yo uthe file path location of
+				// the
+				// image.
+				largeImagePath = myCursor
+						.getString(myCursor
+								.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
+				unknowndeviceUri = Uri.fromFile(new File(
+						largeImagePath));
+				imageCaptureUri = null;
+			} finally {
+			}
+			
+			
 		} catch (Exception e) {
 			unknowndeviceUri = null;
 			e.printStackTrace();
@@ -563,7 +591,7 @@ public class MediManage_AddShowActivity extends Activity implements
 		if (unknowndeviceUri != null)
 			return unknowndeviceUri.getPath();
 		else
-			return imageCaptureUri.getPath();
+			return getPath(imageCaptureUri);
 	}
 	
 	
@@ -598,7 +626,8 @@ public class MediManage_AddShowActivity extends Activity implements
 //		}
 		
 		String storageState = Environment.getExternalStorageState();
-		if (storageState.equals(Environment.MEDIA_MOUNTED)) {
+		if (storageState.equals(Environment.MEDIA_MOUNTED)) 
+		{
 			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 			String filename = System.currentTimeMillis() + ".jpg";
@@ -614,7 +643,8 @@ public class MediManage_AddShowActivity extends Activity implements
 			} catch (ActivityNotFoundException e) {
 				e.printStackTrace();
 			}
-		} else {
+		}
+		else {
 			new AlertDialog.Builder(MediManage_AddShowActivity.this)
 					.setMessage(
 							"External Storeage (SD Card) is required.\n\nCurrent state: "
@@ -622,6 +652,39 @@ public class MediManage_AddShowActivity extends Activity implements
 					.create().show();
 		}
 	}
+	
+	/**
+	 * Get image path from {@link Uri}
+	 * @param uri
+	 * @return
+	 */
+	public String getPath(Uri uri) {
+
+		String StringPath = null;
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			// HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+			// THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+
+			StringPath = cursor.getString(column_index);
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			StringPath = null;
+		}
+
+		if (StringPath == null) {
+			StringPath = uri.getPath();
+			if (StringPath != null)
+				return StringPath;
+		} 
+		return StringPath;
+	}
+	
 	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {

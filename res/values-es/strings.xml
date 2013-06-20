@@ -27,7 +27,8 @@
     <string name="telephone_not_medatory">Telephone</string>
     <string name="mobile">Celular</string>
     <string name="mobile_not_medatory">Mobile</string>
-    <string name="mail">E-Mail</string>
+    <string name="mail">E-Mail*</string>
+    <string name="email">E-Mail</string>
     <string name="intolerance">Intolerancia con</string>
     <string name="doctor">Médico</string>
     <string name="note">Nota</string>
@@ -42,7 +43,7 @@
     <string name="text_red">Text red during buzz</string>
     <string name="activate">Activar</string>
     <string name="edit_cell">Edit Cells</string>
-    <string name="photo">Categoría de Fotos</string>
+    <string name="photo">Categoría de Fotos*</string>
     <string name="desc">Descripción*</string>
     <string name="desc_not_mentatory">Descripción</string>
     <string name="short_desc">Descripción corta*</string>
@@ -84,7 +85,7 @@
     <string name="stop_alarm">Detener la alarma</string>
     <string name="wayto_stopalarm">Maneras de detener la alarma</string>
     <string name="confirm_medicine">Reconocimiento de Medicina</string>
-    <string name="inteval_time">Intervalo de tiempo</string>
+    <string name="inteval_time">Intervalo de tiempo*</string>
     <string name="inteval_days">Días de intervalo</string>
     <string name="male">Masculino</string>
     <string name="female">Femenino</string>
@@ -131,7 +132,7 @@
     <string name="interval_time_prompt">Intervalo de tiempo</string>
     <string name="interval_days_prompt">Días de intervalo</string>
     <string name="medicine_for_each_time_prompt">How Many Time in a Day?</string>
-    <string name="dosage_mesurement_prompt">Dosis Medida</string>
+    <string name="dosage_mesurement_prompt">Dosis Medida*</string>
     <string name="How_many_prompt">¿Cuántas veces en el día?</string>
     <string name="schedule_prompt">Programar dentro del intervalo elegido</string>
     <string name="week_prompt">Semana del Mes</string>
@@ -189,7 +190,7 @@
     <string name="stop_alarm_msg">Por favor, deje la primera alarma</string>
     <string name="set_alarm_time">Por favor, ajuste la hora de alarma</string>
     <string name="set_starting_date">Establecer la fecha de inicio</string>
-    <string name="star_date">fecha de inicio</string>
+    <string name="star_date">fecha de inicio*</string>
     <string name="feild_require_user_mgt">Por favor, introduzca los campos requeridos es decir, Nombre, Apellido</string>
     <string name="pateint_added_user_mgt">Paciente Añadido</string>
     <string name="pateint_delete_user_mgt">Entrada del Paciente Eliminada</string>

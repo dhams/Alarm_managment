@@ -7,8 +7,11 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -58,7 +61,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 			llwed, llwedtime, llthurs, llthurstime, llfri, llfritime, llsat,
 			llsattime, llsun, llsuntime,MainBgLayout;
 	
-	String name, surname, address, city, state, zip, country, tel, mob, mail,
+	String name="", surname="", address, city, state, zip, country, tel="", mob="", mail,
 			note1, note2, visiting, doWhat;
 	
 	int picid, phyid, phy_user_id, userid, counter = 0, returnflag, _Str,
@@ -72,7 +75,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 	
 	final CharSequence[] items = new CharSequence[7];
 	final boolean[] flags = { false, false, false, false, false, false, false };
-	boolean fillistha = false,increment=false,falgCamera;
+	boolean fillistha = false,increment=false;
 	
 	ArrayList<Phys_Model> userList, userMainList;
 	Button add, cancel, back, update, delete, next, prev,btnHome;
@@ -82,13 +85,16 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 	AlertDialog.Builder builder;
 	AlertDialog alert;
 	AutoCompleteTextView autoCountryList,autoStateList;
-	static String _path;
+	String _path="";
 	AlertDialog alertMsg;
 	AlertDialog.Builder alertDialog,ad1,ad2;
 	ArrayList<Picture_Model> picList;
 	databasehelper db;
 	
+	private static final int CAMERA_IMAGE_CAPTURE = 0;
+	private  Uri imageCaptureUri  ,unknowndeviceUri; 
 
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -819,17 +825,16 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				sunfrom = spSunFrom.getSelectedItemPosition();
 				sunto = spSunTo.getSelectedItemPosition();
 			}
-			if (!(name.equals("") || surname.equals("")|| tel.equals("")|| mob.equals(""))) {
+			if (!(name.equals("") || surname.equals("")|| tel.equals("")|| mob.equals("")||mail.equals(""))) {
 				
-				if(falgCamera==true){
-					//insertation in picture management
-				     db.insertPicture(phy_user_id, _path, name, 1, note1,note2);
-				     falgCamera=false;
-				     ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
-						picid = picsTemp.get(picsTemp.size() - 1).id;
-				}
+
 				
 				if(GlobalMethods.isEmail(mail)){
+					
+					     db.insertPicture(phy_user_id, _path, name, 1, note1,note2);
+					     ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
+							picid = picsTemp.get(picsTemp.size() - 1).id;
+							
 					db.insertPhysician(phy_user_id, picid, name, surname, address,
 							city, zip, country, state,gen, tel, mob, mail, visiting,
 							note1, note2, "" + flags[0], monfrom, monto, ""
@@ -897,16 +902,18 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				sunfrom = spSunFrom.getSelectedItemPosition();
 				sunto = spSunTo.getSelectedItemPosition();
 			}
-			if (!(name.equals("") || surname.equals("") )) {
+			if (!(name.equals("") || surname.equals("") || mail.equals(""))) {
 				
-				if (falgCamera == true) {
-					db.insertPicture(phy_user_id, _path, name, 1, note1, note2);
 
-					falgCamera = false;
-					ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
-					picid = picsTemp.get(picsTemp.size() - 1).id;
-				}
 				if(GlobalMethods.isEmail(mail)){
+					
+//					if (falgCamera == true) {
+						db.insertPicture(phy_user_id, _path, name, 1, note1, note2);
+
+//						falgCamera = false;
+						ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
+						picid = picsTemp.get(picsTemp.size() - 1).id;
+//					}
 					
 					db.updatePhysician(phy_user_id, phyid, picid, name, surname,
 							address, city, zip, country, state,gen, tel, mob, mail,
@@ -1001,38 +1008,36 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 			break;
 		}
 	}
+	
 	public void Shot_Camera(){
-		try {
-			//_path = Environment.getExternalStorageDirectory() + File.separator+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
-			
-			String parentdir;
-			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
-			File parentDirFile = new File(parentdir);
-			parentDirFile.mkdirs();
+		String storageState = Environment.getExternalStorageState();
+		if (storageState.equals(Environment.MEDIA_MOUNTED)) 
+		{
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-			// If we can't write to that special path, try just writing
-			// directly to the sdcard
-			if (!parentDirFile.isDirectory()) {
-			parentdir = Environment.getExternalStorageDirectory()+"";
+			String filename = System.currentTimeMillis() + ".jpg";
+			ContentValues values = new ContentValues();
+			values.put(MediaStore.Images.Media.TITLE, filename);
+			imageCaptureUri = getContentResolver().insert(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+			intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					imageCaptureUri);
+			try {
+				startActivityForResult(intent, CAMERA_IMAGE_CAPTURE);
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
 			}
-	                Calendar cal = Calendar.getInstance();
-	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
-	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
-	                _path=filepath;
-	                
-			System.out.println("thumbnail path~~~~~~"+_path);
-			File file = new File(_path);
-			Uri outputFileUri = Uri.fromFile(file);
-			
-			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-			startActivityForResult(intent, 1212);	
-			falgCamera=true;
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		
+		else {
+			new AlertDialog.Builder(PhysicianManage_AddShowActivity.this)
+					.setMessage(
+							"External Storeage (SD Card) is required.\n\nCurrent state: "
+									+ storageState).setCancelable(true)
+					.create().show();
+		}
 	}
+
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1066,6 +1071,97 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 			 _path=picmodel.path;
 		}
 		
+		if(requestCode==CAMERA_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK){
+			_path	= getThubnailFilePath() ;
+			Bitmap bitmap = GlobalMethods.decodeFile(_path);
+			
+			if (bitmap == null) {
+				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
+			} else {
+				ivPhy.setImageBitmap(bitmap);
+			}
+		}
+		
+	}
+	
+	/**
+	 * Get the path of captured  image by camera 
+	 * @return
+	 */
+	private String getThubnailFilePath() {
+		try {
+			String[] largeFileProjection = {
+					MediaStore.Images.ImageColumns._ID,
+					MediaStore.Images.ImageColumns.DATA };
+
+			String largeFileSort = MediaStore.Images.ImageColumns._ID
+					+ " DESC";
+		Cursor	myCursor = this.managedQuery(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+					largeFileProjection, null, null, largeFileSort);
+			
+			
+			String largeImagePath = "";
+
+			try {
+				myCursor.moveToFirst();
+
+				// This will actually give yo uthe file path location of
+				// the
+				// image.
+				largeImagePath = myCursor
+						.getString(myCursor
+								.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
+				unknowndeviceUri = Uri.fromFile(new File(
+						largeImagePath));
+				imageCaptureUri = null;
+			} finally {
+			}
+			
+			
+		} catch (Exception e) {
+			unknowndeviceUri = null;
+			e.printStackTrace();
+		}
+		
+		if (unknowndeviceUri != null)
+			return unknowndeviceUri.getPath();
+		else
+			return getPath(imageCaptureUri);
+	}
+
+	/**
+	 * Get image path from {@link Uri}
+	 * @param uri
+	 * @return
+	 */
+	public String getPath(Uri uri) {
+
+		String StringPath = null;
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			// HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+			// THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
+
+			StringPath = cursor.getString(column_index);
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			StringPath = null;
+		}
+
+		if (StringPath == null) {
+			StringPath = uri.getPath();
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			return null;
+		}
+		return StringPath;
 	}
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {

@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -58,12 +61,12 @@ public class UserManage_AddShowActivity extends Activity implements
 			etTel, etMob, etMail, etNote1, etNote2, etTole, etPhy;
 	ArrayList<User_Model> userList, userMainList;
 	static int counter = 0;
-	static String _path;
+	String _path = "";
 	Uri mCapturedImageURI = null;
 	Button add, cancel, back, update, delete, next, prev;
 	ImageView ivUser, headLogo;
 	TextView headerTitle, tvPhy;
-	String name, surname, address, country, state, city, zip, tel, mob, mail,
+	String name="", surname="", address, country, state, city, zip, tel, mob, mail="",
 			gender, note1, note2, tole, btype, phy, genderSelected = "Male",
 			_check, path = "";
 	int picid, phyid, uid, user_id, blood, userid;
@@ -72,7 +75,7 @@ public class UserManage_AddShowActivity extends Activity implements
 	Spinner spBloodType;
 	RadioGroup genderGroup;
 	RadioButton genderRadio, mailRadio, femailRadio;
-	boolean flag, addImage, flagCamera;
+	boolean flag, addImage;
 	String doWhat;
 	AutoCompleteTextView autoCountryList, autoStateList;
 	ArrayList<Picture_Model> picList;
@@ -80,6 +83,9 @@ public class UserManage_AddShowActivity extends Activity implements
 	AlertDialog.Builder alertDialog,ad1,ad2;
 	public File cacheDir;
 	Bitmap bitmap = null;
+	
+	private static final int CAMERA_IMAGE_CAPTURE = 0;
+	private  Uri imageCaptureUri  ,unknowndeviceUri; 
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -272,6 +278,7 @@ public class UserManage_AddShowActivity extends Activity implements
 			}
 		});
 
+		
 		alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setTitle("Shot from Camera");
 		alertDialog.setMessage(R.string.shot_from_Camera);
@@ -450,20 +457,22 @@ public class UserManage_AddShowActivity extends Activity implements
 			openContextMenu(v);
 			break;
 		case R.id.btnAddUser:
-			if (!(name.equals("") || surname.equals(""))) {
-				Log.i("User Id : User Add ", ""+user_id);
-				if (flagCamera == true) {
-					// insertation in picture management
-					db.insertPicture(user_id, _path, name, 1, note1, note2);
-					System.out.println("User Id~~~~~~~" + user_id);
-					System.out.println("image path~~~~~~~" + _path);
-					flagCamera = false;
-					ArrayList<Picture_Model> picsTemp = db.getPictures(user_id);
-					picid = picsTemp.get(picsTemp.size() - 1).id;
-				}
+			if (!(name.equals("") || surname.equals("")||  mail.equals(""))) {
 				
 				if(GlobalMethods.isEmail(mail)){
 					
+					Log.i("User Id : User Add ", ""+user_id);
+//					if (flagCamera == true) {
+						// insertation in picture management
+						db.insertPicture(user_id, _path, name, 1, note1, note2);
+						System.out.println("User Id~~~~~~~" + user_id);
+						System.out.println("image path~~~~~~~" + _path);
+//						flagCamera = false;
+						ArrayList<Picture_Model> picsTemp = db.getPictures(user_id);
+						picid = picsTemp.get(picsTemp.size() - 1).id;
+//					}
+
+						
 					db.insertPatients(user_id, picid, phyid, name, surname,
 							address, zip, country, state, city, gender, tel, mob,
 							mail, tole, blood, phy, note1, note2);
@@ -491,14 +500,14 @@ public class UserManage_AddShowActivity extends Activity implements
 			if (!(name.equals("") || surname.equals(""))) {
 				Log.i("PID", "......... " + uid);
 				Log.i("User Id : User Update ", ""+user_id);
-				if (flagCamera == true) {
+//				if (flagCamera == true) {
 					db.insertPicture(user_id, _path, name, 1, note1, note2);
 					System.out.println("User Id~~~~~~~" + user_id);
 					System.out.println("image path~~~~~~~" + _path);
-					flagCamera = false;
+//					flagCamera = false;
 					ArrayList<Picture_Model> picsTemp = db.getPictures(user_id);
 					picid = picsTemp.get(picsTemp.size() - 1).id;
-				}
+//				}
 				
 				if(GlobalMethods.isEmail(mail)){
 					db.updatePatients(user_id, uid, picid, phyid, name, surname,
@@ -640,51 +649,126 @@ public class UserManage_AddShowActivity extends Activity implements
 
 			etNote1.requestFocus();
 		}
+		
+		if(requestCode==CAMERA_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK){
+			_path	= getThubnailFilePath() ;
+			Bitmap bitmap = GlobalMethods.decodeFile(_path);
+			
+			if (bitmap == null) {
+				ivUser.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
+			} else {
+				ivUser.setImageBitmap(bitmap);
+			}
+		}
+	}
+	
+	/**
+	 * Get the path of captured  image by camera 
+	 * @return
+	 */
+	private String getThubnailFilePath() {
+		try {
+			String[] largeFileProjection = {
+					MediaStore.Images.ImageColumns._ID,
+					MediaStore.Images.ImageColumns.DATA };
+
+			String largeFileSort = MediaStore.Images.ImageColumns._ID
+					+ " DESC";
+		Cursor	myCursor = this.managedQuery(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+					largeFileProjection, null, null, largeFileSort);
+			
+			
+			String largeImagePath = "";
+
+			try {
+				myCursor.moveToFirst();
+
+				// This will actually give yo uthe file path location of
+				// the
+				// image.
+				largeImagePath = myCursor
+						.getString(myCursor
+								.getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
+				unknowndeviceUri = Uri.fromFile(new File(
+						largeImagePath));
+				imageCaptureUri = null;
+			} finally {
+			}
+			
+			
+		} catch (Exception e) {
+			unknowndeviceUri = null;
+			e.printStackTrace();
+		}
+		
+		if (unknowndeviceUri != null)
+			return unknowndeviceUri.getPath();
+		else
+			return getPath(imageCaptureUri);
 	}
 
-	public void Shot_Camera() {
-		try {
-//			_path=  "/sdcard/Medpalnn";
-//			 File sdImageMainDirectory = new File(_path);
-//	                if (!sdImageMainDirectory.exists()) {
-//	                    sdImageMainDirectory.mkdirs();
-//	                }
-//	                if (!sdImageMainDirectory.isDirectory()) {
-//	                	_path = "/sdcard";
-//	        			}
-	                
-			String parentdir;
-			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
-			File parentDirFile = new File(parentdir);
-			parentDirFile.mkdirs();
+	/**
+	 * Get image path from {@link Uri}
+	 * @param uri
+	 * @return
+	 */
+	public String getPath(Uri uri) {
 
-			// If we can't write to that special path, try just writing
-			// directly to the sdcard
-			if (!parentDirFile.isDirectory()) {
-			parentdir = Environment.getExternalStorageDirectory()+"";
-			}
-	                Calendar cal = Calendar.getInstance();
-	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
-	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
-	                _path=filepath;
-		
-			
-			//_path = Environment.getExternalStorageDirectory() + File.separator+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
-			System.out.println("thumbnail path~~~~~~"+_path);
-			File file = new File(_path);
-			Uri outputFileUri = Uri.fromFile(file);
-			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-			startActivityForResult(intent, 1212);
-			
-			flagCamera=true;
+		String StringPath = null;
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		if (cursor != null) {
+			// HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
+			// THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
+			int column_index = cursor
+					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+			cursor.moveToFirst();
 
-		} catch (Exception e) {
-			e.printStackTrace();
-			
-			
+			StringPath = cursor.getString(column_index);
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			StringPath = null;
 		}
 
+		if (StringPath == null) {
+			StringPath = uri.getPath();
+			if (StringPath != null)
+				return StringPath;
+		} else {
+			return null;
+		}
+		return StringPath;
+	}
+	
+	public void Shot_Camera(){
+		String storageState = Environment.getExternalStorageState();
+		if (storageState.equals(Environment.MEDIA_MOUNTED)) 
+		{
+			Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+			String filename = System.currentTimeMillis() + ".jpg";
+			ContentValues values = new ContentValues();
+			values.put(MediaStore.Images.Media.TITLE, filename);
+			imageCaptureUri = getContentResolver().insert(
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+
+			intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
+					imageCaptureUri);
+			try {
+				startActivityForResult(intent, CAMERA_IMAGE_CAPTURE);
+			} catch (ActivityNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			new AlertDialog.Builder(UserManage_AddShowActivity.this)
+					.setMessage(
+							"External Storeage (SD Card) is required.\n\nCurrent state: "
+									+ storageState).setCancelable(true)
+					.create().show();
+		}
 	}
 
 	@Override

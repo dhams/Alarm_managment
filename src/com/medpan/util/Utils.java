@@ -3,7 +3,12 @@ package com.medpan.util;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-public class Utils {
+import android.app.Activity;
+import android.database.Cursor;
+import android.net.Uri;
+import android.provider.MediaStore;
+
+public class Utils  {
     public static void CopyStream(InputStream is, OutputStream os)
     {
         final int buffer_size=1024;
