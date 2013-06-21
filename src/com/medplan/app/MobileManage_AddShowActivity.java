@@ -407,12 +407,11 @@ public class MobileManage_AddShowActivity extends Activity implements
 			}
 			edit.commit();
 			if (!(name.equals("") || surname.equals("") || tel.equals("") || mob
-					.equals("")||relation==0 || mail.equals("") )) {
-				
+					.equals("")||relation==0 )) {
 				
 				
 
-			    if(GlobalMethods.isEmail(mail)){
+//			    if(GlobalMethods.isEmail(mail)){
 			    	
 //				    if(flagCamera==true){
 				    	//insertation in picture management
@@ -429,12 +428,12 @@ public class MobileManage_AddShowActivity extends Activity implements
 						Toast.makeText(MobileManage_AddShowActivity.this,
 								R.string.contact_saved_mob_mgt, Toast.LENGTH_LONG).show();
 						this.finish();
-				}
-				else{
-					Toast.makeText(MobileManage_AddShowActivity.this,
-							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
-							.show();
-				}
+//				}
+//				else{
+//					Toast.makeText(MobileManage_AddShowActivity.this,
+//							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
+//							.show();
+//				}
 			  
 			} else
 				Toast.makeText(

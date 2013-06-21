@@ -1261,6 +1261,7 @@ public class CellManage_AddShowActivity extends Activity implements
 		intWeek = spWeek.getSelectedItemPosition();
 		intMonth = spMonth.getSelectedItemPosition();
 
+		mSoundManager.stopSound() ;
 		switch (v.getId()) {
 		case R.id.tvIDate:
 			tv.requestFocus();
@@ -1302,6 +1303,7 @@ public class CellManage_AddShowActivity extends Activity implements
 						Toast.LENGTH_SHORT).show(); 
 				return ; 
 			}
+			
 			
 			Log.i("User Id : Cell Add ", "" + loginid);
 			Intent myIntent = null;

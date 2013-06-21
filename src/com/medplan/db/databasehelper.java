@@ -2072,6 +2072,20 @@ public class databasehelper extends SQLiteOpenHelper {
 
 	}
 	
+	
+	/**
+	 * This method will check the alarm for same time .
+	 */
+	private boolean  checkSameTimeReport (int loginId, int userID , String pateintName,String medName,
+			String date, String time, String dosageTaken,int qty ){
+		openDataBase() ;
+		
+		Cursor cursor = myDataBase.rawQuery("select * from notification_medplann where loginid="+loginId+" and userid="+userID+" and ", null) ;
+		return false ; 
+	}
+
+
+	
 	/////////////////////////////////Report Medplann////////////////////////////
 	
 	public void insertReport(int loginid, String pateintName,String medName,

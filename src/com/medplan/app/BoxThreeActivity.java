@@ -7,6 +7,7 @@ import java.util.Date;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -85,6 +86,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 	private String fromWhere;
 
 	private ApplicationClass applicationClass;
+	private AlertDialog.Builder alertDialog ;
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -194,7 +196,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				+ cell_pos + "~~~~ " + MedName + "~~~~~ " + WaytoStop
 				+ "~~~~~ " + Desc);
  
-		AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
+		alertDialog = new AlertDialog.Builder(this);
 		alertDialog.setCancelable(false);
 		alertDialog.setTitle("Confirm");
 		alertDialog.setMessage("Did you take your medicine?");
@@ -1316,7 +1318,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		User_Model user = db.getSinglePatientForId(userid).get(0);
 		String username = user.name + " " + user.surname;
 		String med = MedName;
-
+		
 		Log.i("Login Id", "" + lid);
 		Log.i("User name", username);
 		Log.i("Med Name", med);
@@ -1334,7 +1336,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		startActivity(intent) ;
 		
 	}
-
+	
 	public void Call_actvity() {
 		intent = new Intent(BoxThreeActivity.this,
 				CellManage_AddShowActivity.class);
@@ -1520,5 +1522,14 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		// }) ;
 
 		// thread.start() ;
+	}
+	
+	class AlertDialgo extends AlertDialog.Builder{
+
+		public AlertDialgo(Context arg0) {
+			super(arg0);
+			// TODO Auto-generated constructor stub
+		}
+		
 	}
 }

@@ -457,9 +457,9 @@ public class UserManage_AddShowActivity extends Activity implements
 			openContextMenu(v);
 			break;
 		case R.id.btnAddUser:
-			if (!(name.equals("") || surname.equals("")||  mail.equals(""))) {
+			if (!(name.equals("") || surname.equals(""))) {
 				
-				if(GlobalMethods.isEmail(mail)){
+//				if(GlobalMethods.isEmail(mail)){
 					
 					Log.i("User Id : User Add ", ""+user_id);
 //					if (flagCamera == true) {
@@ -482,13 +482,13 @@ public class UserManage_AddShowActivity extends Activity implements
 							.show();
 					this.finish();
 					
-				}
+//				}
 				
-				else{
-					Toast.makeText(UserManage_AddShowActivity.this,
-							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
-							.show();
-				}
+//				else{
+//					Toast.makeText(UserManage_AddShowActivity.this,
+//							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
+//							.show();
+//				}
 
 				
 			} else
@@ -509,7 +509,7 @@ public class UserManage_AddShowActivity extends Activity implements
 					picid = picsTemp.get(picsTemp.size() - 1).id;
 //				}
 				
-				if(GlobalMethods.isEmail(mail)){
+//				if(GlobalMethods.isEmail(mail)){
 					db.updatePatients(user_id, uid, picid, phyid, name, surname,
 							address, zip, country, state, city, gender, tel, mob,
 							mail, tole, blood, phy, note1, note2);
@@ -517,12 +517,12 @@ public class UserManage_AddShowActivity extends Activity implements
 							R.string.pateint_update_user_mgt, Toast.LENGTH_SHORT)
 							.show();
 					this.finish();
-				}
-				else{
-					Toast.makeText(UserManage_AddShowActivity.this,
-							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
-							.show();
-				}
+//				}
+//				else{
+//					Toast.makeText(UserManage_AddShowActivity.this,
+//							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
+//							.show();
+//				}
 				
 			} else
 				Toast.makeText(UserManage_AddShowActivity.this,

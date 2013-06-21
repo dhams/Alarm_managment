@@ -825,11 +825,11 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				sunfrom = spSunFrom.getSelectedItemPosition();
 				sunto = spSunTo.getSelectedItemPosition();
 			}
-			if (!(name.equals("") || surname.equals("")|| tel.equals("")|| mob.equals("")||mail.equals(""))) {
+			if (!(name.equals("") || surname.equals("")|| tel.equals("")|| mob.equals(""))) {
 				
 
 				
-				if(GlobalMethods.isEmail(mail)){
+//				if(GlobalMethods.isEmail(mail)){
 					
 					     db.insertPicture(phy_user_id, _path, name, 1, note1,note2);
 					     ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
@@ -857,12 +857,12 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				} else
 					this.finish();
 				
-				}
-				else{
-					Toast.makeText(PhysicianManage_AddShowActivity.this,
-							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
-							.show();
-				}
+//				}
+//				else{
+//					Toast.makeText(PhysicianManage_AddShowActivity.this,
+//							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
+//							.show();
+//				}
 				
 					
 					
@@ -902,10 +902,10 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				sunfrom = spSunFrom.getSelectedItemPosition();
 				sunto = spSunTo.getSelectedItemPosition();
 			}
-			if (!(name.equals("") || surname.equals("") || mail.equals(""))) {
+			if (!(name.equals("") || surname.equals("") )) {
 				
 
-				if(GlobalMethods.isEmail(mail)){
+//				if(GlobalMethods.isEmail(mail)){
 					
 //					if (falgCamera == true) {
 						db.insertPicture(phy_user_id, _path, name, 1, note1, note2);
@@ -932,12 +932,12 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 
 					this.finish();
 					
-				}
-				else{
-					Toast.makeText(PhysicianManage_AddShowActivity.this,
-							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
-							.show();
-				}
+//				}
+//				else{
+//					Toast.makeText(PhysicianManage_AddShowActivity.this,
+//							"Enter correct Mail-ID", Toast.LENGTH_SHORT)
+//							.show();
+//				}
 				
 			} else
 				Toast
