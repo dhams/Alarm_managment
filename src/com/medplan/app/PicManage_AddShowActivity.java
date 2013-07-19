@@ -71,6 +71,8 @@ public class PicManage_AddShowActivity extends Activity implements
 	private static final int CAMERA_IMAGE_CAPTURE = 0;
 	private  Uri imageCaptureUri  ,unknowndeviceUri; 
 	
+	private static final int SELECT_PICTURE = 1;
+	
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -182,8 +184,6 @@ public class PicManage_AddShowActivity extends Activity implements
 				showButton.setVisibility(View.VISIBLE);
 				fillIsTheForm(pics_temp);
 				counter = this.getIntent().getIntExtra("counter", 0);
-			
-
 			}
 		} else { 
 			rl.setVisibility(View.INVISIBLE);
@@ -275,7 +275,7 @@ public class PicManage_AddShowActivity extends Activity implements
 			break;
 		case R.id.btnUpdate:
 			if (!(_path.equals("") || description.equals("")|| category==0)) {
-				db.updatePicture(userid,id, _path, description, category, note1,note2);
+				db.updatePicture(userid,id, _path, description, category, note1,note2 ,true);
 				Toast.makeText(PicManage_AddShowActivity.this,
 						R.string.picture_update_pic_mgt, Toast.LENGTH_LONG).show();
 				this.finish();
@@ -360,23 +360,38 @@ public class PicManage_AddShowActivity extends Activity implements
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if (resultCode == RESULT_OK && requestCode == 1) {
- 
-			Uri contentUri = data.getData();
-			String[] proj = { MediaStore.Images.Media.DATA };
-			Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			cursor.moveToFirst();
-			String tmppath = cursor.getString(column_index);
-			//Bitmap mBitmap = BitmapFactory.decodeFile(tmppath);
-			_path = tmppath;
-			Bitmap bitmap;
-			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(path, setwidth, setheight);
-			bitmap=GlobalMethods.decodeFile(_path);
-			iv.setImageBitmap(bitmap);
-			desc.setFocusable(true);
+		if (requestCode == SELECT_PICTURE) {
+			if (resultCode == RESULT_OK) {
+				Uri selectedImageUri = data.getData();
+				// filemanagerstring = selectedImageUri.getPath();
+				this._path = getPath(selectedImageUri);
+				if (_path != null) {
+					Log.e("Image path", _path);
+//					Bitmap bm = GlobalMethods.decodeFile(_path);
+					Bitmap bm = GlobalMethods.decodeFileForReg(_path, selectedImageUri, getApplicationContext());
+					iv.setImageBitmap(bm);
+//					desc.setFocusable(true);
+				}
+			}
 
 		}
+//		if (resultCode == RESULT_OK && requestCode == 1) {
+// 
+//			Uri contentUri = data.getData();
+//			String[] proj = { MediaStore.Images.Media.DATA };
+//			Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+//			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//			cursor.moveToFirst();
+//			String tmppath = cursor.getString(column_index);
+//			//Bitmap mBitmap = BitmapFactory.decodeFile(tmppath);
+//			_path = tmppath;
+//			Bitmap bitmap;
+//			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(path, setwidth, setheight);
+//			bitmap=GlobalMethods.decodeFile(_path);
+//			iv.setImageBitmap(bitmap);
+//			desc.setFocusable(true);
+//
+//		}
 		if (requestCode == 1212) {
 			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
 			Bitmap bitmap;
@@ -440,17 +455,26 @@ public class PicManage_AddShowActivity extends Activity implements
 			
 			break;
 		case 1:
-			Intent gallery = new Intent();
-			gallery.setType("image/*"); // sets the return type to IMAGE
-			gallery.setAction(Intent.ACTION_GET_CONTENT);
-			startActivityForResult(
-					Intent.createChooser(gallery, "Select Picture"), 1);
+//			Intent gallery = new Intent();
+//			gallery.setType("image/*"); // sets the return type to IMAGE
+//			gallery.setAction(Intent.ACTION_GET_CONTENT);
+//			startActivityForResult(
+//					Intent.createChooser(gallery, "Select Picture"), 1);
 
+			gallery() ;
 			break;
 		}
 		return false;
 	}
 
+	
+	public void gallery() {
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+				SELECT_PICTURE);
+	}
 	
 	public void Shot_Camera(){
 		String storageState = Environment.getExternalStorageState();
@@ -555,9 +579,7 @@ public class PicManage_AddShowActivity extends Activity implements
 			StringPath = uri.getPath();
 			if (StringPath != null)
 				return StringPath;
-		} else {
-			return null;
-		}
+		} 
 		return StringPath;
 	}
 	

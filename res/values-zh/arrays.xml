@@ -82,7 +82,7 @@
     <string-array name="way_stop_alarm">
         <item></item>
         <item>停止按钮</item>
-        <item>闪光的单元格</item>
+        <item>細胞</item>
     </string-array>
     <string-array name="interval_time">
         <item></item>

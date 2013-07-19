@@ -3,6 +3,7 @@ package com.medplan.app;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -87,6 +88,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 	private ApplicationClass applicationClass;
 	private AlertDialog.Builder alertDialog ;
+	String pendingInterntID  ;
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -98,12 +101,10 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-		Window wind;
-		wind = this.getWindow();
-		wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
-		wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-		wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
-		String pendingInterntID = intent.getStringExtra("unique");
+
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:SS Z");
+
+	    pendingInterntID = intent.getStringExtra("unique");
 
 		applicationClass = (ApplicationClass) this.getApplication();
 
@@ -148,6 +149,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 			Log.e("", "*************  finish  ****	**************");
 			stop = true;
 			finish();
+			launchHomeActivity() ;
+			return  ;
 		} else {
 			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
 					userid, boxid, cell_pos);
@@ -155,6 +158,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				Log.e("", "*************  finish  ****	**************");
 				stop = true;
 				finish();
+				launchHomeActivity() ;
+				return  ;
 			} else{
 				if (activity!=null)
 				Toast.makeText(BoxThreeActivity.this,
@@ -172,10 +177,18 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		// finish();
 		// }
 
-		if (pendingInterntID != null)
+		if (pendingInterntID != null){
 			Log.d("*********** Pending intent Id =", "Pending intent Id ="
 					+ pendingInterntID);
-
+			unlockScren() ;
+		}
+		Log.d("!!!!!!!!!!!!!! Pending intent Id =", "Pending intent Id ="+SP.getString("BoxTenPid", "")) ;
+		if (SP.getString("BoxTenPid", "").equals(pendingInterntID)){
+			finish() ;
+			return   ;
+		}
+		
+			
 		setContentView(R.layout.cell_mgt_three_boxe);
 
 		Constant.flag = false;
@@ -200,7 +213,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		alertDialog.setCancelable(false);
 		alertDialog.setTitle("Confirm");
 		alertDialog.setMessage("Did you take your medicine?");
-		alertDialog.setPositiveButton(R.string.ok,
+		
+		alertDialog.setPositiveButton(R.string.ok, 
 				new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
@@ -277,7 +291,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						// TODO: handle exception
+						// TODO: handle exceptiononCreate
 					}
 
 					picid = cellinfolist.get(i).picid;
@@ -317,7 +331,6 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 						e.printStackTrace();
 						// TODO: handle exception
 					}
-
 					picid = cellinfolist.get(i).picid;
 					c = i;
 					break;
@@ -501,7 +514,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 										public void run() {
 											if (counter >= limit) {
-												CommonMethod.player.stop();
+//												CommonMethod.player.stop();
+												CommonMethod.releaseSoundPlayer();
 											} else {
 												CommonMethod.player.start();
 											}
@@ -527,7 +541,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 										public void run() {
 											if (counter >= limit) {
-												CommonMethod.player.stop();
+//												CommonMethod.player.stop();
+												CommonMethod.releaseSoundPlayer();
 											} else {
 												CommonMethod.player.start();
 											}
@@ -603,6 +618,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				mTts.shutdown();
 			}
 		}
+		
+		CommonMethod.releaseSoundPlayer() ;
 		super.onDestroy();
 	}
 
@@ -705,7 +722,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 					}
 					if (sound == true) {
-						CommonMethod.player.stop();
+//						CommonMethod.player.stop();
+						CommonMethod.releaseSoundPlayer();
 						btnConfirm.setVisibility(View.GONE);
 
 					}
@@ -756,7 +774,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 					// alert=false;
 					// }
 					if (sound == true) {
-						CommonMethod.player.stop();
+//						CommonMethod.player.stop();
+						CommonMethod.releaseSoundPlayer();
 						btnConfirm.setVisibility(View.GONE);
 					}
 					if (mTts != null)
@@ -800,7 +819,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 						vibrat = false;
 					}
 					if (sound == true) {
-						CommonMethod.player.stop();
+//						CommonMethod.player.stop();
+						CommonMethod.releaseSoundPlayer();
 						btnConfirm.setVisibility(View.GONE);
 					}
 					if (mTts != null)
@@ -846,7 +866,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 					CommonMethod.vibrator.cancel();
 				}
 				if (sound == true) {
-					CommonMethod.player.stop();
+//					CommonMethod.player.stop();
+					CommonMethod.releaseSoundPlayer();
 
 				}
 				if (mTts != null)
@@ -912,7 +933,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 				}
 				if (sound == true) {
-					CommonMethod.player.stop();
+//					CommonMethod.player.stop();
 					btnConfirm.setVisibility(View.GONE);
 
 				}
@@ -925,7 +946,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 //						|| sound == true || alert == true || fromWhere != null)
 				
 				
-					if (fromWhere != null)
+					if (fromWhere != null )
 				{
 					blink = false;
 					miniImg = false;
@@ -971,7 +992,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				// alert=false;
 				// }
 				if (sound == true) {
-					CommonMethod.player.stop();
+//					CommonMethod.player.stop();
+					CommonMethod.releaseSoundPlayer();
 					btnConfirm.setVisibility(View.GONE);
 				}
 				if (mTts != null)
@@ -1021,7 +1043,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 					vibrat = false;
 				}
 				if (sound == true) {
-					CommonMethod.player.stop();
+//					CommonMethod.player.stop();
+					CommonMethod.releaseSoundPlayer();
 					btnConfirm.setVisibility(View.GONE);
 				}
 				if (mTts != null)
@@ -1073,7 +1096,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				CommonMethod.vibrator.cancel();
 			}
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				CommonMethod.releaseSoundPlayer();
 
 			}
 			if (mTts != null)
@@ -1329,12 +1353,13 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		db.insertReport(lid, username, med, date, time, dosage_taken, qty);
 		BoxThreeActivity.this.finish();
 		
-		Intent intent  = new Intent(BoxThreeActivity.this, MainActivity.class) ;
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK) ;
-		if (Build.VERSION.SDK_INT >= 11 )//11 for Honeycomb
-	        intent.addFlags(0x8000);
-		startActivity(intent) ;
+//		Intent intent  = new Intent(BoxThreeActivity.this, MainActivity.class) ;
+//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK) ;
+//		if (Build.VERSION.SDK_INT >= 11 )//11 for Honeycomb
+//	        intent.addFlags(0x8000);
+//		startActivity(intent) ;
 		
+		SP.edit().putString("BoxTenPid", pendingInterntID).commit();
 	}
 	
 	public void Call_actvity() {
@@ -1460,22 +1485,41 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				CommonMethod.vibrator.cancel();
 			} catch (Exception e) {
 				e.printStackTrace();
-				// TODO: handle exception
 			}
-
 		}
 
+//		CommonMethod.releaseSoundPlayer();
+	}
+	
+	 
+	private void  launchHomeActivity(){
+		
+		    Intent startMain = new Intent(Intent.ACTION_MAIN);
+	        startMain.addCategory(Intent.CATEGORY_HOME);
+	        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+	        startActivity(startMain);
 	}
 
+	private  void unlockScren(){
+		Window wind;
+		wind = this.getWindow();
+		wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+		wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+	}
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (isAlarm && done == false) {
+			if (isAlarm ) {
+				alertMsg.show();
+				Toast.makeText(BoxThreeActivity.this,
+						getResources().getString(R.string.stop_alarm_msg),
+						Toast.LENGTH_LONG).show();
 				System.out.println("frist loop~~~~");
 
-				if (Constant.flag == true) {
+			}else{
 					boolean finish = true;
 					Intent intent = new Intent(BoxThreeActivity.this,
 							MainActivity.class);
@@ -1487,19 +1531,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 					finish();
 					Constant.flag = false;
 					System.out.println("second loop~~~~");
-				} else {
-					alertMsg.show();
-					Toast.makeText(BoxThreeActivity.this,
-							getResources().getString(R.string.stop_alarm_msg),
-							Toast.LENGTH_LONG).show();
-				}
-				return false;
 			}
-		} else {
-			System.out.println("outside loop~~~~");
-			return true;
-		}
-
+		} 
 		return super.onKeyDown(keyCode, event);
 
 	}

@@ -97,6 +97,7 @@
     <string name="add_cell">Add Cell</string>
     <string name="cancel">Cancel</string>
     <string name="delete">Delete</string>
+    <string name="delete_all">Delete all</string>
     <string name="back">Back</string>
     <string name="update">Update</string>
     <string name="visiting_time">Visiting time</string>
@@ -272,7 +273,7 @@
     <string name="time">Time</string>
     <string name="taken">Taken</string>
     <string name="noreportfound">No Report Found</string>
-    <string name="getreport">Get Report As PDF</string>
+    <string name="getreport">Get report as PDF</string>
     <string name="select_box_alarm_mgt">Please First select Box for User in Cell-Management.</string>
     <string name="connect_box_alarm_mgt">Select any User to connect with the Box,then Choose the BOX Type and click on Activate to Connect to the Box.</string>
 </resources>

@@ -93,7 +93,7 @@
     <string-array name="way_stop_alarm">
         <item></item>
         <item>bouton d\'arrêt</item>
-        <item>cellule de clignotant</item>
+        <item>cellule </item>
     </string-array>
     <string-array name="interval_time">
         <item></item>

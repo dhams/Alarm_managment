@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <declare-styleable name="MySpinner">
+        <attr name="MyEntries" format="reference"/>
+    </declare-styleable>
     <string-array name="user_type">
         <item>User/patient</item>
         <item>Doctor/physician</item>
@@ -92,14 +95,14 @@
     <string-array name="way_stop_alarm">
         <item></item>
         <item>Stop button</item>
-        <item>Blinking cell</item>
+        <item>Cell</item>
     </string-array>
     <string-array name="interval_time">
         <item></item>
         <item>Daily</item>
         <item>Weekly</item>
         <item>Monthly</item>
-        <item>Week of a day</item>
+        <item>Days of a week </item>
     </string-array>
     <string-array name="interval_day">
         <item></item>

@@ -87,6 +87,7 @@ public class UserManage_AddShowActivity extends Activity implements
 	private static final int CAMERA_IMAGE_CAPTURE = 0;
 	private  Uri imageCaptureUri  ,unknowndeviceUri; 
 
+	private boolean flagCamera ;
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -106,6 +107,8 @@ public class UserManage_AddShowActivity extends Activity implements
 				startActivity(intent);
 			}
 		});
+		
+		
 		db = new databasehelper(this);
 		//
 		user_id = PreferenceManager.getDefaultSharedPreferences(
@@ -345,7 +348,7 @@ public class UserManage_AddShowActivity extends Activity implements
 		} else {
 			femailRadio.setChecked(true);
 		}
-
+ 
 		picid = um.picid;
 		phyid = um.phyid;
 		uid = um.uid;
@@ -369,6 +372,7 @@ public class UserManage_AddShowActivity extends Activity implements
 
 		Picture_Model picmodel = db.getPicture(picid);
 
+		_path = picmodel.path ;
 			Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
 			if (bitmap == null) {
 				ivUser.setImageBitmap(BitmapFactory.decodeResource(getResources(),R.drawable.add_photo));
@@ -403,7 +407,7 @@ public class UserManage_AddShowActivity extends Activity implements
 
 		tel = etTel.getText().toString();
 		mob = etMob.getText().toString();
-		mail = etMail.getText().toString();
+		mail = etMail.getText().toString();	
 		gender = genderSelected;
 		tole = etTole.getText().toString();
 		phy = tvPhy.getText().toString();
@@ -456,21 +460,29 @@ public class UserManage_AddShowActivity extends Activity implements
 			registerForContextMenu(v);
 			openContextMenu(v);
 			break;
+			
+//			ttsharma94@gmail.com
+//
+//			TDhSharma489
 		case R.id.btnAddUser:
 			if (!(name.equals("") || surname.equals(""))) {
 				
 //				if(GlobalMethods.isEmail(mail)){
 					
 					Log.i("User Id : User Add ", ""+user_id);
-//					if (flagCamera == true) {
+					if (flagCamera == true) {
 						// insertation in picture management
-						db.insertPicture(user_id, _path, name, 1, note1, note2);
+					
+
 						System.out.println("User Id~~~~~~~" + user_id);
 						System.out.println("image path~~~~~~~" + _path);
-//						flagCamera = false;
+						flagCamera = false;
+
+						db.insertPicture(user_id, _path, name, 1, note1, note2);
+						
 						ArrayList<Picture_Model> picsTemp = db.getPictures(user_id);
 						picid = picsTemp.get(picsTemp.size() - 1).id;
-//					}
+					}
 
 						
 					db.insertPatients(user_id, picid, phyid, name, surname,
@@ -501,13 +513,27 @@ public class UserManage_AddShowActivity extends Activity implements
 				Log.i("PID", "......... " + uid);
 				Log.i("User Id : User Update ", ""+user_id);
 //				if (flagCamera == true) {
+////					db.insertPicture(user_id, _path, name, 1, bnote1, note2);
+//					
+//					System.out.println("User Id~~~~~~~" + user_id);
+//					System.out.println("image path~~~~~~~" + _path);
+//					flagCamera = false;
+//					
+////					ArrayList<Picture_Model> picsTemp = db.getPictures(user_id);
+////					picid = picsTemp.get(picsTemp.size() - 1).id;
+//					
+//					db.updatePicture(0, picid, _path, null, 0, null, null , false) ;
+//				} 
+				
+				if (flagCamera == true) {
 					db.insertPicture(user_id, _path, name, 1, note1, note2);
 					System.out.println("User Id~~~~~~~" + user_id);
 					System.out.println("image path~~~~~~~" + _path);
-//					flagCamera = false;
+					flagCamera = false;
 					ArrayList<Picture_Model> picsTemp = db.getPictures(user_id);
 					picid = picsTemp.get(picsTemp.size() - 1).id;
-//				}
+				}
+					
 				
 //				if(GlobalMethods.isEmail(mail)){
 					db.updatePatients(user_id, uid, picid, phyid, name, surname,
@@ -658,6 +684,7 @@ public class UserManage_AddShowActivity extends Activity implements
 				ivUser.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
 			} else {
 				ivUser.setImageBitmap(bitmap);
+				flagCamera = true ;
 			}
 		}
 	}

@@ -91,6 +91,7 @@
     <string name="add_cell">Ajouter cellulaire</string>
     <string name="cancel">annuler</string>
     <string name="delete">effacer</string>
+    <string name="delete_all">supprimer tous</string>
     <string name="back">arrière</string>
     <string name="update">mettre à jour</string>
     <string name="visiting_time">temps de visite</string>

@@ -124,14 +124,13 @@
                 android:textColor="@color/label_color"
                 android:textStyle="bold" />
 
-            <Spinner
+            <com.medplan.app.MySpinner
                 android:id="@+id/spBgColor"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/spinner_bg"
                 android:entries="@array/color_type"
-                android:prompt="@string/select_bgColor" >
-            </Spinner>
+                android:prompt="@string/select_bgColor" />
 
             <TextView
                 android:id="@+id/textviewTitle"
@@ -292,7 +291,7 @@
                 android:textColor="@color/label_color"
                 android:textStyle="bold" />
 
-            <Spinner
+<!--             <Spinner
                 android:id="@+id/sptimeInterval"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -300,10 +299,18 @@
                 android:entries="@array/interval_time"
                 android:paddingLeft="5dp"
                 android:prompt="@string/interval_time_prompt" >
-            </Spinner>
+            </Spinner> -->
 
-          
-
+          <com.medplan.app.MySpinner
+                android:id="@+id/sptimeInterval"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:entries="@array/interval_time"
+                android:paddingLeft="5dp"
+                android:prompt="@string/interval_time_prompt" 
+                android:focusable="false"
+            />
 
                 <TextView
                     android:id="@+id/textviewTitle"

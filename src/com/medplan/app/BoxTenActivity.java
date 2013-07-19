@@ -20,6 +20,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
@@ -78,17 +79,18 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 	private TextToSpeech mTts;
 	boolean blink, miniImg, vibrat, alert, sound, isConfirm, isAlarm;
 	private static final int MY_DATA_CHECK_CODE = 1234;
-	boolean done = false;
+//	public static  Onpause  =false;
 	AlertDialog alertMsg;
 	public static CellInfo_Model cell;
 	ImageView headLogo;
 	TextView headerTitle;
 	SimpleDateFormat sdf;
 	SharedPreferences SP;
-    private boolean stop ;
+    public static  boolean stop ;
     private String fromWhere ;
     private ApplicationClass applicationClass ;
     private String 	activity   ;
+    String pendingInterntID ; 
     
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -97,7 +99,7 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 		db = new databasehelper(this);
 		SP = PreferenceManager.getDefaultSharedPreferences(this);
 		Intent intent = getIntent();
-		String pendingInterntID  = intent.getStringExtra("unique") ;
+		pendingInterntID  = intent.getStringExtra("unique") ;
 		boxid = intent.getIntExtra("BoxID", 0);
 		userid = intent.getIntExtra("UserID", 0);
 		loginid = intent.getIntExtra("LoginID", 0);
@@ -107,7 +109,6 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 		alarmSound = intent.getIntExtra("Sound", 0);
 		Desc = intent.getStringExtra("Description");
 		fromWhere = intent.getStringExtra("FromWhereActivity");
-		 
 		 
 			applicationClass = (ApplicationClass) this.getApplication();
 
@@ -145,11 +146,11 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 			}
 
 		 
-		 Window wind;
-		    wind = this.getWindow();
-		    wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
-		    wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-		    wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+//		 Window wind;
+//		    wind = this.getWindow();
+//		    wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+//		    wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+//		    wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
 		    
 //		if (SP.getInt("lock", -1) == 0 && cell_pos != -1) {
 //			Log.i("", "finish");
@@ -160,14 +161,23 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 //			stop = true ;
 //		finish();
 //	}
-		
-			if (pendingInterntID!=null)
+			
+			if (pendingInterntID!=null){
 				Log.d("*********** Pending intent Id =", "Pending intent Id ="+pendingInterntID) ;
+				unlockScren();
+				}
+			Log.d("!!!!!!!!!!!!!! Pending intent Id =", "Pending intent Id ="+SP.getString("BoxTenPid", "")) ;
+			if (SP.getString("BoxTenPid", "").equals(pendingInterntID)){
+				finish() ;
+				return   ;
+			}
 		    
 		if(((SP.getInt("lock", -1) == 0)&& cell_pos != -1)||(SP.getString("isLogin", "")=="no")||(db.isUserExsist(userid)==false)) {
 			Log.e("", "*************  finish  ****	**************");
 			stop = true ;
 			finish();
+			launchHomeActivity();
+			return   ;
 		}
 	else{
 		ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
@@ -176,6 +186,8 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 			Log.e("", "*************  finish  ****	**************");
 			stop = true ;
 			finish();
+			launchHomeActivity();
+			return  ; 
 		}
 		else
 			if (activity!=null)
@@ -268,7 +280,7 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 					public void onClick(DialogInterface dialog, int which) {
 						isConfirm = true;
 						isAlarm = false;
-						done = true;
+//						reportDone = true;
 						ReportDetails();
 					}
 				});
@@ -279,7 +291,7 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 					public void onClick(DialogInterface dialog, int which) {
 						isConfirm = false;
 						isAlarm = false;
-						done = true;
+//						reportDone = true;
 						ReportDetails();
 					}
 				});
@@ -295,6 +307,7 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 		tv.setText("User : " + arr.name + " " + arr.surname);
 		}catch (Exception e) {
 		}
+		
 		tvBoxname.setText(" Box: " + boxid);
 
 		cellinfolist = db.getCellInfoForBox(loginid, userid, boxid, -1);
@@ -678,7 +691,6 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 			SplashScreen.Cmethod.CheckAddShowScreen(Constant._StrCheck,
 					titleHeadLayout, MainBgLayout);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -734,10 +746,17 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 	@Override
 	public void onDestroy() {
 		// Don�t forget to shutdown!
-		if (mTts != null) {
-			mTts.stop();
-			mTts.shutdown();
+		try {
+			if (mTts != null) {
+				mTts.stop();
+				mTts.shutdown();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		CommonMethod.releaseSoundPlayer() ;
+		
 		super.onDestroy();
 	}
 
@@ -1353,6 +1372,7 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 			qty = cell.intDos_Mgt;
 		} catch (Exception e) {
 		}
+		
 		int lid = loginid;
 		User_Model user = db.getSinglePatientForId(userid).get(0);
 		String username = user.name + " " + user.surname;
@@ -1369,13 +1389,19 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 
 		db.insertReport(lid, username, med, date, time, dosage_taken, qty);
 		
-		Intent intent  = new Intent(BoxTenActivity.this, MainActivity.class) ;
-		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK) ;
-		if (Build.VERSION.SDK_INT >= 11 )//11 for Honeycomb
-	        intent.addFlags(0x8000);
-		startActivity(intent) ;
+//		fromWhere = null ;
 		
-		BoxTenActivity.this.finish();
+		SP.edit().putString("BoxTenPid", pendingInterntID).commit();
+		 
+		finish();
+		
+//		Intent intent  = new Intent(BoxTenActivity.this, MainActivity.class) ;
+//		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK) ;
+//		if (Build.VERSION.SDK_INT >= 11 )//11 for Honeycomb
+//	        intent.addFlags(0x8000);
+//		startActivity(intent) ;
+		
+		
 	}
 
 	public void Call_actvity() {
@@ -1399,7 +1425,11 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+//		CommonMethod.releaseSoundPlayer();
+//		Onpause = true ;
+		
 	}
+	
 
 	@Override
 	protected void onResume() {
@@ -1608,36 +1638,65 @@ public class BoxTenActivity extends Activity implements OnClickListener,
 		}
 	}
 
+	
+	private void  launchHomeActivity(){
+		
+	    Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+}
+	private  void unlockScren(){
+		Window wind;
+		wind = this.getWindow();
+		wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+		wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+	}
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if (isAlarm && done == false) {
-				System.out.println("frist loop~~~~");
-
-				if (Constant.flag == true) {
-					boolean finish = true;
-					Intent intent = new Intent(BoxTenActivity.this,
-							MainActivity.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-					intent.putExtra("Finish", finish);
-					startActivity(intent);
-					finish();
-					Constant.flag = false;
-					System.out.println("second loop~~~~");
-				} else {
-					alertMsg.show();
-					Toast.makeText(BoxTenActivity.this,
-							getResources().getString(R.string.stop_alarm_msg),
-							Toast.LENGTH_LONG).show();
-				}
-				return false;
+			if (isAlarm ) {
+				alertMsg.show();
+				Toast.makeText(BoxTenActivity.this,
+						getResources().getString(R.string.stop_alarm_msg),
+						Toast.LENGTH_LONG).show();
+//				
+//				System.out.println("frist loop~~~~");
+//
+//				if (Constant.flag == true) {
+//					boolean finish = true;
+//					Intent intent = new Intent(BoxTenActivity.this,
+//							MainActivity.class);
+//					intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//					intent.putExtra("Finish", finish);
+//					startActivity(intent);
+//					finish();
+//					Constant.flag = false;
+//					System.out.println("second loop~~~~");
+//				} else {
+//					alertMsg.show();
+//					Toast.makeText(BoxTenActivity.this,
+//							getResources().getString(R.string.stop_alarm_msg),
+//							Toast.LENGTH_LONG).show();
+//				}
 			}
-		} else {
-			System.out.println("outside loop~~~~");
-			return true;
-		}
-
+			else
+			{
+				boolean finish = true;
+				Intent intent = new Intent(BoxTenActivity.this,
+						MainActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+				intent.putExtra("Finish", finish);
+				startActivity(intent);
+				finish();
+				Constant.flag = false;
+				System.out.println("second loop~~~~");
+				
+			}
+		} 
 		return super.onKeyDown(keyCode, event);
 
 	}

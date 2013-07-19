@@ -352,7 +352,7 @@ public class UserManage_ListActivity extends Activity implements
 			holder.uType.setText("Mobile    No: " + userList.get(position).mob+ "\nTel.          No: " + userList.get(position).tel);
 			
 			
-			Picture_Model temp = db.getPicture(userList.get(position).picid);
+			    Picture_Model temp = db.getPicture(userList.get(position).picid);
 			
 				System.out.println("pictue path~~~~~~~~~~~~~~"+temp.path);
 			

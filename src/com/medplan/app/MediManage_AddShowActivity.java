@@ -75,7 +75,7 @@ public class MediManage_AddShowActivity extends Activity implements
 	ArrayList<Picture_Model> picList;
 	AlertDialog alertMsg;
 	AlertDialog.Builder alertDialog,ad1,ad2;
-//	boolean flagCamera;
+	boolean flagCamera;
 	int userid;
 	private static final int CAMERA_IMAGE_CAPTURE = 0;
 	private  Uri imageCaptureUri  ,unknowndeviceUri; 
@@ -283,7 +283,7 @@ public class MediManage_AddShowActivity extends Activity implements
 			e.printStackTrace();
 		}
 		
-		id = med.mid;
+		id = med.	mid;
 	    picid=med.mpicid;
 		
 		spToxicity.setSelection(Integer.parseInt(med.toxicity));
@@ -302,6 +302,8 @@ public class MediManage_AddShowActivity extends Activity implements
 	    
 	    Picture_Model picmodel = db.getPicture(picid);
 		
+	         _path
+	          = picmodel.path ;
 	    	 Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
 	 		if (bitmap == null) {
 	 			imgMed.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
@@ -369,13 +371,21 @@ public class MediManage_AddShowActivity extends Activity implements
 				
 				
 //				if(flagCamera==true){
-					//insertation in picture management
-				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
+//					//insertation in picture management
+//				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
 //				     flagCamera=false;
-//				     ArrayList<Picture_Model> picsTemp = db.getPicture(id)
-					//	picid = picsTemp.get(picsTemp.size() - 1).id;
-				     picid = db.getPictureID(_path);
+//				     ArrayList<Picture_Model> picsTemp = db.getPictures(medi_user_id)  ;
+//						
+//				     picid = picsTemp.get(picsTemp.size() - 1).id;
+////				     picid = db.getPictureID(_path);
 //				}
+				
+				if (flagCamera == true) {
+				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
+				     flagCamera=false;
+				     ArrayList<Picture_Model> picsTemp = db.getPictures(medi_user_id);
+				     picid = picsTemp.get(picsTemp.size() - 1).id;
+				}
 				
 				db.insertMedical(medi_user_id, picid, name, sdesc, ldesc,
 						usedAs, aing, dosage,dosageType,dosagetime,  therapeutic,
@@ -393,15 +403,17 @@ public class MediManage_AddShowActivity extends Activity implements
 			if (!(name.equals("") || sdesc.equals("")))
 			{
 				
-//				if(flagCamera==true){
+				if(flagCamera==true){
 					//insertation in picture management
-				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
-//				     flagCamera=false;
+//				     db.insertPicture(medi_user_id, _path, sdesc, 2, note1,note2);
+				     flagCamera=false;
 //				     ArrayList<Picture_Model> picsTemp = db.getPictures(medi_user_id);
 //						picid = picsTemp.get(picsTemp.size() - 1).id;
-				     picid = db.getPictureID(_path);
-//				}
-				
+//				        picid = db.getPictureID(_path); 
+				        db.updatePicture(0, picid, _path, null, 0, null, null , false) ;
+				}
+				 
+				 
 				db.updateMedical(medi_user_id, id, picid, name, sdesc, ldesc,
 						usedAs, aing,  dosage, dosageType, dosagetime,   therapeutic,
 						intolerancem, caution, toxicity, note1, note2,route_admin);
@@ -518,6 +530,7 @@ public class MediManage_AddShowActivity extends Activity implements
 				imgMed.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
 			} else {
 				imgMed.setImageBitmap(bitmap);
+				flagCamera = true  ;
 			}
 		}
 	

@@ -205,12 +205,12 @@
 
 			<TextView android:id="@+id/textviewTitle"
 				android:layout_width="fill_parent" android:layout_height="wrap_content"
-				android:paddingLeft="5dp" android:text="@string/mail"
+				android:paddingLeft="5dp" android:text="@string/email"
 				android:textColor="@color/label_color" android:textStyle="bold" />
 
 			<EditText android:id="@+id/etEmail" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:background="@drawable/input_field_1"
-				android:hint="@string/mail" android:singleLine="true"
+				android:hint="@string/email" android:singleLine="true"
 				android:inputType="textEmailAddress" android:paddingLeft="5dp">
 			</EditText>
 

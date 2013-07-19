@@ -91,6 +91,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
     private String 	activity   ;
     
     private ApplicationClass applicationClass ;
+    String pendingInterntID ;
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -99,7 +100,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 		SP = PreferenceManager.getDefaultSharedPreferences(this);
 		Intent intent = getIntent();
 		
-		String pendingInterntID  = intent.getStringExtra("unique") ;
+		 pendingInterntID  = intent.getStringExtra("unique") ;
 //		boxid = intent.getIntExtra("BoxID", 0);
 //		userid = intent.getIntExtra("UserID", 0);
 //		loginid = intent.getIntExtra("LoginID", 0);
@@ -143,14 +144,14 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				WaytoStop = applicationClass.wayToStop;
 				Desc = applicationClass.desc;
 				alarmSound = applicationClass.alarmSound;
-//				fromWhere = applicationClass.fromWhere;
+				fromWhere = null;
 			}
 			
-		 Window wind;
-		    wind = this.getWindow();
-		    wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
-		    wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-		    wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+//		 Window wind;
+//		    wind = this.getWindow();
+//		    wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+//		    wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+//		    wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
 		 
 //		isDialogOver = false;
 
@@ -163,14 +164,24 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 		// stop = true ;
 		// finish();
 		// }
-			if (pendingInterntID!=null)
+			if (pendingInterntID!=null){
 				Log.d("*********** Pending intent Id =", "Pending intent Id ="+pendingInterntID) ;
-		
+				unlockScren();
+				}
+			Log.d("!!!!!!!!!!!!!! Pending intent Id =", "Pending intent Id ="+SP.getString("BoxTenPid", "")) ;
+			if (SP.getString("BoxTenPid", "").equals(pendingInterntID)){
+				finish() ;
+				return   ;
+			}
+			
 		if (((SP.getInt("lock", -1) == 0) && cell_pos != -1)
 				|| (SP.getString("isLogin", "") == "no")
 				|| (db.isUserExsist(userid) == false)) {
 			Log.e("", "*************  finish  ****	**************");
 			stop = true;
+			finish();
+			launchHomeActivity() ;
+			return ; 
 			
 		} else {
 			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
@@ -179,6 +190,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				Log.e("", "*************  finish  ****	**************");
 				stop = true;
 				finish();
+				launchHomeActivity();
+				return ; 
 			} else
 				if (activity!=null)
 				Toast.makeText(BoxEightActivity.this,
@@ -690,10 +703,16 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 	@Override
 	public void onDestroy() {
 		// Don�t forget to shutdown!
-		if (mTts != null) {
-			mTts.stop();
-			mTts.shutdown();
+		try {
+			if (mTts != null) {
+				mTts.stop();
+				mTts.shutdown();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		CommonMethod.releaseSoundPlayer() ;
 		super.onDestroy();
 	}
 
@@ -813,7 +832,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null) 
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -856,7 +875,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null)
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -900,7 +919,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null) 
-			if (fromWhere != null)
+			if (fromWhere != null && stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -944,7 +963,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null) 
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -988,7 +1007,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null) 
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -1032,7 +1051,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null) 
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -1076,7 +1095,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null)
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -1117,7 +1136,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null) 
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				blink = false;
 				miniImg = false;
@@ -1169,7 +1188,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 //			if (blink == true || miniImg == true || vibrat == true
 //					|| sound == true||fromWhere!=null)
-			if (fromWhere != null)
+			if (fromWhere != null&&stop== false)
 			{
 				btnConfirm.setVisibility(View.GONE);
 				blink = false;
@@ -1213,7 +1232,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 		Log.i("Date Time", date + " " + time);
 
 		db.insertReport(lid, username, med, date, time, dosage_taken, qty);
-
+		SP.edit().putString("BoxTenPid", pendingInterntID).commit();
 //		handler.postDelayed(new Runnable() {
 //
 //			@Override
@@ -1224,11 +1243,11 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 
 		 BoxEightActivity.this.finish();
 		
-			Intent intent  = new Intent(BoxEightActivity.this, MainActivity.class) ;
-			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK) ;
-			if (Build.VERSION.SDK_INT >= 11 )//11 for Honeycomb
-		        intent.addFlags(0x8000);
-			startActivity(intent) ;
+//			Intent intent  = new Intent(BoxEightActivity.this, MainActivity.class) ;
+//			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK) ;
+//			if (Build.VERSION.SDK_INT >= 11 )//11 for Honeycomb
+//		        intent.addFlags(0x8000);
+//			startActivity(intent) ;
 		
 	}
 
@@ -1252,6 +1271,7 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+//		CommonMethod.releaseSoundPlayer() ;
 	}
 
 	@Override
@@ -1591,36 +1611,65 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 		}
 	}
+	
+	private void  launchHomeActivity(){
+		
+	    Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+      }
 
+	private  void unlockScren(){
+		Window wind;
+		wind = this.getWindow();
+		wind.addFlags(LayoutParams.FLAG_DISMISS_KEYGUARD);
+		wind.addFlags(LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		wind.addFlags(LayoutParams.FLAG_TURN_SCREEN_ON);
+	}
+	
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		// TODO Auto-generated method stub
 
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (isAlarm && done == false) {
+				alertMsg.show();
+				Toast.makeText(BoxEightActivity.this,
+						getResources().getString(R.string.stop_alarm_msg),
+						Toast.LENGTH_LONG).show();
 				System.out.println("frist loop~~~~");
 
-				if (Constant.flag == true) {
-					boolean finish = true;
-					Intent intent = new Intent(BoxEightActivity.this,
-							MainActivity.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-					intent.putExtra("Finish", finish);
-					startActivity(intent);
-					finish();
-					Constant.flag = false;
-					System.out.println("second loop~~~~");
-				} else {
-					alertMsg.show();
-					Toast.makeText(BoxEightActivity.this,
-							getResources().getString(R.string.stop_alarm_msg),
-							Toast.LENGTH_LONG).show();
-				}
-				return false;
+				
+//				if (Constant.flag == true) {
+//					boolean finish = true;
+//					Intent intent = new Intent(BoxEightActivity.this,
+//							MainActivity.class);
+//					intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+//					intent.putExtra("Finish", finish);
+//					startActivity(intent);
+//					finish();
+//					Constant.flag = false;
+//					System.out.println("second loop~~~~");
+//				} else {
+//					alertMsg.show();
+//					Toast.makeText(BoxEightActivity.this,
+//							getResources().getString(R.string.stop_alarm_msg),
+//							Toast.LENGTH_LONG).show();
+//				}
+//				return false;
 			}
 		} else {
-			System.out.println("outside loop~~~~");
-			return true;
+			boolean finish = true;
+			Intent intent = new Intent(BoxEightActivity.this,
+					MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+			intent.putExtra("Finish", finish);
+			startActivity(intent);
+			finish();
+			Constant.flag = false;
+			System.out.println("second loop~~~~");
+
 		}
 
 		return super.onKeyDown(keyCode, event);

@@ -94,6 +94,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 	private static final int CAMERA_IMAGE_CAPTURE = 0;
 	private  Uri imageCaptureUri  ,unknowndeviceUri; 
 
+	private boolean falgCamera ; 
 	
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -214,7 +215,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 		update.setOnClickListener(this);
 		delete = (Button) findViewById(R.id.btnDelPhy);
 		delete.setOnClickListener(this);
-
+		
 		ivPhy = (ImageView) findViewById(R.id.imagePhy);
 		ivPhy.setOnClickListener(this);
 		etFName = (EditText) findViewById(R.id.etFName);
@@ -612,6 +613,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 		etNote2.setText(phy.note2);
 		Picture_Model picmodel = db.getPicture(picid);
 		
+		_path = picmodel.path ;
 			Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
 			if (bitmap == null) {
 				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
@@ -676,10 +678,10 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 			spFriFrom.setSelection(phy.frifrom);
 			spFriTo.setSelection(phy.frito);
 		} else {
-			llfri.setVisibility(View.GONE);
 			llfritime.setVisibility(View.GONE);
 		}
 		if (phy.sat.equalsIgnoreCase("true")&& phy.satfrom!=0) {
+			llfri.setVisibility(View.GONE);
 			flg = true;
 			flags[5]=true;
 			llsat.setVisibility(View.VISIBLE);
@@ -708,7 +710,6 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 		fillistha = true;
 	}
 
-	
 
 	public void onClick(View v) {
 		name = etFName.getText().toString();
@@ -724,11 +725,11 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 			state = etState.getText().toString();
 		}
 		tel = etTel.getText().toString();
-		mob = etMob.getText().toString();
+		mob = etMob.getText().toString();	
 		mail = etMail.getText().toString();
 		note1 = etNote1.getText().toString();
 		note2 = etNote2.getText().toString();
-		if(rdFemale.isChecked()==true)
+		if(rdFemale.isChecked()==true)	
 		{
 			gen = 1;
 		}
@@ -797,6 +798,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 			openContextMenu(v);
 			break;
 		case R.id.btnAddPhy:
+			
 			if (flags[0] == true && spMonFrom.getSelectedItemPosition()!=0) {
 				monfrom = spMonFrom.getSelectedItemPosition();
 				monto = spMonTo.getSelectedItemPosition();
@@ -831,9 +833,15 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				
 //				if(GlobalMethods.isEmail(mail)){
 					
-					     db.insertPicture(phy_user_id, _path, name, 1, note1,note2);
-					     ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
-							picid = picsTemp.get(picsTemp.size() - 1).id;
+				if (falgCamera==true ){
+					falgCamera= false ; 
+
+					 db.insertPicture(phy_user_id, _path, name, 1, note1,note2);
+					 
+				     ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
+					 picid = picsTemp.get(picsTemp.size() - 1).id;
+				}
+					   
 							
 					db.insertPhysician(phy_user_id, picid, name, surname, address,
 							city, zip, country, state,gen, tel, mob, mail, visiting,
@@ -908,12 +916,22 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 //				if(GlobalMethods.isEmail(mail)){
 					
 //					if (falgCamera == true) {
+////						db.insertPicture(phy_user_id, _path, name, 1, note1, note2);
+//						falgCamera = false;
+//
+//						db.updatePicture(0, picid, _path, null, 0, null, null , false) ;	
+////						ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
+////						picid = picsTemp.get(picsTemp.size() - 1).id;
+//						
+//					}
+					
+					if (falgCamera == true) {
 						db.insertPicture(phy_user_id, _path, name, 1, note1, note2);
 
-//						falgCamera = false;
+						falgCamera = false;
 						ArrayList<Picture_Model> picsTemp = db.getPictures(phy_user_id);
 						picid = picsTemp.get(picsTemp.size() - 1).id;
-//					}
+					}
 					
 					db.updatePhysician(phy_user_id, phyid, picid, name, surname,
 							address, city, zip, country, state,gen, tel, mob, mail,
@@ -1079,6 +1097,7 @@ public class PhysicianManage_AddShowActivity extends Activity implements
 				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
 			} else {
 				ivPhy.setImageBitmap(bitmap);
+				falgCamera = true ;
 			}
 		}
 		

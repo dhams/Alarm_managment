@@ -9,7 +9,11 @@ import java.util.Date;
 import javax.mail.internet.NewsAddress;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -49,6 +53,7 @@ import com.medpan.util.Notification_Model;
 import com.medpan.util.Picture_Model;
 import com.medpan.util.Report_Model;
 import com.medpan.util.User_Model;
+import com.medplan.app.BoxThreeActivity.AlertDialgo;
 import com.medplan.db.databasehelper;
 
 public class UserReportActivity extends Activity {
@@ -59,7 +64,7 @@ public class UserReportActivity extends Activity {
 	LinearLayout mainLayout;
 	RelativeLayout HeaderLayout;
 	ListView listview;
-	Button btnDel, btnPdf, btnHome;
+	Button btnDel , btnDelAll, btnPdf, btnHome;
 	public static ArrayList<Report_Model> reportList;
 	public static EfficientAdapter adapter;
 	public static ArrayList<Boolean> flags = new ArrayList<Boolean>();
@@ -73,7 +78,8 @@ public class UserReportActivity extends Activity {
 	Font smallBold = new Font(Font.FontFamily.TIMES_ROMAN, 10, Font.NORMAL);
 	// Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16, Font.BOLD);
 	Paragraph paragraph;
-
+	 AlertDialog alertDialog = null  ;
+	
 	@Override
 	public void onCreate(Bundle icicle) {
 		overridePendingTransition(0, 0);
@@ -93,6 +99,7 @@ public class UserReportActivity extends Activity {
 			}
 		});
 		btnDel = (Button) findViewById(R.id.btnDel);
+		btnDelAll = (Button) findViewById(R.id.btnDelAll);
 		btnDel.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -110,7 +117,9 @@ public class UserReportActivity extends Activity {
 					btnDel.setVisibility(View.GONE);
 					btnPdf.setVisibility(View.GONE);
 					listview.setVisibility(View.GONE);
+					btnDelAll.setVisibility(View.GONE) ;
 				} else {
+					btnDelAll.setVisibility(View.VISIBLE) ;
 					tvNoreport.setVisibility(View.GONE);
 					btnDel.setVisibility(View.VISIBLE);
 					btnPdf.setVisibility(View.VISIBLE);
@@ -126,7 +135,53 @@ public class UserReportActivity extends Activity {
 			}
 		});
 
+		
+ 
+		AlertDialog.Builder builder = new AlertDialog.Builder(this) ;
+		builder.setTitle("Confirm");
+		builder.setMessage("Delete all ?");
+		
+		builder.setPositiveButton(R.string.ok, new  DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+				tvNoreport.setVisibility(View.VISIBLE);
+				listview.setVisibility(View.GONE);
+				btnDel.setVisibility(View.GONE);
+				btnDelAll.setVisibility(View.GONE) ;
+				btnPdf.setVisibility(View.GONE);
+				
+					db.deleteAllReport() ;
+					reportList.clear() ;
+					adapter.notifyDataSetChanged() ;
+					
+//					adapter = new EfficientAdapter(getApplicationContext(), reportList);
+//					listview.setAdapter(adapter) ;
+					
+		            alertDialog.dismiss() ; 			
+			}
+		}) ;
+		
+		builder.setNegativeButton(R.string.no_thanks, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			alertDialog.dismiss();	
+			}
+			
+		});
+		
+		btnDelAll.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+		
+				alertDialog.show() ;
+			
+			}
+		});
+			
+		alertDialog = builder.create() ;
 		
 		btnPdf = (Button)findViewById(R.id.btnPdf);
 		btnPdf.setOnClickListener(new OnClickListener() {
@@ -211,11 +266,13 @@ public class UserReportActivity extends Activity {
 			tvNoreport.setVisibility(View.VISIBLE);
 			listview.setVisibility(View.GONE);
 			btnDel.setVisibility(View.GONE);
+			btnDelAll.setVisibility(View.GONE) ;
 			btnPdf.setVisibility(View.GONE);
 		} else {
 			tvNoreport.setVisibility(View.GONE);
 			listview.setVisibility(View.VISIBLE);
 			btnDel.setVisibility(View.VISIBLE);
+			btnDelAll.setVisibility(View.VISIBLE) ;
 			btnPdf.setVisibility(View.VISIBLE);
 			for (int i = 0; i < reportList.size(); i++) {
 				flags.add(false);

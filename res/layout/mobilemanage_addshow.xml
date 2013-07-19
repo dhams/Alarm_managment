@@ -251,7 +251,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
-                android:text="@string/mail"
+                android:text="@string/email"
                 android:textColor="@color/label_color"
                 android:textStyle="bold" />
 
@@ -260,7 +260,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/input_field_1"
-                android:hint="@string/mail"
+                android:hint="@string/email"
                 android:paddingLeft="10dp"
                 android:inputType="textEmailAddress"
                 android:singleLine="true" >

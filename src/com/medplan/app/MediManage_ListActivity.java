@@ -3,29 +3,29 @@ package com.medplan.app;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ImageView.ScaleType;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ImageView.ScaleType;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -36,8 +36,6 @@ import com.medpan.util.Constant;
 import com.medpan.util.GlobalMethods;
 import com.medpan.util.Medicine_Model;
 import com.medpan.util.Picture_Model;
-import com.medpan.util.User_Model;
-
 import com.medplan.db.databasehelper;
 
 public class MediManage_ListActivity extends Activity implements
@@ -297,7 +295,6 @@ public class MediManage_ListActivity extends Activity implements
 					i.putExtra("mid", userList.get(arg2).mid);
 					i.putExtra("mname", userList.get(arg2).nm);
 					i.putExtra("picid", userList.get(arg2).mpicid);
-					
 					setResult(RESULT_OK, i);
 					finish();		
 					
@@ -326,7 +323,7 @@ public class MediManage_ListActivity extends Activity implements
 						i.putExtra("counter", arg2);
 						startActivity(i);
 					}
-					else
+					else	
 					{
 					int temp = userList.indexOf(tempUserList.get(arg2));
 					Intent i = new Intent(MediManage_ListActivity.this,
@@ -396,14 +393,12 @@ public class MediManage_ListActivity extends Activity implements
 				holder.uImage.setImageBitmap(GlobalMethods.decodeFile(temp.path));
 				holder.uImage.setScaleType(ScaleType.FIT_XY);
 				return convertView;
-
 		}
 
 	   class ViewHolder {
 
 			TextView uName, uType;
 			ImageView uImage;
-
 		}
 	}
 
@@ -477,5 +472,32 @@ public class MediManage_ListActivity extends Activity implements
 				Toast.makeText(MediManage_ListActivity.this, R.string.no_record_found, Toast.LENGTH_SHORT).show();
 			}
 		}
+		class dialogDeligate extends DialogFragment {
+			
+			@Override
+			public View onCreateView(LayoutInflater inflater,
+					ViewGroup container, Bundle savedInstanceState) {
+				
+				
+				return super.onCreateView(inflater, container, savedInstanceState);
+			}
+			@Override
+			public Dialog onCreateDialog(Bundle savedInstanceState) {
+				
+				AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+				
+				
+//			    builder.setTitle("Medicine");
+//			           builder.setItems(R.array.color_type, new DialogInterface.OnClickListener() {
+//			               public void onClick(DialogInterface dialog, int which) {
+//			               // The 'which' argument contains the index position
+//			               // of the selected item
+//			           }
+//			    });
+			           
+				return super.onCreateDialog(savedInstanceState);
+			}
+		}
 	}
+
 }

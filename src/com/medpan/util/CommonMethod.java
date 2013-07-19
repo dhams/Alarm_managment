@@ -256,8 +256,6 @@ public static Bitmap decodeSampledBitmapFromResource(String resId,
 	return BitmapFactory.decodeFile(resId, options);
 }
 
-
-
 	public static void vibration(Context ctx){ 
 		 vibrator = (Vibrator)ctx.getSystemService(Context.VIBRATOR_SERVICE);
 		 
@@ -266,14 +264,23 @@ public static Bitmap decodeSampledBitmapFromResource(String resId,
 		    vibrator.vibrate(pattern,2);  
 	}
 	
-	public static void SoundPlayer(Context ctx,int raw_id){
+	public static void SoundPlayer(Context ctx,int raw_id) throws IllegalStateException, IOException{
+	    releaseSoundPlayer() ;
 		player =  new MediaPlayer().create(ctx, raw_id);
+//		player.prepare() ;
 //		player.setLooping(false); // Set looping
 		player.setVolume(100, 100);
+    	player.start();
+		Log.d("Sound " , "Is playing ...................");
+	}
+	
+	public static void releaseSoundPlayer(){
+		if (player != null )
+		if (player.isPlaying()){
+			player.stop();
+//			player.release() ;	
+		}
 		
-		//player.release();
-		 player.start();
-		 Log.d("Sound " , "Is playing ...................");
 	}
 	public static void ShowToast(Activity context)
 	{

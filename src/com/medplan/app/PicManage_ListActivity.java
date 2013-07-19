@@ -550,8 +550,6 @@ public class PicManage_ListActivity extends Activity implements OnClickListener 
 							
 						if(picList.get(k).id==medPic.get(item).id)
 						{
-							
-						
 						Intent i = new Intent(PicManage_ListActivity.this,PicManage_AddShowActivity.class);
 						i.putExtra("idtoshow", medPic.get(item).id);
 						Log.i("uid list", position + "--"+ medPic.get(item).id);
@@ -560,10 +558,7 @@ public class PicManage_ListActivity extends Activity implements OnClickListener 
 						startActivity(i);
 						}
 						}
-
 					}
-
-					
 				}
 				else
 				{

@@ -16,6 +16,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -759,11 +760,8 @@ public class CellManageActivity extends Activity implements OnClickListener {
     	
     	@Override
     	protected void onPreExecute() {
-    		
-    	
     		dialog = new ProgressDialog(CellManageActivity.this);
     	    dialog.show() ;
-    	    
     		super.onPreExecute();
     	}
     	
@@ -790,8 +788,8 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			n= newBoxId>oldBoxId?oldBoxId:newBoxId; 
 					 
 			cellInfoList = db.getCellInfoForBox(login_id, user_id, oldBoxId, -1);
-			
-			counter = db.getLastNotificationId() ;	
+			 
+//			counter = db.getLastNotificationId() ;	
 			 
 			if (newBoxId>oldBoxId){
 				
@@ -802,7 +800,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			else{
 				for (int i = 0; i < cellInfoList.size(); i++) {
 					if ((cellInfoList.get(i).cellid+1)>n)
-					{
+					{   
 					   db.deleteCell(user_id,cellInfoList.get(i).cellid , oldBoxId, login_id) ;
 					}
 					else 
@@ -815,9 +813,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			alarmUtilsList = new ArrayList<PendingAlarmUtil>();
 			alarmUtilsList =	db.getDeadAlarm(login_id, user_id, newBoxId , oldBoxId) ;
 			
-			
 			if (alarmUtilsList.size()!=0)
-			
 			{
 				Intent oldIntent = null ;
 				Intent newIntent  = null  ;
@@ -880,31 +876,50 @@ public class CellManageActivity extends Activity implements OnClickListener {
 					
 				}
 				
-			
-				
 				long repeat = 0 ;
 				String interval  ;
 				 
 				Calendar calendar = null ;
-				calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-				Calendar calendar2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+				Calendar calendar2 = null ;
 				
 //				int counter =alarmUtilsList.get(alarmUtilsList.size()-1).notificationId;
 	            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy") ;
 	            Date date = null;
 	            	
 				for(int i=0 ; i <alarmUtilsList.size(); i++){
-					counter++ ;
+					calendar = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
+					calendar2 = Calendar.getInstance();
+					
+//					counter++ ;
 					
 					Log.d("removed alarm", "box id ="+oldBoxId+"and unique id ="+alarmUtilsList.get(i).notificationId) ;
+					
+					oldIntent.setData(Uri.parse("custom://" + alarmUtilsList.get(i).notificationId));
+					oldIntent.setAction(String.valueOf(alarmUtilsList.get(i).notificationId));
 					
 		            oldPendingIntent = PendingIntent.getActivity(
 							CellManageActivity.this, alarmUtilsList.get(i).notificationId,
 							oldIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+					
 					alarmanager.cancel(oldPendingIntent);
 					oldPendingIntent.cancel();
-					  
-					newIntent.putExtra("unique", counter) ;
+					   
+					interval = alarmUtilsList.get(i).interval ;
+					db.insertNotification(user_id, box_id,
+							alarmUtilsList.get(i).cellId, login_id,
+							alarmUtilsList.get(i).time, 0, interval,
+							day, alarmUtilsList.get(i).date,
+							alarmUtilsList.get(i).waytostop,
+							alarmUtilsList.get(i).sound,
+							alarmUtilsList.get(i).description,
+			            	  
+//							if (spIntervalDay.getSelectedItemPosition() != 4) {
+//								
+							alarmUtilsList.get(i).medicine);
+					
+					counter = db.getLastNotificationId() ;
+					
+					newIntent.putExtra("unique", ""+counter) ;
 					newIntent.putExtra("BoxID", box_id);
 					newIntent.putExtra("UserID", user_id);
 					newIntent.putExtra("LoginID", login_id);
@@ -914,13 +929,14 @@ public class CellManageActivity extends Activity implements OnClickListener {
 					newIntent.putExtra("Description", alarmUtilsList.get(i).description);
 					newIntent.putExtra("Sound", alarmUtilsList.get(i).sound-1);
 					newIntent.putExtra("FromWhereActivity","Heaven" ); 
+					newIntent.setData(Uri.parse("custom://" + counter));
+					newIntent.setAction(String.valueOf(counter));
+					
 					
 		            newPendingIntent = PendingIntent.getActivity(
 							CellManageActivity.this, counter,
 							newIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 		             
-
-		            interval = alarmUtilsList.get(i).interval ;
 		           
 		            try {
 						date = dateFormat.parse(alarmUtilsList.get(i).date);
@@ -949,13 +965,17 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			            	
 				            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis())){
 				            	
-					            calendar.clear() ;
-				                calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+1) ;
-				                calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)) ;
-				                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
+//					            calendar.clear() ;
+				            	calendar = calendar2 ;
+//				                calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+1) ;
+//				                calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)) ;
+//				                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
 				             	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
 				            	calendar.set(Calendar.SECOND,0) ;
+				            	
+				            	if (calendar.getTimeInMillis()<Calendar.getInstance().getTimeInMillis())
+				            		calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+1) ;
 			            }
 			         }
 			            else if (interval.equalsIgnoreCase("weekly")){
@@ -989,7 +1009,22 @@ public class CellManageActivity extends Activity implements OnClickListener {
 //					            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
 //					            	calendar.set(Calendar.SECOND,0) ;
 					            	
-								if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
+
+							if ((calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
+									.get(Calendar.DATE)                                        //increment Week until it comes to current or greater then current  .   
+									&& (calendar2.get(Calendar.MONTH) == calendar
+											.get(Calendar.MONTH)) && (calendar2
+										.get(Calendar.YEAR) == calendar
+									.get(Calendar.YEAR)))   && (calendar.getTimeInMillis()<calendar2.getTimeInMillis()))
+							{
+								calendar = calendar2 ;
+								calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+7) ;
+				            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
+				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
+				            	calendar.set(Calendar.SECOND,0) ;
+							}
+							
+							else if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
 										.get(Calendar.DATE)                                        //increment Week until it comes to current or greater then current  .   
 										&& (calendar2.get(Calendar.MONTH) == calendar
 												.get(Calendar.MONTH)) && (calendar2
@@ -1008,7 +1043,22 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			            	repeat = AlarmManager.INTERVAL_DAY * 30;
 			            	
 
-							if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
+
+							if ((calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
+									.get(Calendar.DATE)                                        //increment Week until it comes to current or greater then current  .   
+									&& (calendar2.get(Calendar.MONTH) == calendar
+											.get(Calendar.MONTH)) && (calendar2
+										.get(Calendar.YEAR) == calendar
+									.get(Calendar.YEAR)))   && (calendar.getTimeInMillis()<calendar2.getTimeInMillis()))
+							{
+								calendar = calendar2 ;
+								calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)+1) ;
+				            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
+				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
+				            	calendar.set(Calendar.SECOND,0) ;
+							}
+							
+							else	if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
 									.get(Calendar.DATE)                                        //increment month until it comes to current or greater then current  .     
 									&& (calendar2.get(Calendar.MONTH) == calendar
 											.get(Calendar.MONTH)) && (calendar2
@@ -1057,7 +1107,22 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			            	
 			            	calendar.set(Calendar.DAY_OF_WEEK, dayCount) ;
 			            	
-							if (!(calendar2.get(Calendar.DATE) == calendar                   //To manage old dates 
+			            	
+							if ((calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
+									.get(Calendar.DATE)                                        //increment Week until it comes to current or greater then current  .   
+									&& (calendar2.get(Calendar.MONTH) == calendar
+											.get(Calendar.MONTH)) && (calendar2
+										.get(Calendar.YEAR) == calendar
+									.get(Calendar.YEAR)))   && (calendar.getTimeInMillis()<calendar2.getTimeInMillis()))
+							{
+								calendar = calendar2 ;
+								calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+7) ;
+				            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
+				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
+				            	calendar.set(Calendar.SECOND,0) ;
+							}
+							
+							else if (!(calendar2.get(Calendar.DATE) == calendar                   //To manage old dates 
 									.get(Calendar.DATE)                                      //increment day of week until it comes to current or greater then current  .   
 									&& (calendar2.get(Calendar.MONTH) == calendar
 											.get(Calendar.MONTH)) && (calendar2
@@ -1079,14 +1144,17 @@ public class CellManageActivity extends Activity implements OnClickListener {
 						alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
 								calendar.getTimeInMillis(), repeat, newPendingIntent);
 						   
-						db.insertNotification(user_id, box_id,
-								alarmUtilsList.get(i).cellId, login_id,
-								alarmUtilsList.get(i).time, counter, interval,
-								day, alarmUtilsList.get(i).date,
-								alarmUtilsList.get(i).waytostop,
-								alarmUtilsList.get(i).sound,
-								alarmUtilsList.get(i).description,
-								alarmUtilsList.get(i).medicine);
+//						db.insertNotification(user_id, box_id,
+//								alarmUtilsList.get(i).cellId, login_id,
+//								alarmUtilsList.get(i).time, counter, interval,
+//								day, alarmUtilsList.get(i).date,
+//								alarmUtilsList.get(i).waytostop,
+//								alarmUtilsList.get(i).sound,
+//								alarmUtilsList.get(i).description,
+//				            	  
+////								if (spIntervalDay.getSelectedItemPosition() != 4) {
+////									
+//								alarmUtilsList.get(i).medicine);
 						
 //						db.updateNotificationId(user_id, newBoxId,
 //								alarmUtilsList.get(i).cellId, login_id, counter);

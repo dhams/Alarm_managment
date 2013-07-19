@@ -15,6 +15,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcel;
 import android.preference.PreferenceManager;
 import android.view.KeyEvent;
 import android.view.View;

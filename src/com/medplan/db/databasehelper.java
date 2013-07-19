@@ -1038,16 +1038,20 @@ public class databasehelper extends SQLiteOpenHelper {
 	}
 
 	public void updatePicture(int userid,int id, String path, String desc,
-			int category, String note1, String note2) {
+			int category, String note1, String note2, boolean isFromPicManagment) {
 		openDataBase();
 		ContentValues initialValues = new ContentValues();
- 
-		initialValues.put("pic_user_id", userid);
-		initialValues.put("pic_path", path);
-		initialValues.put("pic_desc", desc);
-		initialValues.put("pic_category", category);
-		initialValues.put("pic_note_one", note1);
-		initialValues.put("pic_note_two", note2);
+	
+		if (isFromPicManagment) {
+			initialValues.put("pic_user_id", userid);
+			initialValues.put("pic_path", path);
+			initialValues.put("pic_desc", desc);
+			initialValues.put("pic_category", category);
+			initialValues.put("pic_note_one", note1);
+			initialValues.put("pic_note_two", note2);
+		} else {
+			initialValues.put("pic_path", path);
+		}
 		myDataBase.update("picture_master_medplan", initialValues, "pic_id="
 				+ id , null);
 //		myDataBase.close();
@@ -1055,6 +1059,7 @@ public class databasehelper extends SQLiteOpenHelper {
 
 	}
  
+	
 	public void insertPicture(int userid, String path, String desc,
 			int category, String note1, String note2) {
 
@@ -1067,8 +1072,12 @@ public class databasehelper extends SQLiteOpenHelper {
 		initialValues.put("pic_note_one", note1);
 		initialValues.put("pic_note_two", note2);
 
+//		myDataBase.delete("picture_master_medplan","pic_user_id="+userid, whereArgs)
+		
 		long l = myDataBase.insert("picture_master_medplan", null,
 				initialValues);
+		
+		
 		Log.i("", "insert ========== " + l);
 //		myDataBase.close();
 		
@@ -1117,6 +1126,8 @@ public class databasehelper extends SQLiteOpenHelper {
 //		SQLiteDatabase.releaseMemory();
 		return pid;
 	}
+	
+ 
 
 	public ArrayList<Picture_Model> getPictures(int userid) {
 		// CREATE TABLE "notifications" ("id" INTEGER PRIMARY KEY AUTOINCREMENT
@@ -1882,7 +1893,7 @@ public class databasehelper extends SQLiteOpenHelper {
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		Cursor c = null;
 		
-		String query  = "select pid from notification_medplann where userid=" + userid
+		String query  = "select notificationid from notification_medplann where userid=" + userid
 						+ " and boxid=" + boxid + " and loginid=" + loginid
 						+ " and cellid=" + cellid 
 //						+" and isAlive="+0  
@@ -2155,6 +2166,10 @@ public class databasehelper extends SQLiteOpenHelper {
 		openDataBase();
 		myDataBase.delete("report_medplann", "report_id=" + rid, null);
 //		myDataBase.close();
+	}
+	public void deleteAllReport(){
+		openDataBase() ;
+		myDataBase.delete("report_medplann", null, null) ;
 	}
 	
 	

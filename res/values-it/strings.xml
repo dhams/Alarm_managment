@@ -92,6 +92,7 @@
     <string name="add_cell">Aggiungi cella</string>
     <string name="cancel">Annulla</string>
     <string name="delete">Cancella</string>
+    <string name="delete_all">cancella tutti</string>
     <string name="back">Indietro</string>
     <string name="update">Aggiorna</string>
     <string name="visiting_time">Orari di visita</string>

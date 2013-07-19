@@ -97,6 +97,7 @@
     <string name="add_cell">添加单元格</string>
     <string name="cancel">取消</string>
     <string name="delete">删去</string>
+    <string name="delete_all">全部刪除</string>
     <string name="back">后退</string>
     <string name="update">更新</string>
     <string name="visiting_time">看病时间</string>

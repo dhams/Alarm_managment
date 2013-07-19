@@ -11,6 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 
 import com.medplan.app.GMailSender;
@@ -66,19 +68,22 @@ public class GlobalMethods {
 
 		// First decode with inJustDecodeBounds=true to check dimensionsve 
 		final BitmapFactory.Options options = new BitmapFactory.Options();
-		options.inJustDecodeBounds = true;
-		BitmapFactory.decodeFile(resId, options);
+//		options.inJustDecodeBounds = true;
+//		BitmapFactory.decodeFile(resId, options);
 
 		// Calculate inSampleSize
-		options.inSampleSize = calculateInSampleSize(options, reqWidth,
-				reqHeight);
+//		options.inSampleSize = calculateInSampleSize(options, reqWidth,
+//				reqHeight);
 
+		options.inSampleSize = 4; 
+		
 		// Decode bitmap with inSampleSize set
-		options.inJustDecodeBounds = false;
+//		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeFile(resId, options);
 	}
 
 	public static Bitmap decodeFile(String path)  {
+		
 		int orientation = 0;
 		try {
 			if (path == null) {
@@ -86,6 +91,7 @@ public class GlobalMethods {
 			}
 			
 			Bitmap bm = decodeSampledBitmapFromResource(path, 70, 70);
+			
 			
 //			// decode image size 
 //			BitmapFactory.Options o = new BitmapFactory.Options();
@@ -147,22 +153,82 @@ public class GlobalMethods {
 			} 
 			return bm;
 		} catch (Exception e) {
-			
-			GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
-			try {
-				sender.sendMail("Medplann image",   
-				    " image has not displayed and orientation is ="+orientation,   
-				    "android.testapps@gmail.com",   
-				    "dharmendra@openxcelltechnolabs.com");
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			doMail(orientation , e.toString()) ;
 			return null;
 		}
-		
 	}
 
+	
+	
+	public static Bitmap decodeFileForReg(String path , Uri uri ,Context context)  {
+		
+		int orientation = 0;
+		try {
+			if (path == null) {
+				return null;
+			}
+			
+			Bitmap bm = decodeSampledBitmapFromResource(path, 70, 70);
+			
+			if (bm==null){
+				bm = MediaStore.Images.Media.getBitmap(context.getContentResolver(), uri);
+				if (bm==null)
+					doMail(0 , "Image null") ;		
+			}
+			
+			ExifInterface exif = new ExifInterface(path);
+			
+			orientation = exif
+					.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
+			
+         	Log.e("ExifInteface .........", "rotation ="+orientation);
+			
+//			exif.setAttribute(ExifInterface.ORIENTATION_ROTATE_90, 90);
+			
+			Log.e("orientation", "" + orientation);
+			Matrix m = new Matrix();
+
+			if ((orientation == ExifInterface.ORIENTATION_ROTATE_180)) {
+				m.postRotate(180);
+//				m.postScale((float) bm.getWidth(), (float) bm.getHeight());
+				// if(m.preRotate(90)){
+				Log.e("in orientation", "" + orientation);
+				bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
+						bm.getHeight(), m, true);
+				return bm;
+			} else if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
+				m.postRotate(90); 
+				Log.e("in orientation", "" + orientation);
+				bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
+						bm.getHeight(), m, true);
+				return bm;
+			}
+			else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
+				m.postRotate(270);
+				Log.e("in orientation", "" + orientation);
+				bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(),
+						bm.getHeight(), m, true);
+				return bm;
+			} 
+			return bm;
+		} catch (Exception e) {
+			doMail(orientation , e.toString()) ;
+			return null;
+		}
+	}
+	
+	public static void doMail(int orientation , String exception){
+		GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
+		try {
+			sender.sendMail("Medplann image",   
+			    " image has not displayed and orientation is ="+orientation+" and exception is "+exception,   
+			    "android.testapps@gmail.com",   
+			    "dharmendra@openxcelltechnolabs.com");
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
 	public static boolean isEmail(String email) {
 		boolean matchFound1;
 		boolean returnResult = true;

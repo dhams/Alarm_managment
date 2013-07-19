@@ -82,7 +82,7 @@
     <string-array name="way_stop_alarm">
         <item></item>
         <item>Botón de Parada</item>
-        <item>Celda intermitente</item>
+        <item>Celda </item>
     </string-array>
     <string-array name="interval_time">
         <item></item>

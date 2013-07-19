@@ -1,7 +1,6 @@
 package com.medplan.app;
 
 import java.io.File;
-import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,6 +13,7 @@ import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory.Options;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +22,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,7 +34,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ImageView.ScaleType;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,7 +50,7 @@ public class RegisterScreen extends Activity implements OnClickListener {
 	databasehelper db;
 	Spinner spType;
 	TextView tvLogin;
-	static String _path, path = "";
+	String  path = "";
 	ImageView ivPhy;
 	String[] items1 = new String[] { " ", "User/Patient", "Doctor/Physician",
 			"Pharma" };
@@ -64,7 +64,7 @@ public class RegisterScreen extends Activity implements OnClickListener {
 	private  Uri imageCaptureUri  ,unknowndeviceUri; 
 	private static final int CAMERA_IMAGE_CAPTURE = 0;
 
-	
+	private static final int SELECT_PICTURE = 1;
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
@@ -220,10 +220,15 @@ public class RegisterScreen extends Activity implements OnClickListener {
 			public void onItemSelected(AdapterView<?> arg0, View arg1,
 					int arg2, long arg3) {
 
-				SharedPreferences.Editor editor = SplashScreen.SP.edit();
-				editor.putString("OperationType", spType.getSelectedItem()
-						.toString());
-				editor.commit();
+				try {
+					SharedPreferences.Editor editor = SplashScreen.SP.edit();
+					editor.putString("OperationType", spType.getSelectedItem()
+							.toString());
+					editor.commit();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 				// Constant._StrCheck = SP.getString("OperationType", "");
 
@@ -238,9 +243,31 @@ public class RegisterScreen extends Activity implements OnClickListener {
 
 			}
 		});
+		
+//		gallery() ;
 	}
 
 	
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if (keyCode==KeyEvent.KEYCODE_BACK){
+		
+			launchHomeActivity();
+		}
+		
+		
+		return super.onKeyDown(keyCode, event);
+	}
+	private void  launchHomeActivity(){
+		
+	    Intent startMain = new Intent(Intent.ACTION_MAIN);
+        startMain.addCategory(Intent.CATEGORY_HOME);
+        startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(startMain);
+}
+
 //	@Override
 //	protected void onResume() {
 //		
@@ -252,50 +279,7 @@ public class RegisterScreen extends Activity implements OnClickListener {
 //
 //	}
 	
-	public void Shot_Camera() {
-//		try { 
-//			   Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE); 
-//               startActivityForResult(cameraIntent, 1212); 
-			
-			
-//			_path=  "/sdcard/Medpalnn";
-//			 File sdImageMainDirectory = new File(_path);
-//	                if (!sdImageMainDirectory.exists()) {
-//	                    sdImageMainDirectory.mkdirs();
-//	                }
-//	                if (!sdImageMainDirectory.isDirectory()) {
-//	                	_path = "/sdcard";
-//	        			}
-	                
-//			String parentdir;
-//			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
-//			File parentDirFile = new File(parentdir);
-//			parentDirFile.mkdirs();
-//
-//			// If we can't write to that special path, try just writing
-//			// directly to the sdcard
-//			if (!parentDirFile.isDirectory()) {
-//			parentdir = Environment.getExternalStorageDirectory()+"";
-//			} 
-//	                Calendar cal = Calendar.getInstance();
-//	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
-//	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
-//	                _path=filepath;
-//		
-//			
-//			//_path = Environment.getExternalStorageDirectory() + File.separator+ "TakenFromCamera" + cal.getTimeInMillis() + ".png";
-//			System.out.println("thumbnail path~~~~~~"+_path);
-//			File file = new File(_path);
-//			Uri outputFileUri = Uri.fromFile(file);
-//			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-//			startActivityForResult(intent, 1212);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		
-		
-		
+	public void Shot_Camera(){
 		String storageState = Environment.getExternalStorageState();
 		if (storageState.equals(Environment.MEDIA_MOUNTED)) 
 		{
@@ -322,8 +306,16 @@ public class RegisterScreen extends Activity implements OnClickListener {
 									+ storageState).setCancelable(true)
 					.create().show();
 		}
-
 	}
+	
+	public void gallery() {
+		Intent intent = new Intent();
+		intent.setType("image/*");
+		intent.setAction(Intent.ACTION_GET_CONTENT);
+		startActivityForResult(Intent.createChooser(intent, "Select Picture"),
+				SELECT_PICTURE);
+	}
+	
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -342,35 +334,41 @@ public class RegisterScreen extends Activity implements OnClickListener {
 			
 			
 			
-			String parentdir;
-			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
-			File parentDirFile = new File(parentdir);
-			parentDirFile.mkdirs();
+//			String parentdir;
+//			parentdir = Environment.getExternalStorageDirectory()+"/Medplann";
+//			File parentDirFile = new File(parentdir);
+//			parentDirFile.mkdirs();
+//
+//			// If we can't write to that special path, try just writing
+//			// directly to the sdcard
+//			if (!parentDirFile.isDirectory()) {
+//			parentdir = Environment.getExternalStorageDirectory()+"";
+//			}
+//	                Calendar cal = Calendar.getInstance();
+//	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
+//	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
+//	                _path=filepath;
+//			
+//			File file = new File(_path);
+//			Uri outputFileUri = Uri.fromFile(file);
+//			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+//			startActivityForResult(intent, 1212);
 
-			// If we can't write to that special path, try just writing
-			// directly to the sdcard
-			if (!parentDirFile.isDirectory()) {
-			parentdir = Environment.getExternalStorageDirectory()+"";
-			}
-	                Calendar cal = Calendar.getInstance();
-	                String filename = "IMG"+cal.getTimeInMillis()+".jpg";
-	                String filepath = Environment.getExternalStorageDirectory()+"/Medplann/"+filename;
-	                _path=filepath;
 			
-			File file = new File(_path);
-			Uri outputFileUri = Uri.fromFile(file);
-			Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-			startActivityForResult(intent, 1212);
-
+			Shot_Camera() ;
+			
+			
 			break;
 		case 1:
-			Intent gallery = new Intent();
-			gallery.setType("image/*"); // sets the return type to IMAGE
-			gallery.setAction(Intent.ACTION_GET_CONTENT);
-			startActivityForResult(
-					Intent.createChooser(gallery, "Select Picture"), 1);
+//			Intent gallery = new Intent();
+//			gallery.setType("image/*"); // sets the return type to IMAGE
+//			gallery.setAction(Intent.ACTION_GET_CONTENT);
+//			startActivityForResult(
+//					Intent.createChooser(gallery, "Select Picture"), 1);
 
+			
+			gallery();
 			break;
 		}
 		return false;
@@ -390,50 +388,55 @@ public class RegisterScreen extends Activity implements OnClickListener {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode == RESULT_OK && requestCode == 1) {
-
-			Uri contentUri = data.getData();
-			String[] proj = { MediaStore.Images.Media.DATA };
-			Cursor cursor = managedQuery(contentUri, proj, null, null, null);
-			int column_index = cursor
-					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			cursor.moveToFirst();
-			String tmppath = cursor.getString(column_index);
-			// Bitmap mBitmap = BitmapFactory.decodeFile(tmppath);
-			//ivPhy.setImageBitmap(GlobalMethods.decodeSampledBitmapFromResource(tmppath, 80, 80));
-			
-			Bitmap bitmap 
-			= GlobalMethods.decodeFile(tmppath);
-			ivPhy.setImageBitmap(bitmap);
-			// ivPhy.setImageBitmap(mBitmap);
-			path = tmppath;
+		
+		
+		if (requestCode == SELECT_PICTURE&&resultCode == RESULT_OK) {
+				Uri selectedImageUri = data.getData();
+				// filemanagerstring = selectedImageUri.getPath();
+				this.path = getPath(selectedImageUri);
+				if (path != null) {
+					Log.e("Image path", path);
+//					Bitmap bitmap = GlobalMethods.decodeFile(path);
+					Bitmap bitmap = GlobalMethods.decodeFileForReg(path, selectedImageUri, getApplicationContext());
+					
+//					Bitmap bitmap = BitmapFactory.decodeFile(path);
+					ivPhy.setImageBitmap(bitmap);
+				}
 		}
-		if (requestCode == 1212) {
-			
-//			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED));
-////			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-////			   Bitmap photo = (Bitmap) data.getExtras().get("data"); 
-////			   ivPhy.setImageBitmap(photo);
-//			   
-////			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-////			Bitmap bitmap;
-//			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(_path, 80, 80);
-//			bitmap=GlobalMethods.decodeFile(_path);
-////			bitmap=null;
+		
+//		if (resultCode == RESULT_OK && requestCode == 1) {
+//
+//			Uri contentUri = data.getData();
+//			String[] proj = { MediaStore.Images.Media.DATA };
+//			Cursor cursor = managedQuery(contentUri, proj, null, null, null);
+//			int column_index = cursor
+//					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//			cursor.moveToFirst();
+//			String tmppath = cursor.getString(column_index);
+//			// Bitmap mBitmap = BitmapFactory.decodeFile(tmppath);
+//			//ivPhy.setImageBitmap(GlobalMethods.decodeSampledBitmapFromResource(tmppath, 80, 80));
 //			
-//			if (bitmap == null) { 
-//				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
-//                try { 
-//					GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
-//					sender.sendMail("Resgister image",   
-//					        "Registration screen , image has not displayed ",   
-//					        "android.testapps@gmail.com",   
-//					        "dharmendra@openxcelltechnolabs.com");
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				} 
-//			} 
-//			else {
+//			Bitmap bitmap 
+//			= GlobalMethods.decodeFile(tmppath);
+//			ivPhy.setImageBitmap(bitmap);
+//			// ivPhy.setImageBitmap(mBitmap);
+//			path = tmppath;
+//		}
+//		if (requestCode == 1212) {
+//			
+////			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED));
+//////			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+//////			   Bitmap photo = (Bitmap) data.getExtras().get("data"); 
+//////			   ivPhy.setImageBitmap(photo);
+////			   
+//////			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+//////			Bitmap bitmap;
+////			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(_path, 80, 80);
+////			bitmap=GlobalMethods.decodeFile(_path);
+//////			bitmap=null;
+////			
+////			if (bitmap == null) { 
+////				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
 ////                try { 
 ////					GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
 ////					sender.sendMail("Resgister image",   
@@ -442,40 +445,50 @@ public class RegisterScreen extends Activity implements OnClickListener {
 ////					        "dharmendra@openxcelltechnolabs.com");
 ////				} catch (Exception e) {
 ////					e.printStackTrace();
-////				}  
-////				ivPhy.setImageBitmap(bitmap);
-////				ivPhy.setScaleType(ScaleType.FIT_XY);
+////				} 
+////			} 
+////			else {
+//////                try { 
+//////					GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
+//////					sender.sendMail("Resgister image",   
+//////					        "Registration screen , image has not displayed ",   
+//////					        "android.testapps@gmail.com",   
+//////					        "dharmendra@openxcelltechnolabs.com");
+//////				} catch (Exception e) {
+//////					e.printStackTrace();
+//////				}  
+//////				ivPhy.setImageBitmap(bitmap);
+//////				ivPhy.setScaleType(ScaleType.FIT_XY);
+////			}
+//			
+//			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
+//			Bitmap bitmap; 
+//			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(_path, 80, 80);
+//			bitmap=GlobalMethods.decodeFile(_path);
+//			if (bitmap == null) {
+//				try { 
+////					ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
+//					GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
+//					sender.sendMail("Resgister image",   
+//					    "Registration screen , image has not displayed ",   
+//					    "android.testapps@gmail.com",   
+//					    "dharmendra@openxcelltechnolabs.com");
+//				} catch (Exception e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			} else {
+//				ivPhy.setImageBitmap(bitmap);
+//				ivPhy.setScaleType(ScaleType.FIT_XY);
+////				desc.setFocusable(true);
 //			}
-			
-			sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://"+ Environment.getExternalStorageDirectory())));
-			Bitmap bitmap; 
-			//bitmap=GlobalMethods.decodeSampledBitmapFromResource(_path, 80, 80);
-			bitmap=GlobalMethods.decodeFile(_path);
-			if (bitmap == null) {
-				try { 
-//					ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
-					GMailSender sender = new GMailSender("android.testapps@gmail.com", "androidandroid");
-					sender.sendMail("Resgister image",   
-					    "Registration screen , image has not displayed ",   
-					    "android.testapps@gmail.com",   
-					    "dharmendra@openxcelltechnolabs.com");
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			} else {
-				ivPhy.setImageBitmap(bitmap);
-				ivPhy.setScaleType(ScaleType.FIT_XY);
-				path = _path;
-//				desc.setFocusable(true);
-			}
-
-		
-		}
+//
+//		}
 		
 		if(requestCode==CAMERA_IMAGE_CAPTURE && resultCode==Activity.RESULT_OK){
-			_path	= getThubnailFilePath() ;
-			Bitmap bitmap = GlobalMethods.decodeFile(_path);
+			path	= getThubnailFilePath() ;
+			Options options = new Options() ;
+			Bitmap bitmap = GlobalMethods.decodeFile(path);
 			
 			if (bitmap == null) {
 				ivPhy.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.drawable.add_photo));
@@ -536,11 +549,11 @@ public class RegisterScreen extends Activity implements OnClickListener {
 	 * @param uri
 	 * @return
 	 */
-	public String getPath(Uri uri) {
-
+	public String getPath(Uri uri) {	
 		String StringPath = null;
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		
 		if (cursor != null) {
 			// HERE YOU WILL GET A NULLPOINTER IF CURSOR IS NULL
 			// THIS CAN BE, IF YOU USED OI FILE MANAGER FOR PICKING THE MEDIA
@@ -559,11 +572,10 @@ public class RegisterScreen extends Activity implements OnClickListener {
 			StringPath = uri.getPath();
 			if (StringPath != null)
 				return StringPath;
-		} else {
-			return null;
-		}
+		} 
 		return StringPath;
 	}
+	
 	public void onClick(View v) {
 		fnm = etFnm.getText().toString();
 		lnm = etLnm.getText().toString();

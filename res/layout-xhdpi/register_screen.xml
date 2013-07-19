@@ -78,7 +78,6 @@
                 android:paddingRight="10dp" >
 
                 <ImageView
-                    android:saveEnabled="true"
                     android:id="@+id/regimagivew"
                      android:layout_width="80dp"
                     android:layout_height="80dp"

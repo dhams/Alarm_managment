@@ -97,6 +97,7 @@
     <string name="add_cell">Añadir celda</string>
     <string name="cancel">Cancelar</string>
     <string name="delete">Borrar</string>
+    <string name="delete_all">eliminar todos</string>
     <string name="back">Atrás</string>
     <string name="update">Actualizar</string>
     <string name="visiting_time">Tiempo de recorrido</string>
