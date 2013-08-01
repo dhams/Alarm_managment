@@ -8,6 +8,8 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import javax.mail.Flags.Flag;
+
 import org.xmlpull.v1.XmlPullParser;
 
 import android.R.xml;
@@ -1082,8 +1084,8 @@ public class CellManage_AddShowActivity extends Activity implements
 				break  ;
 			}
 
-				
-			
+				 
+			time = time+":"+calendar.get(Calendar.SECOND)  ;
         	String timeArry[] = time.split(":") ;
         	String dateArry [] =  tvIdate.getText().toString().split("/") ;
         	
@@ -1688,7 +1690,8 @@ public class CellManage_AddShowActivity extends Activity implements
 				 
 				Calendar calendar = Calendar.getInstance();
 			    Calendar calendar2 = Calendar.getInstance(TimeZone.getDefault(), Locale.getDefault());
-				
+				 
+			    time = time+":"+calendar2.get(Calendar.SECOND)  ;
             	String timeArry[] = time.split(":") ;
             	
             	calendar.set(Calendar.YEAR, mYear) ;
@@ -1697,8 +1700,8 @@ public class CellManage_AddShowActivity extends Activity implements
             	
             	calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArry[0])) ;
             	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-            	calendar.set(Calendar.SECOND,0) ;
-				
+            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
+				 
 	            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
 	            	
 	            {
@@ -1728,7 +1731,7 @@ public class CellManage_AddShowActivity extends Activity implements
 			                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
 			             	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 			            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-			            	calendar.set(Calendar.SECOND,0) ;
+			            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[1])) ; 
 		            }
 		         }
 		            else if (repeatString.equalsIgnoreCase("weekly")){
@@ -1845,7 +1848,7 @@ public class CellManage_AddShowActivity extends Activity implements
 		            	
 		            	calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArry[0])) ;
 		            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-		            	calendar.set(Calendar.SECOND,0) ;
+		            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 		            	
 						if (flags[k] == true) {
 //							counter++ ;
@@ -2090,6 +2093,7 @@ public class CellManage_AddShowActivity extends Activity implements
 				 
 				//4513/3 , Dave nivas ,opps adeswer soc. , near canera bank , saijpur bogha , naroada road , ahmedabad , 382345 .
 				
+//				myIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				myntent.putExtra("BoxID", boxid);
 				myntent.putExtra("UserID", userid);
 				myntent.putExtra("LoginID", loginid);
@@ -2161,7 +2165,8 @@ public class CellManage_AddShowActivity extends Activity implements
 //					long nextTime = calendar.getTimeInMillis();
 					
 					
-					
+					 
+					time = time+":"+calendar2.get(Calendar.SECOND)  ;
 	            	String timeArry[] = time.split(":") ;
 	            	String dateArry [] =  tvIdate.getText().toString().split("/") ;
 	            	
@@ -2178,7 +2183,7 @@ public class CellManage_AddShowActivity extends Activity implements
 		            	
 		            	calendar.set(Calendar.HOUR_OF_DAY, hour) ;
 		            	calendar.set(Calendar.MINUTE,minute) ;
-		            	calendar.set(Calendar.SECOND,0) ;
+		            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 		            	
 		            	 
 //				            if (!(calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
@@ -2205,7 +2210,7 @@ public class CellManage_AddShowActivity extends Activity implements
 //						                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
 						            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 						            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-						            	calendar.set(Calendar.SECOND,0) ;
+						            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 						            	
 						            	if (calendar.getTimeInMillis()<Calendar.getInstance().getTimeInMillis())
 						            		calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+1) ;
@@ -2226,7 +2231,7 @@ public class CellManage_AddShowActivity extends Activity implements
 										calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+7) ;
 						            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 						            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-						            	calendar.set(Calendar.SECOND,0) ;
+						            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 									}
 					            	
 									else	if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
@@ -2277,7 +2282,7 @@ public class CellManage_AddShowActivity extends Activity implements
 										calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)+1) ;
 						            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 						            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-						            	calendar.set(Calendar.SECOND,0) ;
+						            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 									}
 									
 									else if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
@@ -2310,7 +2315,7 @@ public class CellManage_AddShowActivity extends Activity implements
 										CellManage_AddShowActivity.this, counter,
 										myntent, PendingIntent.FLAG_UPDATE_CURRENT);			
 						    	
-						    	if ((calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
+//						    	if ((calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
 					         	alarmanager.setRepeating(AlarmManager.RTC_WAKEUP,calendar.getTimeInMillis(), repeat, pd);
 					         	
 					            Log.d("time","Date ="+ date+" Month ="+month+" Year = "+year+ " Hour ="+hour+" Minute= "+minute+" Milisecond ="+calendar.getTimeInMillis()  ) ;
@@ -2346,7 +2351,7 @@ public class CellManage_AddShowActivity extends Activity implements
 			            	
 			            	calendar.set(Calendar.HOUR_OF_DAY, hour) ;
 			            	calendar.set(Calendar.MINUTE,minute) ;
-			            	calendar.set(Calendar.SECOND,0) ;	
+			            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;	
 			            	
 							if (flags[k] == true)  {
 								 
@@ -2370,7 +2375,7 @@ public class CellManage_AddShowActivity extends Activity implements
 									calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+7) ;
 					            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 					            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-					            	calendar.set(Calendar.SECOND,0) ;
+					            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 								}
 								
 								else	if (!(calendar2.get(Calendar.DATE) == calendar                   //To manage old dates 
@@ -2440,7 +2445,7 @@ public class CellManage_AddShowActivity extends Activity implements
 //												+ calendar.get(Calendar.DATE),
 //										Toast.LENGTH_LONG).show();
 
-						    	if ((calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
+//						    	if ((calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
 								alarmanager.setRepeating(AlarmManager.RTC_WAKEUP,
 										calendar.getTimeInMillis(), repeat,
 										pdI);

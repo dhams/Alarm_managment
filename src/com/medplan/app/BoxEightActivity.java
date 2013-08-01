@@ -17,6 +17,7 @@ import com.medpan.util.User_Model;
 import com.medplan.db.databasehelper;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -92,10 +93,14 @@ public class BoxEightActivity extends Activity implements OnClickListener,
     
     private ApplicationClass applicationClass ;
     String pendingInterntID ;
+    private MediaPlayer mediaPlayer ;
+    private Context context ;
+    
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
-
+		
+		context = this ;
 		db = new databasehelper(this);
 		SP = PreferenceManager.getDefaultSharedPreferences(this);
 		Intent intent = getIntent();
@@ -308,341 +313,349 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 		}
 		tvBxname.setText(" Box: " + boxid);
 
-		cellinfolist = db.getCellInfoForBox(loginid, userid, boxid, -1);
+//		cellinfolist = db.getCellInfoForBox(loginid, userid, boxid, -1);
 
-		if (cellinfolist.size() > 0) {
-			a = -1;
-			b = -1;
-			c = -1;
-			d = -1;
-			e = -1;
-			f = -1;
-			g = -1;
-			h = -1;
-			for (int i = 0; i < cellinfolist.size(); i++) {
-				Log.i("Cellid", "--------------" + cellinfolist.get(i).cellid);
-				switch (cellinfolist.get(i).cellid) {
-				case 0:
-					tvCellA.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 0);
-						if (tmp.size() > 0) {
-							tvTimeA.setText(tmp.get(0).strTime);
-							tvTimeA.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					a = i;
-					break;
-				case 1:
-					tvCellB.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 1);
-						if (tmp.size() > 0) {
-							tvTimeB.setText(tmp.get(0).strTime);
-							tvTimeB.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					b = i;
-					break;
-				case 2:
-					tvCellC.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 2);
-						if (tmp.size() > 0) {
-							tvTimeC.setText(tmp.get(0).strTime);
-							tvTimeC.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					c = i;
-					break;
-				case 3:
-					tvCellD.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 3);
-						if (tmp.size() > 0) {
-							tvTimeD.setText(tmp.get(0).strTime);
-							tvTimeD.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					d = i;
-					break;
-				case 4:
-					tvCellE.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 4);
-						if (tmp.size() > 0) {
-							tvTimeE.setText(tmp.get(0).strTime);
-							tvTimeE.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					e = i;
-					break;
-				case 5:
-					tvCellF.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 5);
-						if (tmp.size() > 0) {
-							tvTimeF.setText(tmp.get(0).strTime);
-							tvTimeF.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					f = i;
-					break;
-				case 6:
-					tvCellG.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 6);
-						if (tmp.size() > 0) {
-							tvTimeG.setText(tmp.get(0).strTime);
-							tvTimeG.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					g = i;
-					break;
-				case 7:
-					tvCellH.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 7);
-						if (tmp.size() > 0) {
-							tvTimeH.setText(tmp.get(0).strTime);
-							tvTimeH.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					h = i;
-					break;
+//		if (cellinfolist.size() > 0) {
+//			a = -1;
+//			b = -1;
+//			c = -1;
+//			d = -1;
+//			e = -1;
+//			f = -1;
+//			g = -1;
+//			h = -1;
+//			for (int i = 0; i < cellinfolist.size(); i++) {
+//				Log.i("Cellid", "--------------" + cellinfolist.get(i).cellid);
+//				switch (cellinfolist.get(i).cellid) {
+//				case 0:
+//					tvCellA.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 0);
+//						if (tmp.size() > 0) {
+//							tvTimeA.setText(tmp.get(0).strTime);
+//							tvTimeA.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					a = i;
+//					break;
+//				case 1:
+//					tvCellB.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 1);
+//						if (tmp.size() > 0) {
+//							tvTimeB.setText(tmp.get(0).strTime);
+//							tvTimeB.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					b = i;
+//					break;
+//				case 2:
+//					tvCellC.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 2);
+//						if (tmp.size() > 0) {
+//							tvTimeC.setText(tmp.get(0).strTime);
+//							tvTimeC.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					c = i;
+//					break;
+//				case 3:
+//					tvCellD.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 3);
+//						if (tmp.size() > 0) {
+//							tvTimeD.setText(tmp.get(0).strTime);
+//							tvTimeD.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					d = i;
+//					break;
+//				case 4:
+//					tvCellE.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 4);
+//						if (tmp.size() > 0) {
+//							tvTimeE.setText(tmp.get(0).strTime);
+//							tvTimeE.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					e = i;
+//					break;
+//				case 5:
+//					tvCellF.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 5);
+//						if (tmp.size() > 0) {
+//							tvTimeF.setText(tmp.get(0).strTime);
+//							tvTimeF.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					f = i;
+//					break;
+//				case 6:
+//					tvCellG.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 6);
+//						if (tmp.size() > 0) {
+//							tvTimeG.setText(tmp.get(0).strTime);
+//							tvTimeG.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					g = i;
+//					break;
+//				case 7:
+//					tvCellH.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 7);
+//						if (tmp.size() > 0) {
+//							tvTimeH.setText(tmp.get(0).strTime);
+//							tvTimeH.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					h = i;
+//					break;
+//
+//				}
+//			}
+//		}
 
-				}
-			}
-		}
-
-		if (cell_pos != -1 & stop == false) {
-			isAlarm = true;
-			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
-					userid, boxid, cell_pos);
-			try {
-				cell = arrCell.get(0);
-				blink = cell.blBlink == 1 ? true : false;
-				miniImg = cell.blMini == 1 ? true : false;
-				vibrat = cell.blVibrant == 1 ? true : false;
-				alert = cell.blAlert == 1 ? true : false;
-				int color = cell.intBg;
-				final int limit = cell.intBuzz;
-
-				switch (color) {
-				case 1:
-					setColor(Color.RED);
-					break;
-				case 2:
-					setColor(Color.YELLOW);
-					break;
-				case 3:
-					setColor(Color.GREEN);
-					break;
-				case 4:
-					setColor(Color.rgb(255, 200, 0));
-					break;
-				case 5:
-					setColor(Color.rgb(198, 195, 181));
-					break;
-				case 6:
-					setColor(Color.WHITE);
-					break;
-				}
-
-				// show alarm time
-				tvtmpTime.setVisibility(View.VISIBLE);
-				sdf = new SimpleDateFormat("HH:mm");
-				String currentDateandTime = sdf.format(new Date(System
-						.currentTimeMillis()));
-				System.out.println("current time" + currentDateandTime);
-				tvtmpTime.setText(currentDateandTime);
-
-				Log.i("TAG===",
-						"loginid, userid, boxid, cell_pos,blink,minImg,vibrat,alert,color,limit ===== \n"
-								+ loginid
-								+ " "
-								+ userid
-								+ " "
-								+ boxid
-								+ " "
-								+ cell_pos
-								+ " "
-								+ blink
-								+ " "
-								+ miniImg
-								+ " "
-								+ vibrat
-								+ " "
-								+ alert
-								+ " "
-								+ color
-								+ " "
-								+ limit);
-
-				sound = true;
-
-				if (WaytoStop==1)
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.tapToast), Toast.LENGTH_LONG)
-							.show();
-				else
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
-							.show();
-				
-				// check whether blink,miniImg,alert,vibrate are true or
-				// false...
-
-				if (WaytoStop == 1 || WaytoStop == 0) {
-					btnConfirm.setVisibility(View.VISIBLE);
-					rlCellA.setClickable(false);
-					rlCellB.setClickable(false);
-					rlCellC.setClickable(false);
-					rlCellD.setClickable(false);
-					rlCellE.setClickable(false);
-					rlCellF.setClickable(false);
-					rlCellG.setClickable(false);
-					rlCellH.setClickable(false);
-//					Toast.makeText(getApplicationContext(), getString(R.string.tapToast), Toast.LENGTH_LONG).show();
-				}
-				// blinking cell
-				if (blink == true) {
-					tmpRl.setAnimation(anim);
-					btnConfirm.setVisibility(View.VISIBLE);
-					System.out.println("Working~~~~~~1");
-//					Toast.makeText(getApplicationContext(), getString(R.string.tapCellToast), Toast.LENGTH_LONG).show();
-				}
-				// to show to not mini Image.
-				if (miniImg == true) {
-					System.out.println("Working~~~~~~2");
-					tmpIV.setVisibility(View.VISIBLE);
-					picmodel = db.getPicture(picid);
-					Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
-					System.out.println("wint three box cell~~~~~~~~~~~~"
-							+ picmodel.path);
-					if (bitmap == null) {
-						tmpIV.setVisibility(View.GONE);
-						// tmpIV.setBackgroundResource(R.drawable.add_photo);
-					} else {
-						tmpIV.setImageBitmap(bitmap);
-					}
-				}
-				// To vibrate or not.
-				if (vibrat == true) {
-					System.out.println("Working~~~~~~3");
-					CommonMethod.vibration(this);
-				}
-
-				if (sound == true && alert == true) {
-					System.out.println("Both~~~~~~~");
-					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
-
-					CommonMethod.player
-							.setOnCompletionListener(new OnCompletionListener() {
-
-								@Override
-								public void onCompletion(MediaPlayer mp) {
-									// /will use count and loop as per number of
-									// repetition chosen.
-
-									Intent checkIntent = new Intent();
-									checkIntent
-											.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-									startActivityForResult(checkIntent,
-											MY_DATA_CHECK_CODE);
-
-									handler.postDelayed(new Runnable() {
-
-										public void run() {
-											if (counter >= limit) {
-												CommonMethod.player.stop();
-											} else {
-												CommonMethod.player.start();
-											}
-											counter++;
-										}
-									}, 3000);
-								}
-							});
-				}
-				if (sound == true && alert == false) {
-					System.out.println("sound true alert false~~~~~~~");
-					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
-					CommonMethod.player
-							.setOnCompletionListener(new OnCompletionListener() {
-
-								@Override
-								public void onCompletion(MediaPlayer mp) {
-									// /will use count and loop as per number of
-									// repetition chosen.
-									handler.postDelayed(new Runnable() {
-
-										public void run() {
-											if (counter >= limit) {
-												CommonMethod.player.stop();
-											} else {
-												CommonMethod.player.start();
-											}
-											counter++;
-										}
-									}, 3000);
-								}
-							});
-				}
-				if (sound == false && alert == true) {
-					System.out.println("sound false alert true~~~~~~~");
-					Intent checkIntent = new Intent();
-					checkIntent
-							.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-					startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
-
-				} else {
-					System.out.println("~~~~~~~~~~~~do nothing~~~~~~~");
-				}
-			} catch (Exception e) {
-
-			}
-		}
+//		if (cell_pos != -1 & stop == false) {
+//			isAlarm = true;
+//			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
+//					userid, boxid, cell_pos);
+//            mediaPlayer.create(getApplicationContext(), Constant.Sound[alarmSound]) ;
+//            mediaPlayer.setVolume(100, 100) ;
+//            		
+//			try {
+//				cell = arrCell.get(0);
+//				blink = cell.blBlink == 1 ? true : false;
+//				miniImg = cell.blMini == 1 ? true : false;
+//				vibrat = cell.blVibrant == 1 ? true : false;
+//				alert = cell.blAlert == 1 ? true : false;
+//				int color = cell.intBg;
+//				final int limit = cell.intBuzz;
+//
+//				switch (color) {
+//				case 1:
+//					setColor(Color.RED);
+//					break;
+//				case 2:
+//					setColor(Color.YELLOW);
+//					break;
+//				case 3:
+//					setColor(Color.GREEN);
+//					break;
+//				case 4:
+//					setColor(Color.rgb(255, 200, 0));
+//					break;
+//				case 5:
+//					setColor(Color.rgb(198, 195, 181));
+//					break;
+//				case 6:
+//					setColor(Color.WHITE);
+//					break;
+//				}
+//
+//				// show alarm time
+//				tvtmpTime.setVisibility(View.VISIBLE);
+//				sdf = new SimpleDateFormat("HH:mm");
+//				String currentDateandTime = sdf.format(new Date(System
+//						.currentTimeMillis()));
+//				System.out.println("current time" + currentDateandTime);
+//				tvtmpTime.setText(currentDateandTime);
+//
+//				Log.i("TAG===",
+//						"loginid, userid, boxid, cell_pos,blink,minImg,vibrat,alert,color,limit ===== \n"
+//								+ loginid
+//								+ " "
+//								+ userid
+//								+ " "
+//								+ boxid
+//								+ " "
+//								+ cell_pos
+//								+ " "
+//								+ blink
+//								+ " "
+//								+ miniImg
+//								+ " "
+//								+ vibrat
+//								+ " "
+//								+ alert
+//								+ " "
+//								+ color
+//								+ " "
+//								+ limit);
+//
+//				sound = true;
+//
+//				if (WaytoStop==1)
+//					Toast.makeText(getApplicationContext(),
+//							getString(R.string.tapToast), Toast.LENGTH_LONG)
+//							.show();
+//				else
+//					Toast.makeText(getApplicationContext(),
+//							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
+//							.show();
+//				
+//				// check whether blink,miniImg,alert,vibrate are true or
+//				// false...
+//
+//				if (WaytoStop == 1 || WaytoStop == 0) {
+//					btnConfirm.setVisibility(View.VISIBLE);
+//					rlCellA.setClickable(false);
+//					rlCellB.setClickable(false);
+//					rlCellC.setClickable(false);
+//					rlCellD.setClickable(false);
+//					rlCellE.setClickable(false);
+//					rlCellF.setClickable(false);
+//					rlCellG.setClickable(false);
+//					rlCellH.setClickable(false);
+////					Toast.makeText(getApplicationContext(), getString(R.string.tapToast), Toast.LENGTH_LONG).show();
+//				}
+//				// blinking cell
+//				if (blink == true) {
+//					tmpRl.setAnimation(anim);
+//					btnConfirm.setVisibility(View.VISIBLE);
+//					System.out.println("Working~~~~~~1");
+////					Toast.makeText(getApplicationContext(), getString(R.string.tapCellToast), Toast.LENGTH_LONG).show();
+//				}
+//				// to show to not mini Image.
+//				if (miniImg == true) {
+//					System.out.println("Working~~~~~~2");
+//					tmpIV.setVisibility(View.VISIBLE);
+//					picmodel = db.getPicture(picid);
+//					Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
+//					System.out.println("wint three box cell~~~~~~~~~~~~"
+//							+ picmodel.path);
+//					if (bitmap == null) {
+//						tmpIV.setVisibility(View.GONE);
+//						// tmpIV.setBackgroundResource(R.drawable.add_photo);
+//					} else {
+//						tmpIV.setImageBitmap(bitmap);
+//					}
+//				}
+//				// To vibrate or not.
+//				if (vibrat == true) {
+//					System.out.println("Working~~~~~~3");
+//					CommonMethod.vibration(this);
+//				}
+//
+//				if (sound == true && alert == true) {
+//					System.out.println("Both~~~~~~~");
+////					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
+//					startMediaplayer();
+//
+//					mediaPlayer
+//							.setOnCompletionListener(new OnCompletionListener() {
+//
+//								@Override
+//								public void onCompletion(MediaPlayer mp) {
+//									// /will use count and loop as per number of
+//									// repetition chosen.
+//
+//									Intent checkIntent = new Intent();
+//									checkIntent
+//											.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//									startActivityForResult(checkIntent,
+//											MY_DATA_CHECK_CODE);
+//
+//									handler.postDelayed(new Runnable() {
+//
+//										public void run() {
+//											if (counter >= limit) {
+////												CommonMethod.player.stop();
+//												stopMediaPlayer();
+//											} else {
+//												startMediaplayer();
+//											}
+//											counter++;
+//										}
+//									}, 3000);
+//								}
+//							});
+//				}
+//				if (sound == true && alert == false) {
+//					System.out.println("sound true alert false~~~~~~~");
+////					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
+//					startMediaplayer();
+//					mediaPlayer
+//							.setOnCompletionListener(new OnCompletionListener() {
+//
+//								@Override
+//								public void onCompletion(MediaPlayer mp) {
+//									// /will use count and loop as per number of
+//									// repetition chosen.
+//									handler.postDelayed(new Runnable() {
+//
+//										public void run() {
+//											if (counter >= limit) {
+////												CommonMethod.player.stop();
+//												stopMediaPlayer();
+//											} else {
+////												CommonMethod.player.start();
+//												startMediaplayer();
+//											}
+//											counter++;
+//										}
+//									}, 3000);
+//								}
+//							});
+//				}
+//				if (sound == false && alert == true) {
+//					System.out.println("sound false alert true~~~~~~~");
+//					Intent checkIntent = new Intent();
+//					checkIntent
+//							.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//					startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+//
+//				} else {
+//					System.out.println("~~~~~~~~~~~~do nothing~~~~~~~");
+//				}
+//			} catch (Exception e) {
+//
+//			}
+//		}
 
 		titleHeadLayout = (RelativeLayout) findViewById(R.id.rlHeadTitlelayout);
 		MainBgLayout = (LinearLayout) findViewById(R.id.MainAlarmLayout);
@@ -712,10 +725,29 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		CommonMethod.releaseSoundPlayer() ;
+//		CommonMethod.releaseSoundPlayer() ;
+		stopMediaPlayer();
 		super.onDestroy();
 	}
 
+	private  void stopMediaPlayer(){
+		if (mediaPlayer!=null)
+			try {  
+				mediaPlayer.stop() ;
+				Log.d("Media player ", "is stop ") ;
+			} catch (IllegalStateException e) {
+				e.printStackTrace();
+			}
+	}
+	
+	private void startMediaplayer(){
+		mediaPlayer.setVolume(100f, 100f);
+		if(!mediaPlayer.isPlaying())
+		startMediaplayer();
+		Log.d("Media player ", "is on ") ;
+}
+	
+	
 	public void setColor(int color) {
 		switch (cell_pos) {
 		case 0:
@@ -823,7 +855,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null) {
@@ -865,7 +898,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -909,7 +943,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -953,7 +988,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -997,7 +1033,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -1041,7 +1078,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -1085,7 +1123,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -1126,7 +1165,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 				btnConfirm.setVisibility(View.GONE);
 			}
 			if (mTts != null)
@@ -1179,7 +1219,8 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 			}
 
 			if (sound == true) {
-				CommonMethod.player.stop();
+//				CommonMethod.player.stop();
+				stopMediaPlayer();
 			}
 			if (mTts != null)
 				if (mTts.isSpeaking()) {
@@ -1279,8 +1320,9 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
 
-		Log.d("IS Dialog OVER ?", isDialogOver + "");
-
+		counter=1 ;
+		mediaPlayer = MediaPlayer.create(context,
+					Constant.Sound[alarmSound]);
 		if (isDialogOver == true)
 			finish();
 
@@ -1610,6 +1652,206 @@ public class BoxEightActivity extends Activity implements OnClickListener,
 				}
 			}
 		}
+		
+		
+		cellinfolist = db.getCellInfoForBox(loginid, userid, boxid, -1);
+		if (cell_pos != -1 & stop == false) {
+			isAlarm = true;
+			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
+					userid, boxid, cell_pos);
+            mediaPlayer.create(getApplicationContext(), Constant.Sound[alarmSound]) ;
+            mediaPlayer.setVolume(100, 100) ;
+            		
+			try {
+				cell = arrCell.get(0);
+				blink = cell.blBlink == 1 ? true : false;
+				miniImg = cell.blMini == 1 ? true : false;
+				vibrat = cell.blVibrant == 1 ? true : false;
+				alert = cell.blAlert == 1 ? true : false;
+				int color = cell.intBg;
+				final int limit = cell.intBuzz;
+
+				switch (color) {
+				case 1:
+					setColor(Color.RED);
+					break;
+				case 2:
+					setColor(Color.YELLOW);
+					break;
+				case 3:
+					setColor(Color.GREEN);
+					break;
+				case 4:
+					setColor(Color.rgb(255, 200, 0));
+					break;
+				case 5:
+					setColor(Color.rgb(198, 195, 181));
+					break;
+				case 6:
+					setColor(Color.WHITE);
+					break;
+				}
+
+				// show alarm time
+				tvtmpTime.setVisibility(View.VISIBLE);
+				sdf = new SimpleDateFormat("HH:mm");
+				String currentDateandTime = sdf.format(new Date(System
+						.currentTimeMillis()));
+				System.out.println("current time" + currentDateandTime);
+				tvtmpTime.setText(currentDateandTime);
+
+				Log.i("TAG===",
+						"loginid, userid, boxid, cell_pos,blink,minImg,vibrat,alert,color,limit ===== \n"
+								+ loginid
+								+ " "
+								+ userid
+								+ " "
+								+ boxid
+								+ " "
+								+ cell_pos
+								+ " "
+								+ blink
+								+ " "
+								+ miniImg
+								+ " "
+								+ vibrat
+								+ " "
+								+ alert
+								+ " "
+								+ color
+								+ " "
+								+ limit);
+
+				sound = true;
+
+				if (WaytoStop==1)
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.tapToast), Toast.LENGTH_LONG)
+							.show();
+				else
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
+							.show();
+				
+				// check whether blink,miniImg,alert,vibrate are true or
+				// false...
+
+				if (WaytoStop == 1 || WaytoStop == 0) {
+					btnConfirm.setVisibility(View.VISIBLE);
+					rlCellA.setClickable(false);
+					rlCellB.setClickable(false);
+					rlCellC.setClickable(false);
+					rlCellD.setClickable(false);
+					rlCellE.setClickable(false);
+					rlCellF.setClickable(false);
+					rlCellG.setClickable(false);
+					rlCellH.setClickable(false);
+//					Toast.makeText(getApplicationContext(), getString(R.string.tapToast), Toast.LENGTH_LONG).show();
+				}
+				// blinking cell
+				if (blink == true) {
+					tmpRl.setAnimation(anim);
+					btnConfirm.setVisibility(View.VISIBLE);
+					System.out.println("Working~~~~~~1");
+//					Toast.makeText(getApplicationContext(), getString(R.string.tapCellToast), Toast.LENGTH_LONG).show();
+				}
+				// to show to not mini Image.
+				if (miniImg == true) {
+					System.out.println("Working~~~~~~2");
+					tmpIV.setVisibility(View.VISIBLE);
+					picmodel = db.getPicture(picid);
+					Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
+					System.out.println("wint three box cell~~~~~~~~~~~~"
+							+ picmodel.path);
+					if (bitmap == null) {
+						tmpIV.setVisibility(View.GONE);
+						// tmpIV.setBackgroundResource(R.drawable.add_photo);
+					} else {
+						tmpIV.setImageBitmap(bitmap);
+					}
+				}
+				// To vibrate or not.
+				if (vibrat == true) {
+					System.out.println("Working~~~~~~3");
+					CommonMethod.vibration(this);
+				}
+
+				if (sound == true && alert == true) {
+					System.out.println("Both~~~~~~~");
+//					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
+					startMediaplayer();
+
+					mediaPlayer
+							.setOnCompletionListener(new OnCompletionListener() {
+
+								@Override
+								public void onCompletion(MediaPlayer mp) {
+									// /will use count and loop as per number of
+									// repetition chosen.
+
+									Intent checkIntent = new Intent();
+									checkIntent
+											.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+									startActivityForResult(checkIntent,
+											MY_DATA_CHECK_CODE);
+
+									handler.post(new Runnable() {
+
+										public void run() {
+											if (counter >= limit) {
+//												CommonMethod.player.stop();
+												stopMediaPlayer();
+											} else {
+												startMediaplayer();
+											}
+											counter++;
+										}
+									}) ;
+								}
+							});
+				}
+				if (sound == true && alert == false) {
+					System.out.println("sound true alert false~~~~~~~");
+//					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
+					startMediaplayer();
+					mediaPlayer
+							.setOnCompletionListener(new OnCompletionListener() {
+
+								@Override
+								public void onCompletion(MediaPlayer mp) {
+									// /will use count and loop as per number of
+									// repetition chosen.
+									handler.post(new Runnable() {
+
+										public void run() {
+											if (counter >= limit) {
+//												CommonMethod.player.stop();
+												stopMediaPlayer();
+											} else {
+//												CommonMethod.player.start();
+												startMediaplayer();
+											}
+											counter++;
+										}
+									});
+								}
+							});
+				}
+				if (sound == false && alert == true) {
+					System.out.println("sound false alert true~~~~~~~");
+					Intent checkIntent = new Intent();
+					checkIntent
+							.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+					startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+
+				} else {
+					System.out.println("~~~~~~~~~~~~do nothing~~~~~~~");
+				}
+			} catch (Exception e) {
+
+			}
+		}
+		
 	}
 	
 	private void  launchHomeActivity(){

@@ -1975,7 +1975,7 @@ public class databasehelper extends SQLiteOpenHelper {
 				Cellinfo.boxid = c.getInt(3);
 				Cellinfo.cellid = c.getInt(4);
 				Cellinfo.loginid = c.getInt(1);
-				Cellinfo.strTime = c.getString(5);
+				Cellinfo.strTime = c.getString(5).substring(0, 5);
 				if(!(c.isNull(c.getColumnIndex("nextday"))))
                 Cellinfo.nextDay = c.getString(c.getColumnIndex("nextday")) ;
                  
@@ -2252,6 +2252,53 @@ public class databasehelper extends SQLiteOpenHelper {
 	}
 	
 	
+/**
+ * 
+ * @param loginID
+ * @param userId
+ * @return {@link  ArrayList  } of {@link PendingAlarmUtil}
+ */
+	public ArrayList<PendingAlarmUtil> getAllActiveAlarm(int loginID){
+		openDataBase(); 
+	
+	String Sql = "select * from notification_medplann where loginid="
+			+ loginID ;
+
+	Cursor cursor = myDataBase.rawQuery(Sql, null) ;
+	
+	PendingAlarmUtil alarmUtil  ;
+	
+	ArrayList<PendingAlarmUtil> alarmUtilsList = new ArrayList<PendingAlarmUtil>();
+	
+	while(cursor.moveToNext()){
+		    alarmUtil = new  PendingAlarmUtil() ;
+		    alarmUtil.notificationId = cursor.getInt(cursor.getColumnIndex("notificationid")) ;
+		    alarmUtil.loginId = cursor.getInt(cursor.getColumnIndex("loginid"));
+		    alarmUtil.userId = cursor.getInt(cursor.getColumnIndex("userid"));
+	      	alarmUtil.boxId = cursor.getInt(cursor.getColumnIndex("boxid")); 
+	        alarmUtil.cellId= cursor.getInt(cursor.getColumnIndex("cellid"));
+	        alarmUtil.time = cursor.getString(cursor.getColumnIndex("timeset"));
+	        alarmUtil.interval = cursor.getString(cursor.getColumnIndex("interval")) ;
+	        alarmUtil.nextday = cursor.getString(cursor.getColumnIndex("nextday")) ;
+	        alarmUtil.date = cursor.getString(cursor.getColumnIndex("date")) ;
+	        alarmUtil.waytostop = cursor.getInt(cursor.getColumnIndex("waytostop"));
+	        alarmUtil.sound = cursor.getInt(cursor.getColumnIndex("sound"));
+	        alarmUtil.description = cursor.getString(cursor.getColumnIndex("description")) ;
+	        alarmUtil.medicine = cursor.getString(cursor.getColumnIndex("med")) ;
+	        
+	        alarmUtilsList.add(alarmUtil);
+	   }
+	    return alarmUtilsList ;
+	}
+	
+	
+	/**
+	 * 
+	 * @param userId
+	 * @param cellId
+	 * @param boxId
+	 * @param loginId
+	 */
 	public  void updateBox (int userId, int cellId, int boxId, int loginId){
 		
 		ContentValues values = new ContentValues() ;

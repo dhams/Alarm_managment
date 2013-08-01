@@ -27,7 +27,7 @@ import android.widget.Toast;
 public class CommonMethod {
 	
 	public static Vibrator vibrator;
-	public static MediaPlayer player;
+//	public static MediaPlayer player;
 	
 	
 
@@ -264,24 +264,24 @@ public static Bitmap decodeSampledBitmapFromResource(String resId,
 		    vibrator.vibrate(pattern,2);  
 	}
 	
-	public static void SoundPlayer(Context ctx,int raw_id) throws IllegalStateException, IOException{
-	    releaseSoundPlayer() ;
-		player =  new MediaPlayer().create(ctx, raw_id);
-//		player.prepare() ;
-//		player.setLooping(false); // Set looping
-		player.setVolume(100, 100);
-    	player.start();
-		Log.d("Sound " , "Is playing ...................");
-	}
+//	public static void SoundPlayer(Context ctx,int raw_id) throws IllegalStateException, IOException{
+//	    releaseSoundPlayer() ;
+//		player =  new MediaPlayer().create(ctx, raw_id);
+////		player.prepare() ;
+////		player.setLooping(false); // Set looping
+//		player.setVolume(100, 100);
+//    	player.start();
+//		Log.d("Sound " , "Is playing ...................");
+//	}
 	
-	public static void releaseSoundPlayer(){
-		if (player != null )
-		if (player.isPlaying()){
-			player.stop();
-//			player.release() ;	
-		}
-		
-	}
+//	public static void releaseSoundPlayer(){
+//		if (player != null )
+//		if (player.isPlaying()){
+//			player.stop();
+////			player.release() ;	
+//		}
+//		
+//	}
 	public static void ShowToast(Activity context)
 	{
 		LayoutInflater inflater = context.getLayoutInflater();

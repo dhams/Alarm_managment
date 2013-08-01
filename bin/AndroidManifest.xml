@@ -243,6 +243,14 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget" />
         </receiver>
+        
+        <!-- To maintain  alarm after reboot device -->
+        <receiver  android:name="com.medplan.app.BootAlarmReceiver">
+            <intent-filter >
+                <action  android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        
     </application>
 
 </manifest>

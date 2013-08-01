@@ -954,7 +954,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 	            	
 	            	calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArry[0])) ;
 	            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-	            	calendar.set(Calendar.SECOND,0) ;
+	            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 	            	
 //		            if (!(interval.equalsIgnoreCase("weekDays")))
 //		            {
@@ -972,7 +972,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 //				                calendar.set(Calendar.YEAR, calendar2.get(Calendar.YEAR)) ;
 				             	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-				            	calendar.set(Calendar.SECOND,0) ;
+				            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 				            	
 				            	if (calendar.getTimeInMillis()<Calendar.getInstance().getTimeInMillis())
 				            		calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+1) ;
@@ -1021,7 +1021,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 								calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+7) ;
 				            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-				            	calendar.set(Calendar.SECOND,0) ;
+				            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 							}
 							
 							else if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
@@ -1042,8 +1042,6 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			            else if (interval.equalsIgnoreCase("monthly")){
 			            	repeat = AlarmManager.INTERVAL_DAY * 30;
 			            	
-
-
 							if ((calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
 									.get(Calendar.DATE)                                        //increment Week until it comes to current or greater then current  .   
 									&& (calendar2.get(Calendar.MONTH) == calendar
@@ -1055,7 +1053,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 								calendar.set(Calendar.MONTH, calendar2.get(Calendar.MONTH)+1) ;
 				            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-				            	calendar.set(Calendar.SECOND,0) ;
+				            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 							}
 							
 							else	if (!(calendar2.get(Calendar.DATE) == calendar                     //To manage old dates 
@@ -1104,7 +1102,6 @@ public class CellManageActivity extends Activity implements OnClickListener {
 			            		day = items[6] ;
 			            	}
 			            	
-			            	
 			            	calendar.set(Calendar.DAY_OF_WEEK, dayCount) ;
 			            	
 			            	
@@ -1119,7 +1116,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 								calendar.set(Calendar.DATE, calendar2.get(Calendar.DATE)+7) ;
 				            	calendar.set(Calendar.HOUR_OF_DAY,  Integer.parseInt(timeArry[0])) ;
 				            	calendar.set(Calendar.MINUTE, Integer.parseInt(timeArry[1])) ;
-				            	calendar.set(Calendar.SECOND,0) ;
+				            	calendar.set(Calendar.SECOND,Integer.parseInt(timeArry[2])) ;
 							}
 							
 							else if (!(calendar2.get(Calendar.DATE) == calendar                   //To manage old dates 
@@ -1140,7 +1137,7 @@ public class CellManageActivity extends Activity implements OnClickListener {
 	 
 			            Log.d("time", "Milisecond ="+calendar.getTimeInMillis()) ;
 			            
-			            if ((calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
+//			            if ((calendar.getTimeInMillis()> calendar2.getTimeInMillis()))
 						alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
 								calendar.getTimeInMillis(), repeat, newPendingIntent);
 						   

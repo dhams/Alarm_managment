@@ -1,5 +1,6 @@
 package com.medplan.app;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -62,8 +63,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 	ImageView imgCellA, imgCellB, imgCellC, tmpIV;
 	Button btnConfirm;
 	Intent intent;
-	int cell_pos, boxid, userid, loginid, picid, counter = 1, WaytoStop,
-			alarmSound;
+	int cell_pos=-1, boxid, userid, loginid, picid, counter = 1, WaytoStop,
+			alarmSound = 0;
 	int a = -1, b = -1, c = -1;
 	databasehelper db;
 	String task = "add", MedName, Desc = "" , activity; 
@@ -89,11 +90,15 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 	private ApplicationClass applicationClass;
 	private AlertDialog.Builder alertDialog ;
 	String pendingInterntID  ;
-	
+	private MediaPlayer mediaPlayer ;
+	private Context context ;
 	@Override
 	public void onCreate(Bundle icicle) {
 		super.onCreate(icicle);
 
+		context = this ;
+//		mediaPlayer = new MediaPlayer() ;
+		
 		db = new databasehelper(this);
 		SP = PreferenceManager
 				.getDefaultSharedPreferences(BoxThreeActivity.this);
@@ -101,13 +106,12 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:SS Z");
 
 	    pendingInterntID = intent.getStringExtra("unique");
 
 		applicationClass = (ApplicationClass) this.getApplication();
-
+ 
 		if (intent.hasExtra("BoxID")) {
 
 			boxid = intent.getIntExtra("BoxID", 0);
@@ -117,7 +121,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 			loginid = intent.getIntExtra("LoginID", 0);
 			applicationClass.loginId = loginid;
 			cell_pos = intent.getIntExtra("CellID", -1);
-			applicationClass.cellPos = cell_pos;
+//			applicationClass.cellPos = cell_pos;
 			MedName = intent.getStringExtra("Med");
 			applicationClass.medName = MedName;
 			WaytoStop = intent.getIntExtra("WayToStop", 0);
@@ -135,7 +139,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 			boxid = applicationClass.boxId;
 			userid = applicationClass.userId;
 			loginid = applicationClass.loginId;
-			cell_pos = applicationClass.cellPos;
+//			cell_pos = applicationClass.cellPos;
 			MedName = applicationClass.medName;
 			WaytoStop = applicationClass.wayToStop;
 			Desc = applicationClass.desc;
@@ -166,7 +170,6 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 						getResources().getString(R.string.cell_edit),
 						Toast.LENGTH_LONG).show();
 			}
-				
 		}
 
 		// els e if (SP.getString("isLogin", "")=="no"){
@@ -231,6 +234,7 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 						isConfirm = false;
 						done = true;
 						ReportDetails();
+
 					}
 				});
 
@@ -269,74 +273,74 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		}
 		tvBoxNum.setText(" Box: " + boxid);
 
-		cellinfolist = db.getCellInfoForBox(loginid, userid, boxid, -1);
+//		cellinfolist = db.getCellInfoForBox(loginid, userid, boxid, -1);
 
-		if (cellinfolist.size() > 0) {
-			a = -1;
-			b = -1;
-			c = -1;
-			for (int i = 0; i < cellinfolist.size(); i++) {
-				Log.i("Cellid", "--------------" + cellinfolist.get(i).cellid);
-				switch (cellinfolist.get(i).cellid) {
-				case 0:
-					tvCellA.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					textA = db.getMedical(cellinfolist.get(i).medid).get(0).nm;
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 0);
-						if (tmp.size() > 0) {
-							tvTimeA.setText(tmp.get(0).strTime);
-							tvTimeA.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						// TODO: handle exceptiononCreate
-					}
-
-					picid = cellinfolist.get(i).picid;
-					a = i;
-					break;
-				case 1:
-					tvCellB.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					textB = db.getMedical(cellinfolist.get(i).medid).get(0).nm;
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 1);
-						if (tmp.size() > 0) {
-							tvTimeB.setText(tmp.get(0).strTime);
-							tvTimeB.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					b = i;
-					break;
-				case 2:
-					tvCellC.setText(""
-							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
-					textC = db.getMedical(cellinfolist.get(i).medid).get(0).nm;
-
-					try {
-						ArrayList<Notification_Model> tmp = db
-								.getCellNotification(loginid, userid, boxid, 2);
-						if (tmp.size() > 0) {
-							tvTimeC.setText(tmp.get(0).strTime);
-							tvTimeC.setVisibility(View.VISIBLE);
-						}
-					} catch (Exception e) {
-						e.printStackTrace();
-						// TODO: handle exception
-					}
-					picid = cellinfolist.get(i).picid;
-					c = i;
-					break;
-				}
-			}
-		}
+//		if (cellinfolist.size() > 0) {
+//			a = -1;
+//			b = -1;
+//			c = -1;
+//			for (int i = 0; i < cellinfolist.size(); i++) {
+//				Log.i("Cellid", "--------------" + cellinfolist.get(i).cellid);
+//				switch (cellinfolist.get(i).cellid) {
+//				case 0:
+//					tvCellA.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					textA = db.getMedical(cellinfolist.get(i).medid).get(0).nm;
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 0);
+//						if (tmp.size() > 0) {
+//							tvTimeA.setText(tmp.get(0).strTime);
+//							tvTimeA.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//						// TODO: handle exceptiononCreate
+//					}
+//
+//					picid = cellinfolist.get(i).picid;
+//					a = i;
+//					break;
+//				case 1:
+//					tvCellB.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					textB = db.getMedical(cellinfolist.get(i).medid).get(0).nm;
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 1);
+//						if (tmp.size() > 0) {
+//							tvTimeB.setText(tmp.get(0).strTime);
+//							tvTimeB.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					b = i;
+//					break;
+//				case 2:
+//					tvCellC.setText(""
+//							+ db.getMedical(cellinfolist.get(i).medid).get(0).nm);
+//					textC = db.getMedical(cellinfolist.get(i).medid).get(0).nm;
+//
+//					try {
+//						ArrayList<Notification_Model> tmp = db
+//								.getCellNotification(loginid, userid, boxid, 2);
+//						if (tmp.size() > 0) {
+//							tvTimeC.setText(tmp.get(0).strTime);
+//							tvTimeC.setVisibility(View.VISIBLE);
+//						}
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//						// TODO: handle exception
+//					}
+//					picid = cellinfolist.get(i).picid;
+//					c = i;
+//					break;
+//				}
+//			}
+//		}
 
 		titleHeadLayout = (RelativeLayout) findViewById(R.id.rlHeadTitlelayout);
 		MainBgLayout = (LinearLayout) findViewById(R.id.MainAlarmLayout);
@@ -366,207 +370,215 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 		// DO_DM Need to know when cell is blinking and when button is blinking 
 
-		if (cell_pos != -1 && stop == false) {
-
-			isAlarm = true;
-			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
-					userid, boxid, cell_pos);
-			try {
-				cell = arrCell.get(0);
-
-				blink = cell.blBlink == 1 ? true : false;
-				miniImg = cell.blMini == 1 ? true : false;
-				vibrat = cell.blVibrant == 1 ? true : false;
-				alert = cell.blAlert == 1 ? true : false;
-				int color = cell.intBg;
-				final int limit = cell.intBuzz;
-
-				switch (color) {
-				case 1:
-					setColor(Color.RED);
-					break;
-				case 2:
-					setColor(Color.YELLOW);
-					break;
-				case 3:
-					setColor(Color.GREEN);
-					break;
-				case 4:
-					setColor(Color.rgb(255, 200, 0));
-					break;
-				case 5:
-					setColor(Color.rgb(198, 195, 181));
-					break;
-				case 6:
-					setColor(Color.WHITE);
-					break;
-				}
-
-				// show alarm time
-				tvtmpTime.setVisibility(View.VISIBLE);
-				sdf = new SimpleDateFormat("HH:mm");
-				String currentDateandTime = sdf.format(new Date(System
-						.currentTimeMillis()));
-				System.out.println("current time" + currentDateandTime);
-				tvtmpTime.setText(currentDateandTime);
-				
-				Log.i("TAG===",
-						"loginid, userid, boxid, cell_pos,blink,minImg,vibrat,alert,color,limit ===== \n"
-								+ loginid
-								+ " "
-								+ userid
-								+ " "
-								+ boxid
-								+ " "
-								+ cell_pos
-								+ " "
-								+ blink
-								+ " "
-								+ miniImg
-								+ " "
-								+ vibrat
-								+ " "
-								+ alert
-								+ " "
-								+ color
-								+ " "
-								+ limit);
-
+//		if (cell_pos != -1 && stop == false) {
+////            startMediaplayer();
+//			isAlarm = true;
+//			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
+//					userid, boxid, cell_pos);
+//			try {
+//				cell = arrCell.get(0);
+//
+//				blink = cell.blBlink == 1 ? true : false;
+//				miniImg = cell.blMini == 1 ? true : false;
+//				vibrat = cell.blVibrant == 1 ? true : false;
+//				alert = cell.blAlert == 1 ? true : false;
+//				int color = cell.intBg;
+//				final int limit = cell.intBuzz;
+//
+//				switch (color) {
+//				case 1:
+//					setColor(Color.RED);
+//					break;
+//				case 2:
+//					setColor(Color.YELLOW);
+//					break;
+//				case 3:
+//					setColor(Color.GREEN);
+//					break;
+//				case 4:
+//					setColor(Color.rgb(255, 200, 0));
+//					break;
+//				case 5:
+//					setColor(Color.rgb(198, 195, 181));
+//					break;
+//				case 6: 
+//					setColor(Color.WHITE);
+//					break;
+//				}
+//
+//				// show alarm time
+//				tvtmpTime.setVisibility(View.VISIBLE);
+//				sdf = new SimpleDateFormat("HH:mm");
+//				String currentDateandTime = sdf.format(new Date(System
+//						.currentTimeMillis()));
+//				System.out.println("current time" + currentDateandTime);
+//				tvtmpTime.setText(currentDateandTime);
+//				
+//				Log.i("TAG===",
+//						"loginid, userid, boxid, cell_pos,blink,minImg,vibrat,alert,color,limit ===== \n"
+//								+ loginid
+//								+ " "
+//								+ userid
+//								+ " "
+//								+ boxid
+//								+ " "
+//								+ cell_pos
+//								+ " "
+//								+ blink
+//								+ " "
+//								+ miniImg
+//								+ " "
+//								+ vibrat
+//								+ " "
+//								+ alert
+//								+ " "
+//								+ color
+//								+ " "
+//								+ limit);
+//
 				sound = true;
-
-				// check whether blink,miniImg,alert,vibrate are true or
-				// false...
-
-				// check which way is selected to stop alarm.
-				// 1 indicate the way: touch the button and stop the alarm.
-				if (WaytoStop == 1 || WaytoStop == 0) {
-					btnConfirm.setVisibility(View.VISIBLE);
-					rlCellA.setClickable(false);
-					rlCellB.setClickable(false);
-					rlCellC.setClickable(false);
-				}
-				
-				
-				if (WaytoStop==1)
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.tapToast), Toast.LENGTH_LONG)
-							.show();
-				else
-					Toast.makeText(getApplicationContext(),
-							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
-							.show();
-				
-				// blinking cell
-				if (blink == true) {
-//					Toast.makeText(getApplicationContext(),
-//							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
-//							.show();
-					tmpRl.setAnimation(anim);
-					System.out.println("Working~~~~~~1");
-				}
-
-				else {
+//
+//				// check whether blink,miniImg,alert,vibrate are true or
+//				// false...
+//
+//				// check which way is selected to stop alarm.
+//				// 1 indicate the way: touch the button and stop the alarm.
+//				if (WaytoStop == 1 || WaytoStop == 0) {
+//					btnConfirm.setVisibility(View.VISIBLE);
+//					rlCellA.setClickable(false);
+//					rlCellB.setClickable(false);
+//					rlCellC.setClickable(false);
+//				}
+//				
+//				if (WaytoStop==1)
 //					Toast.makeText(getApplicationContext(),
 //							getString(R.string.tapToast), Toast.LENGTH_LONG)
 //							.show();
-				}
-				// to show to not mini Image.
-				if (miniImg == true) {
-					System.out.println("Working~~~~~~2");
-					tmpIV.setVisibility(View.VISIBLE);
-					picmodel = db.getPicture(picid);
-					Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
-					System.out.println("wint three box cell~~~~~~~~~~~~"
-							+ picmodel.path);
-
-					if (bitmap == null) {
-						tmpIV.setVisibility(View.GONE);
-						// tmpIV.setBackgroundResource(R.drawable.add_photo);
-					} else {
-						tmpIV.setImageBitmap(bitmap);
-					}
-				}
-				// To vibrate or not.
-				if (vibrat == true) {
-					System.out.println("Working~~~~~~3");
-					CommonMethod.vibration(this);
-				}
-
-				if (alert == true) {
-					System.out.println("Both~~~~~~~");
-					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
-
-					CommonMethod.player
-							.setOnCompletionListener(new OnCompletionListener() {
-
-								@Override
-								public void onCompletion(MediaPlayer mp) {
-									// /will use count and loop as per number of
-									// repetition chosen.
-
-									Intent checkIntent = new Intent();
-									checkIntent
-											.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-									startActivityForResult(checkIntent,
-											MY_DATA_CHECK_CODE);
-
-									handler.postDelayed(new Runnable() {
-
-										public void run() {
-											if (counter >= limit) {
-//												CommonMethod.player.stop();
-												CommonMethod.releaseSoundPlayer();
-											} else {
-												CommonMethod.player.start();
-											}
-											counter++;
-										}
-									}, 3000);
-								}
-
-							});
-				}
-
-				if (sound == true && alert == false) {
-					System.out.println("sound true alert false~~~~~~~");
-					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
-					CommonMethod.player
-							.setOnCompletionListener(new OnCompletionListener() {
-
-								@Override
-								public void onCompletion(MediaPlayer mp) {
-									// /will use count and loop as per number of
-									// repetition chosen.
-									handler.postDelayed(new Runnable() {
-
-										public void run() {
-											if (counter >= limit) {
-//												CommonMethod.player.stop();
-												CommonMethod.releaseSoundPlayer();
-											} else {
-												CommonMethod.player.start();
-											}
-											counter++;
-										}
-									}, 3000);
-
-								}
-							});
-				}
-				if (sound == false && alert == true) {
-					System.out.println("sound false alert true~~~~~~~");
-					Intent checkIntent = new Intent();
-					checkIntent
-							.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-					startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
-
-				} else {
-					System.out.println("~~~~~~~~~~~~do nothing~~~~~~~");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+//				else
+//					Toast.makeText(getApplicationContext(),
+//							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
+//							.show();
+//				
+//				// blinking cell
+//				if (blink == true) {
+////					Toast.makeText(getApplicationContext(),
+////							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
+////							.show();
+//					tmpRl.setAnimation(anim);
+//					System.out.println("Working~~~~~~1");
+//				}
+//
+//				else {
+////					Toast.makeText(getApplicationContext(),
+////							getString(R.string.tapToast), Toast.LENGTH_LONG)
+////							.show();
+//				}
+//				// to show to not mini Image.
+//				if (miniImg == true) {
+//					System.out.println("Working~~~~~~2");
+//					tmpIV.setVisibility(View.VISIBLE);
+//					picmodel = db.getPicture(picid);
+//					Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
+//					System.out.println("wint three box cell~~~~~~~~~~~~"
+//							+ picmodel.path);
+//
+//					if (bitmap == null) {
+//						tmpIV.setVisibility(View.GONE);
+//						// tmpIV.setBackgroundResource(R.drawable.add_photo);
+//					} else {
+//						tmpIV.setImageBitmap(bitmap);
+//					}
+//				}
+//				// To vibrate or not.
+//				if (vibrat == true) {
+//					System.out.println("Working~~~~~~3");
+//					CommonMethod.vibration(this);
+//				}
+//
+//				if (alert == true) {
+//					System.out.println("Both~~~~~~~");
+////                   if (!mediaPlayer.isPlaying())
+////					mediaPlayer.start() ;
+//					
+//		            startMediaplayer();
+//					mediaPlayer
+//							.setOnCompletionListener(new OnCompletionListener() {
+//
+//								@Override
+//								public void onCompletion( MediaPlayer mp) {
+//									// /will use count and loop as per number of
+//									// repetition chosen.
+//
+//									Intent checkIntent = new Intent();
+//									checkIntent
+//											.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//									startActivityForResult(checkIntent,
+//											MY_DATA_CHECK_CODE);
+//
+//									handler.post(new Runnable() {
+//
+//										public void run() {
+//											if (counter >= limit) {
+////												CommonMethod.player.stop();
+////												CommonMethod.releaseSoundPlayer();
+//												stopMediaPlayer();
+//											} else {
+////												CommonMethod.player.start();
+//												startMediaplayer();
+//												
+//											}
+//											counter++;
+//										}
+//									});
+//								}
+//
+//							});
+//				}
+//				
+//				if (sound == true && alert == false) {
+//					System.out.println("sound true alert false~~~~~~~");
+////					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
+//					startMediaplayer();
+//					
+//					mediaPlayer
+//							.setOnCompletionListener(new OnCompletionListener() {
+//
+//								@Override
+//								public void onCompletion(MediaPlayer mp) {
+//									// /will use count and loop as per number of
+//									// repetition chosen.
+//									handler.post(new Runnable() {
+//
+//										public void run() {
+//											if (counter >= limit) {
+////												CommonMethod.player.stop();
+////                                                mediaPlayer.stop();
+//												stopMediaPlayer();
+//                                                } 
+//											else {
+//												mediaPlayer.start();
+//											}
+//											counter++;
+//										}
+//									});
+//
+//								}
+//							});
+//				}
+//				if (sound == false && alert == true) {
+//					System.out.println("sound false alert true~~~~~~~");
+//					Intent checkIntent = new Intent();
+//					checkIntent
+//							.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+//					startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+//
+//				} else {
+//					System.out.println("~~~~~~~~~~~~do nothing~~~~~~~");
+//				}
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
 
 	}
 
@@ -619,13 +631,38 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 			}
 		}
 		
-		CommonMethod.releaseSoundPlayer() ;
+//		mediaPlayer.stop() ;
+		stopMediaPlayer();
 		super.onDestroy();
 	}
 
+	
+	private  void stopMediaPlayer(){
+		if (mediaPlayer!=null)
+			try {  
+				mediaPlayer.stop() ;
+				Log.d("Media player ", "is stop ") ;
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+	private void startMediaplayer(){
+//		if(mediaPlayer!=null)
+//			mediaPlayer.reset() ;
+//		   mediaPlayer = MediaPlayer.create(context,
+//					Constant.Sound[alarmSound]);
+			mediaPlayer.setVolume(100f, 100f);
+//			mediaPlayer.setLoopin....g(true);
+			if(!mediaPlayer.isPlaying())
+			mediaPlayer.start();
+			Log.d("Media player ", "is on ") ;
+	}
+	
 	public void setColor(int color) {
 		switch (cell_pos) {
-		case 0:
+		case 0: 
 			rlCellA.setBackgroundColor(color);
 			tmpRl = rlCellA;
 			tmpIV = imgCellA;
@@ -672,230 +709,233 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 
 	}
 
-	private class ClickAysnc extends AsyncTask<Integer, Void, Void> {
-
-		ProgressDialog dialog = new ProgressDialog(BoxThreeActivity.this);
-
-		@Override
-		protected void onPreExecute() {
-			super.onPreExecute();
-			dialog.show();
-			if (cell_pos != -1) {
-				if (CommonMethod.vibrator != null)
-					CommonMethod.vibrator.cancel();
-				if (WaytoStop == 2) {
-					tmpIV.setVisibility(View.GONE);
-					tvtmpTime.setVisibility(View.GONE);
-					tmpRl.setBackgroundColor(Color.TRANSPARENT);
-				}
-			}
-		}
-
-		@Override
-		protected void onPostExecute(Void result) {
-			super.onPostExecute(result);
-			dialog.dismiss();
-		}
-
-		@Override
-		protected Void doInBackground(Integer... params) {
-
-			int viewID = params[0];
-
-			switch (viewID) {
-			case R.id.rl_three_boxA:
-				if (cell_pos != -1) {
-					alert = false;
-					tvCellA.setText(textA);
-
-					if (blink == true) {
-						anim.cancel();
-						tmpRl.clearAnimation();
-						btnConfirm.setVisibility(View.GONE);
-
-					}
-					if (miniImg == true) {
-
-					}
-					if (vibrat == true) {
-						CommonMethod.vibrator.cancel();
-
-					}
-					if (sound == true) {
-//						CommonMethod.player.stop();
-						CommonMethod.releaseSoundPlayer();
-						btnConfirm.setVisibility(View.GONE);
-
-					}
-					if (mTts != null)
-						if (mTts.isSpeaking()) {
-							mTts.stop();
-							mTts.shutdown();
-						}
-					if (blink == true || miniImg == true || vibrat == true
-							|| sound == true || alert == true) {
-						blink = false;
-						miniImg = false;
-						vibrat = false;
-						sound = false;
-						alert = false;
-						Constant.flag = true;
-						tmpIV.setVisibility(View.GONE);
-						tvtmpTime.setVisibility(View.GONE);
-						alertMsg.show();
-					}
-				} else {
-					cell_pos = 0;
-					if (a != -1)
-						task = "show";
-					Call_actvity();
-				}
-
-				break;
-			case R.id.rl_three_boxB:
-				if (cell_pos != -1) {
-					alert = false;
-					tvCellB.setText(textB);
-					if (blink == true) {
-						anim.cancel();
-						tmpRl.clearAnimation();
-						btnConfirm.setVisibility(View.GONE);
-
-					}
-					if (miniImg == true) {
-
-					}
-					if (vibrat == true) {
-						CommonMethod.vibrator.cancel();
-					}
-					// if(alert){
-					// mTts.stop();
-					// mTts.shutdown();
-					// alert=false;
-					// }
-					if (sound == true) {
-//						CommonMethod.player.stop();
-						CommonMethod.releaseSoundPlayer();
-						btnConfirm.setVisibility(View.GONE);
-					}
-					if (mTts != null)
-						if (mTts.isSpeaking()) {
-							mTts.stop();
-							mTts.shutdown();
-						}
-					if (blink == true || miniImg == true || vibrat == true
-							|| sound == true) {
-						blink = false;
-						miniImg = false;
-						vibrat = false;
-						sound = false;
-						Constant.flag = true;
-						tmpIV.setVisibility(View.GONE);
-						tvtmpTime.setVisibility(View.GONE);
-						alertMsg.show();
-					}
-				} else {
-					cell_pos = 1;
-					if (b != -1)
-						task = "show";
-					Call_actvity();
-				}
-				break;
-			case R.id.rl_three_boxC:
-				if (cell_pos != -1) {
-					alert = false;
-					tvCellC.setText(textC);
-					if (blink == true) {
-						anim.cancel();
-						tmpRl.clearAnimation();
-						btnConfirm.setVisibility(View.GONE);
-
-					}
-					if (miniImg == true) {
-
-					}
-					if (vibrat == true) {
-						CommonMethod.vibrator.cancel();
-						vibrat = false;
-					}
-					if (sound == true) {
-//						CommonMethod.player.stop();
-						CommonMethod.releaseSoundPlayer();
-						btnConfirm.setVisibility(View.GONE);
-					}
-					if (mTts != null)
-						if (mTts.isSpeaking()) {
-							mTts.stop();
-							mTts.shutdown();
-						}
-
-					if (blink == true || miniImg == true || vibrat == true
-							|| sound == true) {
-						blink = false;
-						miniImg = false;
-						vibrat = false;
-						sound = false;
-						tmpIV.setVisibility(View.GONE);
-						tvtmpTime.setVisibility(View.GONE);
-						Constant.flag = true;
-						alertMsg.show();
-					}
-				} else {
-					cell_pos = 2;
-					if (c != -1)
-						task = "show";
-					Call_actvity();
-				}
-				break;
-			case R.id.btn_boxthree_confirm:
-				alert = false;
-				rlCellA.setClickable(true);
-				rlCellB.setClickable(true);
-				rlCellC.setClickable(true);
-
-				if (blink == true) {
-					anim.cancel();
-
-					tmpRl.clearAnimation();
-					tmpRl.setBackgroundColor(Color.TRANSPARENT);
-				}
-				if (miniImg == true) {
-
-				}
-				if (vibrat == true) {
-					CommonMethod.vibrator.cancel();
-				}
-				if (sound == true) {
-//					CommonMethod.player.stop();
-					CommonMethod.releaseSoundPlayer();
-
-				}
-				if (mTts != null)
-					if (mTts.isSpeaking()) {
-						mTts.stop();
-						mTts.shutdown();
-					}
-				if (blink == true || miniImg == true || vibrat == true
-						|| sound == true) {
-					btnConfirm.setVisibility(View.GONE);
-					blink = false;
-					miniImg = false;
-					vibrat = false;
-					sound = false;
-					Constant.flag = true;
-					alertMsg.show();
-				} else {
-					// do nothing.
-				}
-				tmpIV.setVisibility(View.GONE);
-				tvtmpTime.setVisibility(View.GONE);
-				break;
-			}
-
-			return null;
-		}
-
-	}
+//	private class ClickAysnc extends AsyncTask<Integer, Void, Void> {
+//
+//		ProgressDialog dialog = new ProgressDialog(BoxThreeActivity.this);
+//
+//		@Override
+//		protected void onPreExecute() {
+//			super.onPreExecute();
+//			dialog.show();
+//			if (cell_pos != -1) {
+//				if (CommonMethod.vibrator != null)
+//					CommonMethod.vibrator.cancel();
+//				if (WaytoStop == 2) {
+//					tmpIV.setVisibility(View.GONE);
+//					tvtmpTime.setVisibility(View.GONE);
+//					tmpRl.setBackgroundColor(Color.TRANSPARENT);
+//				}
+//			}
+//		}
+//
+//		@Override
+//		protected void onPostExecute(Void result) {
+//			super.onPostExecute(result);
+//			dialog.dismiss();
+//		}
+//
+//		@Override
+//		protected Void doInBackground(Integer... params) {
+//
+//			int viewID = params[0];
+//
+//			switch (viewID) {
+//			case R.id.rl_three_boxA:
+//				if (cell_pos != -1) {
+//					alert = false;
+//					tvCellA.setText(textA);
+//
+//					if (blink == true) {
+//						anim.cancel();
+//						tmpRl.clearAnimation();
+//						btnConfirm.setVisibility(View.GONE);
+//
+//					}
+//					if (miniImg == true) {
+//
+//					}
+//					if (vibrat == true) {
+//						CommonMethod.vibrator.cancel();
+//
+//					}
+//					if (sound == true) {
+////						CommonMethod.player.stop();
+//						stopMediaPlayer();
+// 						btnConfirm.setVisibility(View.GONE);
+//
+//					}
+//					if (mTts != null)
+//						if (mTts.isSpeaking()) {
+//							mTts.stop();
+//							mTts.shutdown();
+//						}
+//					if (blink == true || miniImg == true || vibrat == true
+//							|| sound == true || alert == true) {
+//						blink = false;
+//						miniImg = false;
+//						vibrat = false;
+//						sound = false;
+//						alert = false;
+//						Constant.flag = true;
+//						tmpIV.setVisibility(View.GONE);
+//						tvtmpTime.setVisibility(View.GONE);
+//						alertMsg.show();
+//					}
+//				} else {
+//					cell_pos = 0;
+//					if (a != -1)
+//						task = "show";
+//					Call_actvity();
+//				}
+//
+//				break;
+//			case R.id.rl_three_boxB:
+//				if (cell_pos != -1) {
+//					alert = false;
+//					tvCellB.setText(textB);
+//					if (blink == true) {
+//						anim.cancel();
+//						tmpRl.clearAnimation();
+//						btnConfirm.setVisibility(View.GONE);
+//
+//					}
+//					if (miniImg == true) {
+//
+//					}
+//					if (vibrat == true) {
+//						CommonMethod.vibrator.cancel();
+//					}
+//					// if(alert){
+//					// mTts.stop();
+//					// mTts.shutdown();
+//					// alert=false;
+//					// }
+//					if (sound == true) {
+////						CommonMethod.player.stop();
+////						CommonMethod.releaseSoundPlayer();
+//						stopMediaPlayer();
+//						btnConfirm.setVisibility(View.GONE);
+//					}
+//					if (mTts != null)
+//						if (mTts.isSpeaking()) {
+//							mTts.stop();
+//							mTts.shutdown();
+//						}
+//					if (blink == true || miniImg == true || vibrat == true
+//							|| sound == true) {
+//						blink = false;
+//						miniImg = false;
+//						vibrat = false;
+//						sound = false;
+//						Constant.flag = true;
+//						tmpIV.setVisibility(View.GONE);
+//						tvtmpTime.setVisibility(View.GONE);
+//						alertMsg.show();
+//					}
+//				} else {
+//					cell_pos = 1;
+//					if (b != -1)
+//						task = "show";
+//					Call_actvity();
+//				}
+//				break;
+//			case R.id.rl_three_boxC:
+//				if (cell_pos != -1) {
+//					alert = false;
+//					tvCellC.setText(textC);
+//					if (blink == true) {
+//						anim.cancel();
+//						tmpRl.clearAnimation();
+//						btnConfirm.setVisibility(View.GONE);
+//
+//					}
+//					if (miniImg == true) {
+//
+//					}
+//					if (vibrat == true) {
+//						CommonMethod.vibrator.cancel();
+//						vibrat = false;
+//					}
+//					if (sound == true) {
+////						CommonMethod.player.stop();
+////						CommonMethod.releaseSoundPlayer();
+//						stopMediaPlayer();
+//						btnConfirm.setVisibility(View.GONE);
+//					}
+//					if (mTts != null)
+//						if (mTts.isSpeaking()) {
+//							mTts.stop();
+//							mTts.shutdown();
+//						}
+//
+//					if (blink == true || miniImg == true || vibrat == true
+//							|| sound == true) {
+//						blink = false;
+//						miniImg = false;
+//						vibrat = false;
+//						sound = false;
+//						tmpIV.setVisibility(View.GONE);
+//						tvtmpTime.setVisibility(View.GONE);
+//						Constant.flag = true;
+//						alertMsg.show();
+//					}
+//				} else {
+//					cell_pos = 2;
+//					if (c != -1)
+//						task = "show";
+//					Call_actvity();
+//				}
+//				break;
+//			case R.id.btn_boxthree_confirm:
+//				alert = false;
+//				rlCellA.setClickable(true);
+//				rlCellB.setClickable(true);
+//				rlCellC.setClickable(true);
+//
+//				if (blink == true) {
+//					anim.cancel();
+//
+//					tmpRl.clearAnimation();
+//					tmpRl.setBackgroundColor(Color.TRANSPARENT);
+//				}
+//				if (miniImg == true) {
+//
+//				}
+//				if (vibrat == true) {
+//					CommonMethod.vibrator.cancel();
+//				}
+//				if (sound == true) {
+////					CommonMethod.player.stop();
+////					CommonMethod.releaseSoundPlayer();
+//					stopMediaPlayer();
+//
+//				}
+//				if (mTts != null)
+//					if (mTts.isSpeaking()) {
+//						mTts.stop();
+//						mTts.shutdown();
+//					}
+//				if (blink == true || miniImg == true || vibrat == true
+//						|| sound == true) {
+//					btnConfirm.setVisibility(View.GONE);
+//					blink = false;
+//					miniImg = false;
+//					vibrat = false;
+//					sound = false;
+//					Constant.flag = true;
+//					alertMsg.show();
+//				} else {
+//					// do nothing.
+//				}
+//				tmpIV.setVisibility(View.GONE);
+//				tvtmpTime.setVisibility(View.GONE);
+//				break;
+//			}
+//
+//			return null;
+//		}
+//
+//	}
 
 	void doClick(View v) {
 		if (cell_pos != -1) {
@@ -993,7 +1033,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				// }
 				if (sound == true) {
 //					CommonMethod.player.stop();
-					CommonMethod.releaseSoundPlayer();
+//					CommonMethod.releaseSoundPlayer();
+					stopMediaPlayer();
 					btnConfirm.setVisibility(View.GONE);
 				}
 				if (mTts != null)
@@ -1044,7 +1085,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				}
 				if (sound == true) {
 //					CommonMethod.player.stop();
-					CommonMethod.releaseSoundPlayer();
+//					CommonMethod.releaseSoundPlayer();
+					stopMediaPlayer();
 					btnConfirm.setVisibility(View.GONE);
 				}
 				if (mTts != null)
@@ -1097,8 +1139,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 			}
 			if (sound == true) {
 //				CommonMethod.player.stop();
-				CommonMethod.releaseSoundPlayer();
-
+//				CommonMethod.releaseSoundPlayer(); 
+                stopMediaPlayer();   
 			}
 			if (mTts != null)
 				if (mTts.isSpeaking()) {
@@ -1333,6 +1375,8 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 	// }
 
 	public void ReportDetails() {
+		stopMediaPlayer();
+		
 		DateFormat df = new android.text.format.DateFormat();
 		String date = df.format("dd/MM/yyyy", new Date()).toString();
 		String time = df.format("kk:mm:ss", new Date()).toString();
@@ -1380,11 +1424,10 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 		super.onResume();
 
 		Log.e("BOXTHREE", " ************ Timer Actived ******** ");
-
-		rlCellA.setOnClickListener(this);
-		rlCellB.setOnClickListener(this);
-		rlCellC.setOnClickListener(this);
-		btnConfirm.setOnClickListener(this);
+ 
+		counter=1 ;
+		mediaPlayer = MediaPlayer.create(context,
+					Constant.Sound[alarmSound]);
 
 		if (vibrat == true) {
 			CommonMethod.vibration(this);
@@ -1445,7 +1488,6 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
-						// TODO: handle exception
 					}
 					picid = cellinfolist.get(i).picid;
 					b = i;
@@ -1473,6 +1515,226 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 				}
 			}
 		}
+		
+		
+ 
+		cell_pos = getIntent().getIntExtra("CellID", -1);
+		
+		if (cell_pos != -1 && stop == false) {
+//          startMediaplayer();
+			isAlarm = true;
+			ArrayList<CellInfo_Model> arrCell = db.getCellInfoForBox(loginid,
+					userid, boxid, cell_pos);
+			try {
+				cell = arrCell.get(0);
+
+				blink = cell.blBlink == 1 ? true : false;
+				miniImg = cell.blMini == 1 ? true : false;
+				vibrat = cell.blVibrant == 1 ? true : false;
+				alert = cell.blAlert == 1 ? true : false;
+				int color = cell.intBg;
+				final int limit = cell.intBuzz;
+
+				switch (color) {
+				case 1:
+					setColor(Color.RED);
+					break;
+				case 2:
+					setColor(Color.YELLOW);
+					break;
+				case 3:
+					setColor(Color.GREEN);
+					break;
+				case 4:
+					setColor(Color.rgb(255, 200, 0));
+					break;
+				case 5:
+					setColor(Color.rgb(198, 195, 181));
+					break;
+				case 6: 
+					setColor(Color.WHITE);
+					break;
+				}
+
+				// show alarm time
+				tvtmpTime.setVisibility(View.VISIBLE);
+				sdf = new SimpleDateFormat("HH:mm");
+				String currentDateandTime = sdf.format(new Date(System
+						.currentTimeMillis()));
+				System.out.println("current time" + currentDateandTime);
+				tvtmpTime.setText(currentDateandTime);
+				
+				Log.i("TAG===",
+						"loginid, userid, boxid, cell_pos,blink,minImg,vibrat,alert,color,limit ===== \n"
+								+ loginid
+								+ " "
+								+ userid
+								+ " "
+								+ boxid
+								+ " "
+								+ cell_pos
+								+ " "
+								+ blink
+								+ " "
+								+ miniImg
+								+ " "
+								+ vibrat
+								+ " "
+								+ alert
+								+ " "
+								+ color
+								+ " "
+								+ limit);
+ 
+				sound = true;
+
+				// check whether blink,miniImg,alert,vibrate are true or
+				// false...
+
+				// check which way is selected to stop alarm.
+				// 1 indicate the way: touch the button and stop the alarm.
+				if (WaytoStop == 1 || WaytoStop == 0) {
+					btnConfirm.setVisibility(View.VISIBLE);
+					rlCellA.setClickable(false);
+					rlCellB.setClickable(false);
+					rlCellC.setClickable(false);
+				}
+				
+				if (WaytoStop==1)
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.tapToast), Toast.LENGTH_LONG)
+							.show();
+				else
+					Toast.makeText(getApplicationContext(),
+							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
+							.show();
+				
+				// blinking cell
+				if (blink == true) {
+//					Toast.makeText(getApplicationContext(),
+//							getString(R.string.tapCellToast), Toast.LENGTH_LONG)
+//							.show();
+					tmpRl.setAnimation(anim);
+					System.out.println("Working~~~~~~1");
+				}
+
+				else {
+//					Toast.makeText(getApplicationContext(),
+//							getString(R.string.tapToast), Toast.LENGTH_LONG)
+//							.show();
+				}
+				// to show to not mini Image.
+				if (miniImg == true) {
+					System.out.println("Working~~~~~~2");
+					tmpIV.setVisibility(View.VISIBLE);
+					picmodel = db.getPicture(picid);
+					Bitmap bitmap = GlobalMethods.decodeFile(picmodel.path);
+					System.out.println("wint three box cell~~~~~~~~~~~~"
+							+ picmodel.path);
+
+					if (bitmap == null) {
+						tmpIV.setVisibility(View.GONE);
+						// tmpIV.setBackgroundResource(R.drawable.add_photo);
+					} else {
+						tmpIV.setImageBitmap(bitmap);
+					}
+				}
+				// To vibrate or not.
+				if (vibrat == true) {
+					System.out.println("Working~~~~~~3");
+					CommonMethod.vibration(this);
+				}
+
+				if (alert == true) {
+					System.out.println("Both~~~~~~~");
+//                 if (!mediaPlayer.isPlaying())
+//					mediaPlayer.start() ;
+					
+		            startMediaplayer();
+					mediaPlayer
+							.setOnCompletionListener(new OnCompletionListener() {
+
+								@Override
+								public void onCompletion( MediaPlayer mp) {
+									// /will use count and loop as per number of
+									// repetition chosen.
+
+									Intent checkIntent = new Intent();
+									checkIntent
+											.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+									startActivityForResult(checkIntent,
+											MY_DATA_CHECK_CODE);
+
+									handler.post(new Runnable() {
+
+										public void run() {
+											if (counter >= limit) {
+//												CommonMethod.player.stop();
+//												CommonMethod.releaseSoundPlayer();
+												stopMediaPlayer();
+											} else {
+//												CommonMethod.player.start();
+												startMediaplayer();
+												
+											}
+											counter++;
+										}
+									});
+								}
+
+							});
+				}
+				
+				if (sound == true && alert == false) {
+					System.out.println("sound true alert false~~~~~~~");
+//					CommonMethod.SoundPlayer(this, Constant.Sound[alarmSound]);
+					startMediaplayer();
+					
+					mediaPlayer
+							.setOnCompletionListener(new OnCompletionListener() {
+
+								@Override
+								public void onCompletion(MediaPlayer mp) {
+									// /will use count and loop as per number of
+									// repetition chosen.
+									handler.post(new Runnable() {
+
+										public void run() {
+											if (counter >= limit) {
+//												CommonMethod.player.stop();
+//                                              mediaPlayer.stop();
+												stopMediaPlayer();
+                                              } 
+											else {
+												mediaPlayer.start();
+											}
+											counter++;
+										}
+									});
+
+								}
+							});
+				}
+				if (sound == false && alert == true) {
+					System.out.println("sound false alert true~~~~~~~");
+					Intent checkIntent = new Intent();
+					checkIntent
+							.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+					startActivityForResult(checkIntent, MY_DATA_CHECK_CODE);
+
+				} else {
+					System.out.println("~~~~~~~~~~~~do nothing~~~~~~~");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		rlCellA.setOnClickListener(this);
+		rlCellB.setOnClickListener(this);
+		rlCellC.setOnClickListener(this);
+		btnConfirm.setOnClickListener(this);
+		
 	}
 
 	@Override
@@ -1492,6 +1754,15 @@ public class BoxThreeActivity extends Activity implements OnClickListener,
 	}
 	
 	 
+//	public static void SoundPlayer(Context ctx,int raw_id) throws IllegalStateException, IOException{
+//	player =  new MediaPlayer().create(ctx, raw_id);
+////	player.prepare() ;
+////	player.setLooping(false); // Set looping
+//	player.setVolume(100, 100);
+//	player.start();
+//	Log.d("Sound " , "Is playing ...................");
+//    }
+	
 	private void  launchHomeActivity(){
 		
 		    Intent startMain = new Intent(Intent.ACTION_MAIN);
