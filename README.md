@@ -1,4 +1,4 @@
-Medplann
+Alarm Manager 
 ========
 
 learning android 
